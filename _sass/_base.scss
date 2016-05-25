@@ -71,7 +71,9 @@ table {
 	width: 100%;
 	overflow: auto;
 	word-break: normal;
-	word-break: keep-all
+	word-break: keep-all;
+    border-spacing: 0;
+    border-collapse: collapse;
 }
 
 table th {
