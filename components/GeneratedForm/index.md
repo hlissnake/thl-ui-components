@@ -52,7 +52,11 @@ The following values are used from the context if available.
 | Property Name | Type | Description |
 | --- | --- | --- | 
 | __customFields:__ | _object_ | This object has key-value pairs. If the key matches a field type then the value is used in the `React.createElement(<value>...` to create the input. It is passed the all key-values from field.settings, the key-values from field and all redux-form values as props. Additionally if a Class or Object has the `isArrayField` value set to true then the component will be passed to a FieldArray instead of a Field component. |
-| __buildErrorMessage__ | _function_ | This function, if provided, generates the default error message based on the field validator. The default function is as follows:
+| __buildErrorMessage__ | _function_ | This function, if provided, generates the default error message based on the field validator. The default function is as after below. |
+| __formValidators:__ | _object_ | An object of key/value pairs which defines validators to be used. __NOTE__ | These default validators have 3 parameters as opposed to fields.validators. Default is: `{required: (validator, name, value) => (!value) ? buildErrorMessage(validator, name) : undefined}` |
+| __defaultRowComponent:__ | _object / React Class / html_ | default value for __rowComponent__ |
+| __defaultFormComponent:__ | _object / React Class / html_ | default value for __formComponent__ |
+
 ```jsx
 function buildErrorMessage(validator, name) {
     if (isFunction(validator.message)) {
@@ -63,10 +67,7 @@ function buildErrorMessage(validator, name) {
         return `${name} is ${validator.verb || validator.type}`;
     }
 }
-``` |
-| __formValidators:__ | _object_ | An object of key/value pairs which defines validators to be used. __NOTE__ | These default validators have 3 parameters as opposed to fields.validators. Default is: `{required: (validator, name, value) => (!value) ? buildErrorMessage(validator, name) : undefined}` |
-| __defaultRowComponent:__ | _object / React Class / html_ | default value for __rowComponent__ |
-| __defaultFormComponent:__ | _object / React Class / html_ | default value for __formComponent__ |
+```
 
 __props__
 
