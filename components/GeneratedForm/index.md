@@ -50,7 +50,8 @@ __context__
 The following values are used from the context if available.
 
 | __customFields:__ | _object_ | This object has key-value pairs. If the key matches a field type then the value is used in the `React.createElement(<value>...` to create the input. It is passed the all key-values from field.settings, the key-values from field and all redux-form values as props. Additionally if a Class or Object has the `isArrayField` value set to true then the component will be passed to a FieldArray instead of a Field component. |
-| __buildErrorMessage__ | _function_ | This function, if provided, generates the default error message based on the field validator. The default function is as follows: ```jsx
+| __buildErrorMessage__ | _function_ | This function, if provided, generates the default error message based on the field validator. The default function is as follows:
+```jsx
 function buildErrorMessage(validator, name) {
     if (isFunction(validator.message)) {
         return validator.message(validator, name);
@@ -62,15 +63,15 @@ function buildErrorMessage(validator, name) {
 }
 ``` |
 | __formValidators:__ | _object_ | An object of key/value pairs which defines validators to be used. __NOTE__ | These default validators have 3 parameters as opposed to fields.validators. Default is: `{required: (validator, name, value) => (!value) ? buildErrorMessage(validator, name) : undefined}` |
-| __defaultRowComponent:__ | _object \| React Class \| html_ | default value for __rowComponent__ |
-| __defaultFormComponent:__ | _object \| React Class \| html_ | default value for __formComponent__ |
+| __defaultRowComponent:__ | _object / React Class / html_ | default value for __rowComponent__ |
+| __defaultFormComponent:__ | _object / React Class / html_ | default value for __formComponent__ |
 
 __props__
 
 | __fieldName:__ | _string_ | The name of the form field. |
 | __fields:__ | _array_ | Array of form field definitions, see fields below for details. |
-| __rowComponent:__ | _React Class \| html element name string \| React Element \| Wrapped React Element Function_ | This is passed to this is used as the formatter/wrapper for each element, defaults to DefaultFieldRow (see below for details) |
-| __formComponent:__ | _React Class||html element name string \| React Element \| Wrapped React Element Function_ | This is used to wrap all the rowComponents, is passed name (as formName) and all other props, defaults to 'form'. |
+| __rowComponent:__ | _React Class / html element name string / React Element / Wrapped React Element Function_ | This is passed to this is used as the formatter/wrapper for each element, defaults to DefaultFieldRow (see below for details) |
+| __formComponent:__ | _React Class||html element name string / React Element / Wrapped React Element Function_ | This is used to wrap all the rowComponents, is passed name (as formName) and all other props, defaults to 'form'. |
 | __formRedux:__ | _object_ | Additional formRedux values, this is used to pass extra custom parameters to the formRedux handler (See **important** under config here: http://redux-form.com/6.0.0-alpha.13/docs/api/ReduxForm.md/) |
 
 #### GeneratedForm > fields
@@ -82,10 +83,10 @@ __Parameters__
 | __name: (required)__ | _string_ | This is the name used in redux-form. Essentially this is the field identifier. |
 | __type: (required)__ | _string_ | This is the key that determines what input is displayed, currently supported (in order of precedence) Any key on `context.customFields`, 'select', 'textarea', any other value will be passed to an input field as the type parameter (defaults to 'text'). |
 | __displayName:__ | _string_ | This is the name that will be displayed to the user - defaults to name. |
-| __label:__ | _string \| React element_ | This is used as the label to display in the default display components. If not provided will use displayName. |
+| __label:__ | _string / React element_ | This is used as the label to display in the default display components. If not provided will use displayName. |
 | __settings:__ | _object_ | This is passed as props to the input, for example `settings: {placeholder: 'Placeholder'}` will put the attribute `placeholder="Placeholder"` on the input. |
 | __validators:__ | _array_ | An array of validators, see 'validator' property for individual settings. |
-| __validator:__ | _object \| string \| function_ | If string the validator is converted to `{type: validator}` object. If an object it's type key is checked against inbuilt validators and that validator is called. If a function then the function is used as the validation. These are used in the `redux.validators`, see Validation for more details. |
+| __validator:__ | _object / string / function_ | If string the validator is converted to `{type: validator}` object. If an object it's type key is checked against inbuilt validators and that validator is called. If a function then the function is used as the validation. These are used in the `redux.validators`, see Validation for more details. |
 
 __Type='select' Parameters__
 
@@ -134,7 +135,7 @@ The Component passed to rowComponent is build and passed the following propertie
 
 __props__
 
-| __label:__ | _string \| object \| function \| element_ | A react display variable, used to display the name/label of the component. |
+| __label:__ | _string / object / function / element_ | A react display variable, used to display the name/label of the component. |
 | __fieldProps:__ | _object_ | These is the object with all the redux field properties on it. |
 | __field:__ | _element_ | The built input element. |
 
