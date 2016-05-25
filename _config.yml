@@ -10,6 +10,7 @@ title: THL UI Components
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
   React components to help building application websites.
+baseurl: http://thl-dev.github.io/thl-ui-components/
 github_username:  THL-DEV
 
 # Build settings
