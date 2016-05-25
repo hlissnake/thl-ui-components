@@ -10,6 +10,8 @@ layout: default
 Basic usage of the NavigationToolbar component is to place it at the top of your page.
 There are no real settings to get this working, just insert what you want to put on the Toolbar as children of the element.
 
+([Live Demo]({{ '/storybook/?selectedKind=NavigationToolbar&selectedStory=with%20text' | prepend: site.baseurl }}))
+
 ```jsx
 <NavigationToolbar onScroll={action('scrollUp')}>
     <Button>Test Title 1</Button>

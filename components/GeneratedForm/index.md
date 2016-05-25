@@ -12,7 +12,7 @@ Note that all unspecified props passed to the GeneratedForm Component are placed
 
 For additional examples see the attached stories (or run `npm run storybook`).
 
-See the following example:
+See the following example ([Live Demo]({{ '/storybook/?selectedKind=GeneratedForm&selectedStory=Form%20Component' | prepend: site.baseurl }})):
 
 ```jsx
 import GeneratedForm from 'GeneratedForm';
