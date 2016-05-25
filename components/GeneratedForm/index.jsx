@@ -61,11 +61,12 @@ export class FormComponent extends React.Component {
 			...props,
 			name: this.props.formName
 		}, ...this.props.fields.map((field, index) => {
-			let ReduxFieldType = Field;
-			if (field.reduxFieldOptions) {
+			let ReduxFieldElement = Field;
+			let _inputField = (this.context.customFields || {})[field.type];
+			if (_inputField && _inputField.isArrayField) {
+				ReduxFieldElement = FieldArray;
 			}
-			return <Field name={field.name} component={fieldProps => {
-				let _inputField = (this.context.customFields || {})[field.type];
+			return <ReduxFieldElement name={field.name} component={fieldProps => {
 				if (!_inputField) {
 					switch (field.type) {
 						case 'select':
@@ -98,7 +99,7 @@ export class FormComponent extends React.Component {
 					fieldProps: fieldProps,
 					field: _inputField
 				});
-			}}/>
+			}}/>;
 		}))
 	};
 }
