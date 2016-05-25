@@ -1,0 +1,56 @@
+{
+  "name": "thl-ui-components",
+  "description": "THL UI Components",
+  "main": "components/index.jsx",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/THL-DEV/thl-ui-components.git"
+  },
+  "publishConfig": {
+    "registry": "https://tourismholdinglimited.artifactoryonline.com/tourismholdinglimited/api/npm/npm-virtual/"
+  },
+  "scripts": {
+    "start": "start-storybook -p 9001",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "storybook": "start-storybook -p 9001",
+    "build-demo": "build-storybook -o storybook"
+  },
+  "author": "SimeonC",
+  "license": "ISC",
+  "devDependencies": {
+    "@kadira/storybook": "^1.27.0",
+    "babel-cli": "^6.4.0",
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-plugin-syntax-class-properties": "^6.3.13",
+    "babel-plugin-syntax-decorators": "^6.3.13",
+    "babel-plugin-syntax-object-rest-spread": "^6.3.13",
+    "babel-plugin-transform-class-properties": "^6.3.13",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-object-rest-spread": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-react-hmre": "^1.0.1",
+    "script-loader": "^0.6.1",
+    "semantic-release": "^4.3.5",
+    "transform-loader": "^0.2.3",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.10",
+    "webpack-hot-middleware": "^2.9.1"
+  },
+  "dependencies": {
+    "color": "^0.11.1",
+    "font-awesome": "^4.6.1",
+    "font-awesome-webpack": "0.0.4",
+    "lodash": "^4.13.1",
+    "moment": "^2.11.1",
+    "radium": "^0.17.1",
+    "react": "^15.0.0",
+    "react-dom": "^15.0.0",
+    "react-redux": "^4.0.6",
+    "rebass": "^0.2.6",
+    "redux": "^3.3.1",
+    "redux-form": "^6.0.0-alpha.13"
+  }
+}
