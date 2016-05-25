@@ -63,7 +63,6 @@ export class FormComponent extends React.Component {
 		}, ...this.props.fields.map((field, index) => {
 			let ReduxFieldType = Field;
 			if (field.reduxFieldOptions) {
-				if (field.red)
 			}
 			return <Field name={field.name} component={fieldProps => {
 				let _inputField = (this.context.customFields || {})[field.type];

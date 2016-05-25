@@ -1,5 +1,6 @@
 ---
 title: THL UI Components
+layout: default
 ---
 
 # THL UI Components

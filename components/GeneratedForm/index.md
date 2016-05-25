@@ -1,5 +1,6 @@
 ---
 title: GeneratedForm Component
+layout: default
 ---
 
 # GeneratedForm Component Readme
