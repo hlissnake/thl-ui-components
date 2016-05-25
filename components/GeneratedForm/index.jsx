@@ -1,5 +1,5 @@
 import React from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
+import {Field, FieldArray, reduxForm} from 'redux-form';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import isFunction from 'lodash/isFunction';
@@ -61,8 +61,12 @@ export class FormComponent extends React.Component {
 			...props,
 			name: this.props.formName
 		}, ...this.props.fields.map((field, index) => {
-			return <Field name={field.name} component={fieldProps => {
-				let _inputField = (this.context.customFields || {})[field.type];
+			let ReduxFieldElement = Field;
+			let _inputField = (this.context.customFields || {})[field.type];
+			if (_inputField && _inputField.isArrayField) {
+				ReduxFieldElement = FieldArray;
+			}
+			return <ReduxFieldElement name={field.name} component={fieldProps => {
 				if (!_inputField) {
 					switch (field.type) {
 						case 'select':
@@ -95,7 +99,7 @@ export class FormComponent extends React.Component {
 					fieldProps: fieldProps,
 					field: _inputField
 				});
-			}}/>
+			}}/>;
 		}))
 	};
 }

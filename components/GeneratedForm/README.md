@@ -44,7 +44,7 @@ __context__
 
 The following values are used from the context if available.
 
-__customFields:__ _object_ This object has key-value pairs. If the key matches a field type then the value is used in the `React.createElement(<value>...` to create the input. It is passed the all key-values from field.settings, the key-values from field and all redux-form values as props.
+__customFields:__ _object_ This object has key-value pairs. If the key matches a field type then the value is used in the `React.createElement(<value>...` to create the input. It is passed the all key-values from field.settings, the key-values from field and all redux-form values as props. Additionally if a Class or Object has the `isArrayField` value set to true then the component will be passed to a FieldArray instead of a Field component.
 __buildErrorMessage__ _function_ This function, if provided, generates the default error message based on the field validator. The default function is as follows:
 ```jsx
 function buildErrorMessage(validator, name) {
