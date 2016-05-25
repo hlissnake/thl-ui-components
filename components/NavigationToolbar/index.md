@@ -25,4 +25,4 @@ __props__
 
 | Property Name | Type | Description |
 | --- | --- | --- | 
-| __onSelect:__ |  _function(scrollUp: boolean)_ | This is called every time the user scrolls the page. |
+| __onSelect__ |  _function(scrollUp: boolean)_ | This is called every time the user scrolls the page. |
