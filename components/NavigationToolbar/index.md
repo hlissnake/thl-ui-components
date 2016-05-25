@@ -23,4 +23,6 @@ There are no real settings to get this working, just insert what you want to put
 
 __props__
 
-__onSelect:__ _function(scrollUp: boolean)_ This is called every time the user scrolls the page.
+| Property Name | Type | Description |
+| --- | --- | --- | 
+| __onSelect:__ |  _function(scrollUp: boolean)_ | This is called every time the user scrolls the page. |
