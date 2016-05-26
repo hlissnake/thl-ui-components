@@ -1,5 +1,5 @@
 ---
-title: THL UI Components
+title: Home
 layout: default
 ---
 

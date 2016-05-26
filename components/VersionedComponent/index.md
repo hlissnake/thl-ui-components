@@ -9,6 +9,8 @@ layout: default
 
 This component is used to version the display of a component.
 
+([Live Demo]({{ '/storybook/?selectedKind=VersionedComponent&selectedStory=version%201.1.0' | prepend: site.baseurl }}))
+
 __props__
 
 | Name | Type | Description |
