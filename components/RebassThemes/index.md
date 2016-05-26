@@ -1,3 +1,8 @@
+---
+title: RebassThemes Component
+layout: default
+---
+
 # RebassThemes Component
 
 ## Getting Started

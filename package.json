@@ -13,7 +13,8 @@
   "scripts": {
     "start": "start-storybook -p 9001",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "storybook": "start-storybook -p 9001"
+    "storybook": "start-storybook -p 9001",
+    "build-demo": "build-storybook -o storybook"
   },
   "author": "SimeonC",
   "license": "ISC",

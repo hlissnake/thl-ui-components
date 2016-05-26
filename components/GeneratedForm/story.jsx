@@ -42,7 +42,10 @@ storiesOf('GeneratedForm', module)
 		{
 			name: 'age',
 			displayName: 'Age',
-			type: 'number'
+			type: 'number',
+			settings: {
+				placeholder: 'Your Age'
+			}
 		},
 		{
 			name: 'gender',
@@ -66,6 +69,7 @@ storiesOf('GeneratedForm', module)
 		}
 	]} rowComponent={_props => {
 		let {label, fieldProps, field, ...props} = _props;
+		
 		return <div {...props}>
 			<label>{label}</label>
 			{field}

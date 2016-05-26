@@ -14,7 +14,7 @@ To see demo's of all components run `npm run storybook` and open your browser to
 #### Creating New Component
 
 - Create Folder with the name of your new component.
-- Add index.jsx, story.jsx and README.md files.
+- Add index.jsx, story.jsx and index.md files.
 - index.jsx is where your code goes.
 - story.jsx is used for prototyping and testing.
-- README.md describes the component.
+- index.md describes the component (we use index.md not README.md so we can share with the live docs).
