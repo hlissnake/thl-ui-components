@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStore, combineReducers} from 'redux'
-import {reducer as formReducer} from 'redux-form'
+import {reducer as formReducer, Field} from 'redux-form'
 import {Provider, connect} from 'react-redux';
 import {storiesOf, action} from '@kadira/storybook';
 import GeneratedForm, {DefaultFieldRow, FormComponent} from './';
@@ -17,6 +17,21 @@ class GenerateContext extends React.Component {
 	
 	render() {
 		return <div {...this.props}/>
+	}
+}
+
+class CustomCheckboxInput extends React.Component {
+	static isArrayField = true;
+	render() {
+		return <div>{this.props.map((fieldName, index) => <div>
+			<Field
+				component="input"
+				type="checkbox"
+				name={`${fieldName}.selected`}
+			/> <Field
+				name={fieldName}
+				component={fieldProps => <span>{fieldProps.value.name}</span>}/>
+		</div>)}</div>;
 	}
 }
 
@@ -85,6 +100,24 @@ storiesOf('GeneratedForm', module)
 			type: 'rebassInput'
 		}
 	]}/></GenerateContext>
+))
+.add('Array type custom component', () => (
+	<GenerateContext customFields={{customCheckboxInput: CustomCheckboxInput}}><GeneratedForm formName="testform" fields={[
+		{
+			name: 'test2',
+			label: 'test checkboxes',
+			type: 'customCheckboxInput'
+		}
+	]} formRedux={{
+		initialValues: {
+			'test2': [
+				{selected: false, name: 'Option 1'},
+				{selected: false, name: 'Option 2'},
+				{selected: false, name: 'Option 3'},
+				{selected: false, name: 'Option 4'}
+			]
+		}
+	}}/></GenerateContext>
 ))
 .add('Form Component With Validation', () => (
 	<GeneratedForm formName='testValidation' fields={[
