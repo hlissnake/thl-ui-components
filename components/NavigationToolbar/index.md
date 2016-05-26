@@ -1,5 +1,5 @@
 ---
-title: NavigationToolbar Component
+title: NavigationToolbar
 layout: default
 ---
 

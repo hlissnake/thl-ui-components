@@ -1,5 +1,5 @@
 ---
-title: VersionedComponent Component
+title: VersionedComponent
 layout: default
 ---
 

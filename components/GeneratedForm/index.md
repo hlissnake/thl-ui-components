@@ -1,5 +1,5 @@
 ---
-title: GeneratedForm Component
+title: GeneratedForm
 layout: default
 ---
 
