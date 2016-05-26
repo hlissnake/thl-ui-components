@@ -91,7 +91,7 @@ function VersionedComponent(props) {
 	if (!matchedVersion) {
 		throw new Error(`Failed to find component for version ${props.version}`);
 	}
-	console.log(cachedVersionKeys);
+	
 	let _version = resolveVersion(props.version);
 	return React.createElement(matchedVersion, {...props, resolvedVersion: `${_version.major}.${_version.minor}.${_version.patch}${_version.pre === 'undefined' ? '': ('+' + _version.pre)}`});
 }
