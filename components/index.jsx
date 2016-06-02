@@ -1,3 +1,4 @@
-export * as GeneratedForm from './GeneratedForm';
-export * as NavigationToolbar from './NavigationToolbar';
-export * as RebassThemes from './RebassThemes';
+export { default as GeneratedForm } from './GeneratedForm';
+export { default as NavigationToolbar } from './NavigationToolbar';
+export { default as RebassThemes } from './RebassThemes';
+export { default as VersionedComponent } from './VersionedComponent';
