@@ -10,11 +10,11 @@ class GenerateContext extends React.Component {
 	getChildContext() {
 		return {customFields: this.props.customFields};
 	}
-	
+
 	static childContextTypes = {
 		customFields: React.PropTypes.object
 	};
-	
+
 	render() {
 		return <div {...this.props}/>
 	}
@@ -35,7 +35,7 @@ storiesOf('GeneratedForm', module)
 	<div>{story()}<ConnectedDebugForm/></div>
 </Provider>)
 .add('Form Component', () => (
-	<GeneratedForm formName="testform" fields={[
+	<GeneratedForm formName="testform" fieldsDefinition={[
 		{
 			name: 'name'
 		},
@@ -59,7 +59,7 @@ storiesOf('GeneratedForm', module)
 	]}/>
 ))
 .add('Form Component With Custom Row Renderer', () => (
-	<GeneratedForm formName="testform" fields={[
+	<GeneratedForm formName="testform" fieldsDefinition={[
 		{
 			name: 'test1'
 		},
@@ -69,7 +69,7 @@ storiesOf('GeneratedForm', module)
 		}
 	]} rowComponent={_props => {
 		let {label, fieldProps, field, ...props} = _props;
-		
+
 		return <div {...props}>
 			<label>{label}</label>
 			{field}
@@ -78,7 +78,7 @@ storiesOf('GeneratedForm', module)
 	}}/>
 ))
 .add('Form Component With Custom Renderer on Context', () => (
-	<GenerateContext customFields={{rebassInput: Input}}><GeneratedForm formName="testform" fields={[
+	<GenerateContext customFields={{rebassInput: Input}}><GeneratedForm formName="testform" fieldsDefinition={[
 		{
 			name: 'test2',
 			label: 'test rebass',
@@ -87,7 +87,7 @@ storiesOf('GeneratedForm', module)
 	]}/></GenerateContext>
 ))
 .add('Form Component With Validation', () => (
-	<GeneratedForm formName='testValidation' fields={[
+	<GeneratedForm formName='testValidation' fieldsDefinition={[
     {
         name: 'nameField',
         validators: [

@@ -15,7 +15,7 @@ export class DefaultFieldRow extends Component {
 		fieldProps: PropTypes.object.isRequired,
 		field: PropTypes.element.isRequired
 	};
-	
+
 	render() {
 		let {label, fieldProps, field, ...props} = this.props;
 		return <div {...props}>
@@ -28,23 +28,23 @@ export class DefaultFieldRow extends Component {
 export class FormComponent extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
-		fields: PropTypes.array.isRequired,
+		fieldsDefinition: PropTypes.array.isRequired,
 		rowComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ]),
 		formComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
 	};
-	
+
 	static contextTypes = {
 		customFields: PropTypes.object,
 		defaultRowComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ]),
 		defaultFormComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
 	};
-	
+
 	render() {
 		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', ...props} = this.props;
 		return createElement(formComponent, {
 			...props,
 			name: this.props.formName
-		}, ...this.props.fields.map((origField, index) => {
+		}, ...this.props.fieldsDefinition.map((origField, index) => {
 			let {type, ...field} = origField;
 			let ReduxFieldElement = Field;
 			let _inputField;
@@ -114,17 +114,17 @@ function buildValidator(contextValidators, validator, name) {
 export default class GeneratedForm extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
-		fields: PropTypes.array.isRequired,
+		fieldsDefinition: PropTypes.array.isRequired,
 		formRedux: PropTypes.object
 	};
-	
+
 	static contextTypes = {
 		buildErrorMessage: PropTypes.func,
 		formValidators: PropTypes.object
 	};
-	
+
 	render() {
-		let validators = this.props.fields.map((field, index) => {
+		let validators = this.props.fieldsDefinition.map((field, index) => {
 			let validatorsPipe = [];
 			if (field.validator) {
 				field.validators = [field.validator];
