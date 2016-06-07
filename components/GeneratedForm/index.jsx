@@ -45,10 +45,16 @@ export class FormComponent extends Component {
 			...props,
 			name: this.props.formName
 		}, ...this.props.fieldsDefinition.map((origField, index) => {
-			let {type, ...field} = origField;
+			let {type, required, ...field} = origField;
 			let ReduxFieldElement = Field;
 			let _inputField;
 			let CustomFieldComponent = (this.context.customFields || {})[type];
+			if (required) {
+				field.settings = {
+					...field.settings,
+					required
+				};
+			}
 			if (CustomFieldComponent && CustomFieldComponent.isArrayField) {
 				ReduxFieldElement = FieldArray;
 			}

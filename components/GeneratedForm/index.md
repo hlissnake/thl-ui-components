@@ -90,6 +90,7 @@ __Parameters__
 | __name: (required)__ | _string_ | This is the name used in redux-form. Essentially this is the field identifier. |
 | __type: (required)__ | _string_ | This is the key that determines what input is displayed, currently supported (in order of precedence) Any key on `context.customFields`, 'select', 'textarea', any other value will be passed to an input field as the type parameter (defaults to 'text'). |
 | __displayName__ | _string_ | This is the name that will be displayed to the user - defaults to name. |
+| __required__ | _any_ | If set this value is passed to the input as required, can also be set in __settings__ |
 | __label__ | _string / React element_ | This is used as the label to display in the default display components. If not provided will use displayName. |
 | __settings__ | _object_ | This is passed as props to the input, for example `settings: {placeholder: 'Placeholder'}` will put the attribute `placeholder="Placeholder"` on the input. |
 | __rowProps__ | _object_ | This is passed as props to the rowComponent, for example `rowProps: {style: styleObject}` will set the style property of the rowComponent to be the styleObject. |
