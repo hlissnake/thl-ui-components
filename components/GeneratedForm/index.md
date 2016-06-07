@@ -92,6 +92,7 @@ __Parameters__
 | __displayName__ | _string_ | This is the name that will be displayed to the user - defaults to name. |
 | __label__ | _string / React element_ | This is used as the label to display in the default display components. If not provided will use displayName. |
 | __settings__ | _object_ | This is passed as props to the input, for example `settings: {placeholder: 'Placeholder'}` will put the attribute `placeholder="Placeholder"` on the input. |
+| __rowProps__ | _object_ | This is passed as props to the rowComponent, for example `rowProps: {style: styleObject}` will set the style property of the rowComponent to be the styleObject. |
 | __validators__ | _array_ | An array of validators, see 'validator' property for individual settings. |
 | __validator__ | _object / string / function_ | If string the validator is converted to `{type: validator}` object. If an object it's type key is checked against inbuilt validators and that validator is called. If a function then the function is used as the validation. These are used in the `redux.validators`, see Validation for more details. |
 

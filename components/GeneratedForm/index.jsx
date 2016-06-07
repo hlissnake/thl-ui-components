@@ -76,6 +76,7 @@ export class FormComponent extends Component {
 					_inputField = <CustomFieldComponent {...field.settings} {...field} {...fieldProps}/>;
 				}
 				return createElement(rowComponent, {
+					...(field.rowProps || {}),
 					key: index,
 					label: field.label || field.displayName || field.name,
 					fieldProps: fieldProps,
