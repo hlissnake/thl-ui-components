@@ -118,6 +118,10 @@ function buildValidator(contextValidators, validator, name) {
 	}
 }
 
+function _requiredValidator(validator, name, value) {
+	return (!value) ? buildErrorMessage(validator, name) : undefined;
+}
+
 export default class GeneratedForm extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
@@ -139,11 +143,14 @@ export default class GeneratedForm extends Component {
 			if (field.validators) {
 				validatorsPipe = field.validators.map((validator) => buildValidator(
 					this.context.formValidators || {
-						required: (validator, name, value) => (!value) ? buildErrorMessage(validator, name) : undefined
+						required: _requiredValidator
 					},
 					validator,
 					field.displayName || field.name
 				));
+			}
+			if (field.required) {
+				validatorsPipe.unshift(value => _requiredValidator('required', field.displayName || field.name, value));
 			}
 			return {
 				key: field.name,
