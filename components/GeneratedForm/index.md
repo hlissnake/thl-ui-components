@@ -129,7 +129,7 @@ If we were to convert this to a GeneratedForm component field set we would do th
         name: 'nameField',
         validators: [
             'required',
-            (value) => {
+            (value, values) => { // value is the 'nameField' value, values is all values of the form
                 if (value.length < 12) return 'NameField must be 12 characters or longer';
             }
         ]
@@ -138,7 +138,7 @@ If we were to convert this to a GeneratedForm component field set we would do th
 ```
 
 You could also override this by manually passing in the validate parameter in the `formRedux` parameter.
-Note that passing a string will attempt to get the corresponding function off the 'context.formValidators' object.
+Note that passing a string will attempt to get the corresponding function off the 'context.formValidators' object, by default the only validator included is the required validator.
 
 #### Generated Form > rowComponent
 

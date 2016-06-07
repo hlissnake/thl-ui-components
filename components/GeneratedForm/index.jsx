@@ -114,7 +114,7 @@ function buildValidator(contextValidators, validator, name) {
 	if (isFunction(validator)) {
 		return validator;
 	} else if (isObject(validator) && contextValidators[validator.type]) {
-		return (value) => contextValidators[validator.type](validator, name, value);
+		return (value, values) => contextValidators[validator.type](validator, name, value);
 	}
 }
 
@@ -150,7 +150,7 @@ export default class GeneratedForm extends Component {
 				));
 			}
 			if (field.required) {
-				validatorsPipe.unshift(value => _requiredValidator('required', field.displayName || field.name, value));
+				validatorsPipe.unshift((value, values) => _requiredValidator('required', field.displayName || field.name, value));
 			}
 			return {
 				key: field.name,
@@ -165,7 +165,7 @@ export default class GeneratedForm extends Component {
 			reduxDetails.validate = values => {
 				let _errors = validators.reduce((errors, validator) => {
 					errors[validator.key] = validator.pipe.reduce((error, _validator) => {
-						return error || _validator(values[validator.key]);
+						return error || _validator(values[validator.key], values);
 					}, undefined);
 					return errors;
 				}, {});
