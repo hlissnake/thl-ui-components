@@ -32,8 +32,6 @@ class StaticElement extends Component {
 
 	render() {
 		let {component, ...props} = this.props;
-		console.log(this.context._reduxForm, this.context._reduxForm.pristine);
-		console.log('render');
 		return createElement(component, {
 			...props, formProps: {
 				invalid: this.context._reduxForm.invalid,
