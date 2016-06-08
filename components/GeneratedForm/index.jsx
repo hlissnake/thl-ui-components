@@ -123,7 +123,7 @@ export class FormComponent extends Component {
 			}
 			if (CustomFieldComponent && CustomFieldComponent.isArrayField) {
 				ReduxFieldElement = FieldArray;
-			} else if (nonInteractive) {
+			} else if (nonInteractive || (CustomFieldComponent && CustomFieldComponent.nonInteractive)) {
 				ReduxFieldElement = StaticElement;
 			}
 			return <ReduxFieldElement key={index} name={field.name} component={buildFieldComponent(field, CustomFieldComponent, formProps, rowComponent)}/>;
