@@ -3,6 +3,7 @@ import {Field, FieldArray, reduxForm} from 'redux-form';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import isFunction from 'lodash/isFunction';
+import isEqual from 'lodash/isEqual';
 
 export class DefaultFieldRow extends Component {
 	static propTypes = {
@@ -43,9 +44,8 @@ let cachedComponentFunctions = {};
 
 const buildFieldComponent = (field, CustomFieldComponent, formProps, rowComponent) => {
 	if (cachedComponentFunctions[`${formProps.formName}-${field.name}`] &&
-		cachedComponentFunctions[`${formProps.formName}-${field.name}`].field === field &&
+		isEqual(cachedComponentFunctions[`${formProps.formName}-${field.name}`].field, field) &&
 		cachedComponentFunctions[`${formProps.formName}-${field.name}`].CustomFieldComponent === CustomFieldComponent &&
-		cachedComponentFunctions[`${formProps.formName}-${field.name}`].formProps === formProps &&
 		cachedComponentFunctions[`${formProps.formName}-${field.name}`].rowComponent === rowComponent
 	) {
 		return cachedComponentFunctions[`${formProps.formName}-${field.name}`].component;
@@ -53,7 +53,6 @@ const buildFieldComponent = (field, CustomFieldComponent, formProps, rowComponen
 		return (cachedComponentFunctions[`${formProps.formName}-${field.name}`] = {
 			field,
 			CustomFieldComponent,
-			formProps,
 			rowComponent,
 			component: fieldProps => {
 				let _inputField;
@@ -110,7 +109,7 @@ export class FormComponent extends Component {
 		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', onSubmit, handleSubmit, ...formProps} = this.props;
 		return createElement(formComponent, {
 			...formProps,
-			onSubmit: (onSubmit) ? handleSubmit(onSubmit) : handleSubmit,
+			onSubmit: (onSubmit) ? handleSubmit(onSubmit) : undefined,
 			name: formProps.formName
 		}, ...formProps.fieldsDefinition.map((origField, index) => {
 			let {type, required, nonInteractive, ...field} = origField;
