@@ -51,7 +51,7 @@ export class FormComponent extends Component {
 			let CustomFieldComponent = (this.context.customFields || {})[type];
 			if (required) {
 				field.settings = {
-					...field.settings,
+					...(field.settings || {}),
 					required
 				};
 			}
@@ -122,6 +122,10 @@ function _requiredValidator(validator, name, value) {
 	return (!value) ? buildErrorMessage(validator, name) : undefined;
 }
 
+function _emailValidator(validator, name, value) {
+	return (!value || !/^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}$/ig.test(value)) ? buildErrorMessage(validator, name) : undefined;
+}
+
 export default class GeneratedForm extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
@@ -134,23 +138,32 @@ export default class GeneratedForm extends Component {
 		formValidators: PropTypes.object
 	};
 
+	shouldComponentUpdate(nextProps) {
+		return this.props.formName !== nextProps.formName || this.props.fieldsDefinition !== nextProps.fieldsDefinition || this.props.formRedux !== nextProps.formRedux;
+	}
+
 	render() {
 		let validators = this.props.fieldsDefinition.map((field, index) => {
 			let validatorsPipe = [];
 			if (field.validator) {
 				field.validators = [field.validator];
 			}
+			let contextValidators = this.context.formValidators || {
+				required: _requiredValidator,
+				email: _emailValidator
+			};
 			if (field.validators) {
 				validatorsPipe = field.validators.map((validator) => buildValidator(
-					this.context.formValidators || {
-						required: _requiredValidator
-					},
+					contextValidators,
 					validator,
 					field.displayName || field.name
 				));
 			}
+			if (field.settings && field.settings.type === 'email') {
+				validatorsPipe.unshift(buildValidator(contextValidators, {type: 'email', verb: 'not a valid email'}, field.displayName || field.name));
+			}
 			if (field.required) {
-				validatorsPipe.unshift((value, values) => _requiredValidator('required', field.displayName || field.name, value));
+				validatorsPipe.unshift(buildValidator(contextValidators, 'required', field.displayName || field.name));
 			}
 			return {
 				key: field.name,

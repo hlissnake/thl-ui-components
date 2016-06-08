@@ -96,6 +96,14 @@ storiesOf('GeneratedForm', module)
                 if (value.length < 12) return 'NameField must be 12 characters or longer';
             }
         ]
+    },{
+        name: 'name2Field',
+		required: true
+    },{
+        name: 'emailField',
+        settings: {
+			type: 'email'
+		}
     }
 	]} rowComponent={_props => {
 		let {label, fieldProps, field, ...props} = _props;
