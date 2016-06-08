@@ -39,6 +39,13 @@ export class FormComponent extends Component {
 		defaultFormComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
 	};
 
+	shouldComponentUpdate(nextProps) {
+		return this.props.formName !== nextProps.formName ||
+			this.props.fieldsDefinition !== nextProps.fieldsDefinition ||
+			this.props.rowComponent !== nextProps.rowComponent ||
+			this.props.formComponent !== nextProps.formComponent;
+	}
+	
 	render() {
 		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', ...props} = this.props;
 		return createElement(formComponent, {
