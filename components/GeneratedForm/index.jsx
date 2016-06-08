@@ -45,13 +45,14 @@ export class FormComponent extends Component {
 			this.props.rowComponent !== nextProps.rowComponent ||
 			this.props.formComponent !== nextProps.formComponent;
 	}
-	
+
 	render() {
-		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', ...props} = this.props;
+		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', onSubmit, handleSubmit, ...formProps} = this.props;
 		return createElement(formComponent, {
-			...props,
-			name: this.props.formName
-		}, ...this.props.fieldsDefinition.map((origField, index) => {
+			...formProps,
+			onSubmit: (onSubmit) ? handleSubmit(onSubmit) : handleSubmit,
+			name: formProps.formName
+		}, ...formProps.fieldsDefinition.map((origField, index) => {
 			let {type, required, ...field} = origField;
 			let ReduxFieldElement = Field;
 			let _inputField;
@@ -86,13 +87,14 @@ export class FormComponent extends Component {
 							break;
 					}
 				} else {
-					_inputField = <CustomFieldComponent {...field.settings} {...field} {...fieldProps}/>;
+					_inputField = <CustomFieldComponent {...field.settings} {...field} {...fieldProps} formProps={formProps}/>;
 				}
 				return createElement(rowComponent, {
 					...(field.rowProps || {}),
 					key: index,
 					label: field.label || field.displayName || field.name,
-					fieldProps: fieldProps,
+					fieldProps,
+					formProps,
 					field: _inputField
 				});
 			}}/>;
@@ -137,7 +139,8 @@ export default class GeneratedForm extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
 		fieldsDefinition: PropTypes.array.isRequired,
-		formRedux: PropTypes.object
+		formRedux: PropTypes.object,
+		onSubmit: PropTypes.function
 	};
 
 	static contextTypes = {

@@ -2,7 +2,7 @@
   "name": "thl-ui-components",
   "description": "THL UI Components",
   "main": "components/index.jsx",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/THL-DEV/thl-ui-components.git"
@@ -51,6 +51,6 @@
     "react-redux": "^4.0.6",
     "rebass": "^0.2.6",
     "redux": "^3.3.1",
-    "redux-form": "^6.0.0-alpha.14"
+    "redux-form": "^6.0.0-alpha.15"
   }
 }
