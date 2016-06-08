@@ -1,5 +1,5 @@
-import React, { PropTypes, createElement, Component } from 'react';
-import { Field, FieldArray, reduxForm } from 'redux-form';
+import React, {PropTypes, createElement, Component} from 'react';
+import {Field, FieldArray, reduxForm} from 'redux-form';
 import isString from 'lodash/isString';
 import isObject from 'lodash/isObject';
 import isFunction from 'lodash/isFunction';
@@ -25,26 +25,77 @@ export class DefaultFieldRow extends Component {
 	}
 }
 
+class StaticElement extends Component {
+	static contextTypes = {
+		_reduxForm: PropTypes.object
+	}
+
+	render() {
+		let {component, ...props} = this.props;
+		console.log(this.context._reduxForm, this.context._reduxForm.pristine);
+		console.log('render');
+		return createElement(component, {
+			...props, formProps: {
+				invalid: this.context._reduxForm.invalid,
+				pristine: this.context._reduxForm.pristine
+			}
+		});
+	}
+}
+
+let cachedComponentFunctions = {};
+
+const buildFieldComponent = (field, CustomFieldComponent, formProps, rowComponent) => {
+	return cachedComponentFunctions[`${formProps.formName}-${field.name}`] ||
+		(cachedComponentFunctions[`${formProps.formName}-${field.name}`] = fieldProps => {
+		let _inputField;
+		if (!CustomFieldComponent) {
+			switch (type) {
+				case 'select':
+					let {optionValue, optionDisplay, ...settings} = (field.settings || {});
+					_inputField = <select {...fieldProps} {...settings}>{field.options.map((option, index) => {
+						if (isObject(option)) {
+							return <option key={index}
+										   value={option[optionValue || 'value']}>{option[optionDisplay || 'label']}</option>;
+						} else {
+							return <option key={index} value={option}>{option}</option>;
+						}
+					})}</select>;
+					break;
+				case 'textarea':
+					_inputField = <textarea {...fieldProps} {...field.settings}/>;
+					break;
+				default:
+					_inputField = <input {...fieldProps} {...field.settings} type={type || 'text'}/>;
+					break;
+			}
+		} else {
+			_inputField =
+				<CustomFieldComponent {...field.settings} {...field} {...fieldProps} formProps={formProps}/>;
+		}
+		return createElement(rowComponent, {
+			...(field.rowProps || {}),
+			label: field.label || field.displayName || field.name,
+			fieldProps,
+			formProps: fieldProps.formProps || formProps, // catch for nonInteractive usage
+			field: _inputField
+		});
+	});
+}
+
 export class FormComponent extends Component {
 	static propTypes = {
 		formName: PropTypes.string.isRequired,
 		fieldsDefinition: PropTypes.array.isRequired,
-		rowComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ]),
-		formComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
+		rowComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+		formComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
 	};
 
 	static contextTypes = {
 		customFields: PropTypes.object,
-		defaultRowComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ]),
-		defaultFormComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.string ])
+		defaultRowComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+		defaultFormComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
 	};
-
-	shouldComponentUpdate(nextProps) {
-		return this.props.formName !== nextProps.formName ||
-			this.props.fieldsDefinition !== nextProps.fieldsDefinition ||
-			this.props.rowComponent !== nextProps.rowComponent ||
-			this.props.formComponent !== nextProps.formComponent;
-	}
 
 	render() {
 		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', onSubmit, handleSubmit, ...formProps} = this.props;
@@ -53,9 +104,8 @@ export class FormComponent extends Component {
 			onSubmit: (onSubmit) ? handleSubmit(onSubmit) : handleSubmit,
 			name: formProps.formName
 		}, ...formProps.fieldsDefinition.map((origField, index) => {
-			let {type, required, ...field} = origField;
+			let {type, required, nonInteractive, ...field} = origField;
 			let ReduxFieldElement = Field;
-			let _inputField;
 			let CustomFieldComponent = (this.context.customFields || {})[type];
 			if (required) {
 				field.settings = {
@@ -65,39 +115,10 @@ export class FormComponent extends Component {
 			}
 			if (CustomFieldComponent && CustomFieldComponent.isArrayField) {
 				ReduxFieldElement = FieldArray;
+			} else if (nonInteractive) {
+				ReduxFieldElement = StaticElement;
 			}
-			return <ReduxFieldElement key={index} name={field.name} component={fieldProps => {
-				if (!CustomFieldComponent) {
-					switch (type) {
-						case 'select':
-							let {optionValue, optionDisplay, ...settings} = (field.settings || {});
-							_inputField = <select {...fieldProps} {...settings}>{field.options.map((option, index) => {
-								if (isObject(option)) {
-									return <option key={index} value={option[optionValue || 'value']}>{option[optionDisplay || 'label']}</option>;
-								} else {
-									return <option key={index} value={option}>{option}</option>;
-								}
-							})}</select>;
-							break;
-						case 'textarea':
-							_inputField = <textarea {...fieldProps} {...field.settings}/>;
-							break;
-						default:
-							_inputField = <input {...fieldProps} {...field.settings} type={type || 'text'}/>;
-							break;
-					}
-				} else {
-					_inputField = <CustomFieldComponent {...field.settings} {...field} {...fieldProps} formProps={formProps}/>;
-				}
-				return createElement(rowComponent, {
-					...(field.rowProps || {}),
-					key: index,
-					label: field.label || field.displayName || field.name,
-					fieldProps,
-					formProps,
-					field: _inputField
-				});
-			}}/>;
+			return <ReduxFieldElement key={index} name={field.name} component={buildFieldComponent(field, CustomFieldComponent, formProps, rowComponent)}/>;
 		}))
 	};
 }
@@ -140,7 +161,7 @@ export default class GeneratedForm extends Component {
 		formName: PropTypes.string.isRequired,
 		fieldsDefinition: PropTypes.array.isRequired,
 		formRedux: PropTypes.object,
-		onSubmit: PropTypes.function
+		onSubmit: PropTypes.func
 	};
 
 	static contextTypes = {
@@ -159,9 +180,9 @@ export default class GeneratedForm extends Component {
 				field.validators = [field.validator];
 			}
 			let contextValidators = this.context.formValidators || {
-				required: _requiredValidator,
-				email: _emailValidator
-			};
+					required: _requiredValidator,
+					email: _emailValidator
+				};
 			if (field.validators) {
 				validatorsPipe = field.validators.map((validator) => buildValidator(
 					contextValidators,
@@ -170,7 +191,10 @@ export default class GeneratedForm extends Component {
 				));
 			}
 			if (field.settings && field.settings.type === 'email') {
-				validatorsPipe.unshift(buildValidator(contextValidators, {type: 'email', verb: 'not a valid email'}, field.displayName || field.name));
+				validatorsPipe.unshift(buildValidator(contextValidators, {
+					type: 'email',
+					verb: 'not a valid email'
+				}, field.displayName || field.name));
 			}
 			if (field.required) {
 				validatorsPipe.unshift(buildValidator(contextValidators, 'required', field.displayName || field.name));
