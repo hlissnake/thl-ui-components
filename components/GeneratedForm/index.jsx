@@ -33,52 +33,63 @@ class StaticElement extends Component {
 	render() {
 		let {component, ...props} = this.props;
 		return createElement(component, {
-			...props, formProps: {
-				invalid: this.context._reduxForm.invalid,
-				pristine: this.context._reduxForm.pristine
-			}
+			...props, formProps: this.context._reduxForm
 		});
 	}
 }
 
+// this prevents multiple triggers of the render function as we allways return the same function
 let cachedComponentFunctions = {};
 
 const buildFieldComponent = (field, CustomFieldComponent, formProps, rowComponent) => {
-	return cachedComponentFunctions[`${formProps.formName}-${field.name}`] ||
-		(cachedComponentFunctions[`${formProps.formName}-${field.name}`] = fieldProps => {
-		let _inputField;
-		if (!CustomFieldComponent) {
-			switch (type) {
-				case 'select':
-					let {optionValue, optionDisplay, ...settings} = (field.settings || {});
-					_inputField = <select {...fieldProps} {...settings}>{field.options.map((option, index) => {
-						if (isObject(option)) {
-							return <option key={index}
-										   value={option[optionValue || 'value']}>{option[optionDisplay || 'label']}</option>;
-						} else {
-							return <option key={index} value={option}>{option}</option>;
-						}
-					})}</select>;
-					break;
-				case 'textarea':
-					_inputField = <textarea {...fieldProps} {...field.settings}/>;
-					break;
-				default:
-					_inputField = <input {...fieldProps} {...field.settings} type={type || 'text'}/>;
-					break;
+	if (cachedComponentFunctions[`${formProps.formName}-${field.name}`] &&
+		cachedComponentFunctions[`${formProps.formName}-${field.name}`].field === field &&
+		cachedComponentFunctions[`${formProps.formName}-${field.name}`].CustomFieldComponent === CustomFieldComponent &&
+		cachedComponentFunctions[`${formProps.formName}-${field.name}`].formProps === formProps &&
+		cachedComponentFunctions[`${formProps.formName}-${field.name}`].rowComponent === rowComponent
+	) {
+		return cachedComponentFunctions[`${formProps.formName}-${field.name}`].component;
+	} else {
+		return (cachedComponentFunctions[`${formProps.formName}-${field.name}`] = {
+			field,
+			CustomFieldComponent,
+			formProps,
+			rowComponent,
+			component: fieldProps => {
+				let _inputField;
+				if (!CustomFieldComponent) {
+					switch (type) {
+						case 'select':
+							let {optionValue, optionDisplay, ...settings} = (field.settings || {});
+							_inputField = <select {...fieldProps} {...settings}>{field.options.map((option, index) => {
+								if (isObject(option)) {
+									return <option key={index}
+												   value={option[optionValue || 'value']}>{option[optionDisplay || 'label']}</option>;
+								} else {
+									return <option key={index} value={option}>{option}</option>;
+								}
+							})}</select>;
+							break;
+						case 'textarea':
+							_inputField = <textarea {...fieldProps} {...field.settings}/>;
+							break;
+						default:
+							_inputField = <input {...fieldProps} {...field.settings} type={type || 'text'}/>;
+							break;
+					}
+				} else {
+					_inputField =
+						<CustomFieldComponent {...field.settings} {...field} {...fieldProps}/>;
+				}
+				return createElement(rowComponent, {
+					...(field.rowProps || {}),
+					label: field.label || field.displayName || field.name,
+					fieldProps,
+					field: _inputField
+				});
 			}
-		} else {
-			_inputField =
-				<CustomFieldComponent {...field.settings} {...field} {...fieldProps} formProps={formProps}/>;
-		}
-		return createElement(rowComponent, {
-			...(field.rowProps || {}),
-			label: field.label || field.displayName || field.name,
-			fieldProps,
-			formProps: fieldProps.formProps || formProps, // catch for nonInteractive usage
-			field: _inputField
-		});
-	});
+		}).component;
+	}
 }
 
 export class FormComponent extends Component {
