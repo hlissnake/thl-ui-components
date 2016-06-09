@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Base } from 'rebass';
+import { Base, Toolbar } from 'rebass';
 
 export default class NavigationToolbar extends React.Component {
 	static contextTypes = {
@@ -61,31 +61,33 @@ export default class NavigationToolbar extends React.Component {
 	render() {
 		let {children, ...props} = this.props;
 		let toggleBottom =  (this.state.lastScrollDirectionUp || this.state.styling.top <= -this.state.scrollTop) ? 0 : -26;
-		return <Base className='NavigationToolbar' inverted={true} baseStyle={this.state.styling} inverted={true} theme="primary" {...props}>
-			<Base className="NavigationToolbar Toggle" onClick={this.toggle} inverted={true} theme="primary" baseStyle={{
-				height: 22,
-				position: 'absolute',
-				right: 12,
-				bottom: toggleBottom,
-				borderBottomLeftRadius: 4,
-				borderBottomRightRadius: 4,
-				padding: '8px 8px 4px',
-				transition: 'all 0.3s ease-in-out',
-				cursor: 'pointer',
-				visibility: (this.state.styling.top === -this.state.scrollTop) ? 'hidden' : 'visible'
-			}}>
-				<i className={'fa fa-fw fa-caret-' + ((toggleBottom === 0) ? 'up': 'down')}/>
-			</Base>
-			{React.Children.map(children, child => {
-				return React.cloneElement(child, {
-					style: {
-						...child.props.style,
-						display: 'inline-block',
-						position: 'relative',
-						height: '100%'
-					}
-				})
-			})}
+		return <Base className='NavigationToolbar' baseStyle={this.state.styling} inverted={true} theme="primary" {...props}>
+			<Toolbar>
+				<Base className="NavigationToolbar Toggle" onClick={this.toggle} inverted={true} theme="primary" baseStyle={{
+					height: 22,
+					position: 'absolute',
+					right: 12,
+					bottom: toggleBottom,
+					borderBottomLeftRadius: 4,
+					borderBottomRightRadius: 4,
+					padding: '8px 8px 4px',
+					transition: 'all 0.3s ease-in-out',
+					cursor: 'pointer',
+					visibility: (this.state.styling.top === -this.state.scrollTop) ? 'hidden' : 'visible'
+				}}>
+					<i className={'fa fa-fw fa-caret-' + ((toggleBottom === 0) ? 'up': 'down')}/>
+				</Base>
+				{React.Children.map(children, child => {
+					return React.cloneElement(child, {
+						style: {
+							...child.props.style,
+							display: 'inline-block',
+							position: 'relative',
+							height: '100%'
+						}
+					})
+				})}
+			</Toolbar>
 		</Base>;
 	}
 }
