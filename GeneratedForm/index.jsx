@@ -42,9 +42,10 @@ class StaticElement extends Component {
 // this prevents multiple triggers of the render function as we allways return the same function
 let cachedComponentFunctions = {};
 
-const buildFieldComponent = (field, CustomFieldComponent, formProps, rowComponent) => {
+const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowComponent) => {
 	if (cachedComponentFunctions[`${formProps.formName}-${field.name}`] &&
 		isEqual(cachedComponentFunctions[`${formProps.formName}-${field.name}`].field, field) &&
+		cachedComponentFunctions[`${formProps.formName}-${field.name}`].type === type &&
 		cachedComponentFunctions[`${formProps.formName}-${field.name}`].CustomFieldComponent === CustomFieldComponent &&
 		cachedComponentFunctions[`${formProps.formName}-${field.name}`].rowComponent === rowComponent
 	) {
@@ -52,6 +53,7 @@ const buildFieldComponent = (field, CustomFieldComponent, formProps, rowComponen
 	} else {
 		return (cachedComponentFunctions[`${formProps.formName}-${field.name}`] = {
 			field,
+			type,
 			CustomFieldComponent,
 			rowComponent,
 			component: fieldProps => {
@@ -126,7 +128,7 @@ export class FormComponent extends Component {
 			} else if (nonInteractive || (CustomFieldComponent && CustomFieldComponent.nonInteractive)) {
 				ReduxFieldElement = StaticElement;
 			}
-			return <ReduxFieldElement key={index} name={field.name} component={buildFieldComponent(field, CustomFieldComponent, formProps, rowComponent)}/>;
+			return <ReduxFieldElement key={index} name={field.name} component={buildFieldComponent(field, type, CustomFieldComponent, formProps, rowComponent)}/>;
 		}))
 	};
 }
