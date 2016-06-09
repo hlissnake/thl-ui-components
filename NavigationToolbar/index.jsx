@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Radium from 'radium';
 import { Base } from 'rebass';
 
-@Radium
 export default class NavigationToolbar extends React.Component {
 	static contextTypes = {
 		rebass: React.PropTypes.object
