@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStore, combineReducers} from 'redux'
-import {reducer as formReducer, Field} from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 import {Provider, connect} from 'react-redux';
 import {storiesOf, action} from '@kadira/storybook';
 import GeneratedForm, {DefaultFieldRow, FormComponent} from './';
@@ -10,28 +10,13 @@ class GenerateContext extends React.Component {
 	getChildContext() {
 		return {customFields: this.props.customFields};
 	}
-	
+
 	static childContextTypes = {
 		customFields: React.PropTypes.object
 	};
-	
+
 	render() {
 		return <div {...this.props}/>
-	}
-}
-
-class CustomCheckboxInput extends React.Component {
-	static isArrayField = true;
-	render() {
-		return <div>{this.props.map((fieldName, index) => <div>
-			<Field
-				component="input"
-				type="checkbox"
-				name={`${fieldName}.selected`}
-			/> <Field
-				name={fieldName}
-				component={fieldProps => <span>{fieldProps.value.name}</span>}/>
-		</div>)}</div>;
 	}
 }
 
@@ -50,7 +35,7 @@ storiesOf('GeneratedForm', module)
 	<div>{story()}<ConnectedDebugForm/></div>
 </Provider>)
 .add('Form Component', () => (
-	<GeneratedForm formName="testform" fields={[
+	<GeneratedForm formName="testform" fieldsDefinition={[
 		{
 			name: 'name'
 		},
@@ -74,7 +59,7 @@ storiesOf('GeneratedForm', module)
 	]}/>
 ))
 .add('Form Component With Custom Row Renderer', () => (
-	<GeneratedForm formName="testform" fields={[
+	<GeneratedForm formName="testform" fieldsDefinition={[
 		{
 			name: 'test1'
 		},
@@ -84,7 +69,7 @@ storiesOf('GeneratedForm', module)
 		}
 	]} rowComponent={_props => {
 		let {label, fieldProps, field, ...props} = _props;
-		
+
 		return <div {...props}>
 			<label>{label}</label>
 			{field}
@@ -93,7 +78,7 @@ storiesOf('GeneratedForm', module)
 	}}/>
 ))
 .add('Form Component With Custom Renderer on Context', () => (
-	<GenerateContext customFields={{rebassInput: Input}}><GeneratedForm formName="testform" fields={[
+	<GenerateContext customFields={{rebassInput: Input}}><GeneratedForm formName="testform" fieldsDefinition={[
 		{
 			name: 'test2',
 			label: 'test rebass',
@@ -101,26 +86,8 @@ storiesOf('GeneratedForm', module)
 		}
 	]}/></GenerateContext>
 ))
-.add('Array type custom component', () => (
-	<GenerateContext customFields={{customCheckboxInput: CustomCheckboxInput}}><GeneratedForm formName="testform" fields={[
-		{
-			name: 'test2',
-			label: 'test checkboxes',
-			type: 'customCheckboxInput'
-		}
-	]} formRedux={{
-		initialValues: {
-			'test2': [
-				{selected: false, name: 'Option 1'},
-				{selected: false, name: 'Option 2'},
-				{selected: false, name: 'Option 3'},
-				{selected: false, name: 'Option 4'}
-			]
-		}
-	}}/></GenerateContext>
-))
 .add('Form Component With Validation', () => (
-	<GeneratedForm formName='testValidation' fields={[
+	<GeneratedForm formName='testValidation' fieldsDefinition={[
     {
         name: 'nameField',
         validators: [
@@ -129,6 +96,14 @@ storiesOf('GeneratedForm', module)
                 if (value.length < 12) return 'NameField must be 12 characters or longer';
             }
         ]
+    },{
+        name: 'name2Field',
+		required: true
+    },{
+        name: 'emailField',
+        settings: {
+			type: 'email'
+		}
     }
 	]} rowComponent={_props => {
 		let {label, fieldProps, field, ...props} = _props;

@@ -1,5 +1,5 @@
 ---
-title: RebassThemes
+title: RebassThemes Component
 layout: default
 ---
 
