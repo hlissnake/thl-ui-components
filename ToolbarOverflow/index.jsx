@@ -14,7 +14,11 @@ export default class ToolbarOverflow extends React.Component {
 			React.PropTypes.element
 		]),
 		appendStart: React.PropTypes.bool,
-		overflowButtonWidth: React.PropTypes.number
+		overflowButtonWidth: React.PropTypes.number,
+		height: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.number
+		])
 	};
 
 	constructor(){
@@ -54,18 +58,12 @@ export default class ToolbarOverflow extends React.Component {
 			totalChildren: this.props.children.length,
 			width: toolbarWidth,
 			overflowButtonWidth: this.props.overflowButtonWidth || 80,
-			dropdownOpen: false,
-			maxChildHeight: this.state.maxChildHeight
+			dropdownOpen: false
 		};
 		if (!newState.childWidthArray || newState.totalChildren !== this.state.totalChildren) {
-			newState.childWidthArray = [].slice.call(this.refs.items.childNodes).map(element => {
-				newState.maxChildHeight = Math.max(newState.maxChildHeight || 0, element.offsetHeight +
-					parseInt(window.getComputedStyle(element).marginTop) +
-					parseInt(window.getComputedStyle(element).marginBottom));
-				return element.offsetWidth +
+			newState.childWidthArray = [].slice.call(this.refs.items.childNodes).map(element => element.offsetWidth +
 					parseInt(window.getComputedStyle(element).marginLeft) +
-					parseInt(window.getComputedStyle(element).marginRight);
-			}
+					parseInt(window.getComputedStyle(element).marginRight)
 			);
 		}
 		let children = React.Children.toArray(this.props.children);
@@ -111,7 +109,7 @@ export default class ToolbarOverflow extends React.Component {
 			}
 		}
 		return <div className="ToolbarOverflow" ref="root" {...props} style={{...(this.context.rebass.ToolbarOverflow || {display: 'flex', flex: '1', margin: 0, justifyContent: 'flex-start'}), ...style}}>
-				<NavItem id="HiddenHeightSetter" style={{visibility: 'hidden', zIndex: -1, float: 'left', height: this.state.maxChildHeight || '100%'}}/>
+				<NavItem id="HiddenHeightSetter" style={{visibility: 'hidden', zIndex: -1, float: 'left', height: this.props.height}}/>
 				{overflowStartDropdown}
 				<div style={{display: 'flex', flex: '1', overflow: 'hidden'}}>
 					<div ref="items" style={{position: 'absolute', display: 'flex', top: 0, left: 0, tranform: 'translateY(-50%)'}}>

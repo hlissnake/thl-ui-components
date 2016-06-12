@@ -29,6 +29,7 @@ __props__
 | __overflowButton__ |  _React Element | Stateless Function_ | This is passed as the contents for Rebass' Dropdown as the trigger element, if a stateless function is passed it receives the properties `onClick` and `dropdownShown`. |
 | __appendStart__ |  _boolean: true_ | Whether the dropdown trigger is added at the start or end of the row |
 | __overflowButtonWidth__ |  _number: 80_ | The space allocated to the overflow dropdown button |
+| __height__ |  _number | string_ | The height of the bar, this is needed sometimes due to CSS restrictions. |
 
 
 The default styling of the ToolbarOverflow element is: `{display: 'flex', flex: '1', margin: 0, justifyContent: 'flex-start'}`
