@@ -55,11 +55,11 @@ export default class ToolbarOverflow extends React.Component {
 			width: toolbarWidth,
 			overflowButtonWidth: this.props.overflowButtonWidth || 80,
 			dropdownOpen: false,
-			maxChildHeight: 0
+			maxChildHeight: this.state.maxChildHeight
 		};
 		if (!newState.childWidthArray || newState.totalChildren !== this.state.totalChildren) {
 			newState.childWidthArray = [].slice.call(this.refs.items.childNodes).map(element => {
-				newState.maxChildHeight = Math.max(newState.maxChildHeight, element.offsetHeight +
+				newState.maxChildHeight = Math.max(newState.maxChildHeight || 0, element.offsetHeight +
 					parseInt(window.getComputedStyle(element).marginTop) +
 					parseInt(window.getComputedStyle(element).marginBottom));
 				return element.offsetWidth +
@@ -111,10 +111,10 @@ export default class ToolbarOverflow extends React.Component {
 			}
 		}
 		return <div className="ToolbarOverflow" ref="root" {...props} style={{...(this.context.rebass.ToolbarOverflow || {display: 'flex', flex: '1', margin: 0, justifyContent: 'flex-start'}), ...style}}>
-				<NavItem style={{visibility: 'hidden', zIndex: -1, float: 'left', height: this.state.maxChildHeight || '100%'}}>Hidden</NavItem>
+				<NavItem id="HiddenHeightSetter" style={{visibility: 'hidden', zIndex: -1, float: 'left', height: this.state.maxChildHeight || '100%'}}/>
 				{overflowStartDropdown}
 				<div style={{display: 'flex', flex: '1', overflow: 'hidden'}}>
-					<div ref="items" style={{position: 'absolute', display: 'flex', top: '0', left: '0', tranform: 'translateY(-50%)'}}>
+					<div ref="items" style={{position: 'absolute', display: 'flex', top: 0, left: 0, tranform: 'translateY(-50%)'}}>
 						{((this.state.visibleChildren && this.state.totalChildren === this.props.children.length) ? this.state.visibleChildren : React.Children.toArray(children)).map((child) => {
 							return React.cloneElement(child, {style: {...(child.style || {}), display: 'flex'}})
 						})}
