@@ -7,7 +7,7 @@ export default class ToolbarOverflow extends React.Component {
 	static contextTypes = {
 		rebass: React.PropTypes.object
 	};
-	
+
 	static propTypes = {
 		overflowButton: React.PropTypes.oneOfType([
 			React.PropTypes.func,
@@ -16,7 +16,7 @@ export default class ToolbarOverflow extends React.Component {
 		appendStart: React.PropTypes.bool,
 		overflowButtonWidth: React.PropTypes.number
 	};
-	
+
 	constructor(){
 		super();
 		this.state = {
@@ -26,7 +26,7 @@ export default class ToolbarOverflow extends React.Component {
 		};
 		this.calculateVisibleFromWidth = this.calculateVisibleFromWidth.bind(this);
 	}
-	
+
 	componentDidReceiveProps() {
 		if (this.state.totalChildren !== this.refs.root.childNodes.length ||
 			this.state.width !== parseInt(window.getComputedStyle(this.refs.root).width) ||
@@ -35,16 +35,16 @@ export default class ToolbarOverflow extends React.Component {
 			this.calculateVisibleFromWidth();
 		}
 	}
-	
+
 	componentDidMount() {
 		this.calculateVisibleFromWidth();
 		window.addEventListener('resize', this.calculateVisibleFromWidth);
 	}
-	
+
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.calculateVisibleFromWidth);
 	}
-	
+
 	calculateVisibleFromWidth(){
 		let toolbarWidth = parseInt(window.getComputedStyle(this.refs.root).width);
 		let newState = {
@@ -54,19 +54,19 @@ export default class ToolbarOverflow extends React.Component {
 			totalChildren: this.props.children.length,
 			width: toolbarWidth,
 			overflowButtonWidth: this.props.overflowButtonWidth || 80,
-			dropdownOpen: false
+			dropdownOpen: false,
+			maxChildHeight: 0
 		};
 		if (!newState.childWidthArray || newState.totalChildren !== this.state.totalChildren) {
-			let childWidthArray = [].slice.call(this.refs.root.childNodes).map(element =>
-				element.offsetWidth +
-				parseInt(window.getComputedStyle(element).marginLeft) +
-				parseInt(window.getComputedStyle(element).marginRight)
-			);
-			if (this.state.visibleChildren !== this.state.totalChildren) {
-				if (this.props.appendStart) childWidthArray = childWidthArray.slice(1);
-				else childWidthArray = childWidthArray.slice(0, childWidthArray.length - 1);
+			newState.childWidthArray = [].slice.call(this.refs.items.childNodes).map(element => {
+				newState.maxChildHeight = Math.max(newState.maxChildHeight, element.offsetHeight +
+					parseInt(window.getComputedStyle(element).marginTop) +
+					parseInt(window.getComputedStyle(element).marginBottom));
+				return element.offsetWidth +
+					parseInt(window.getComputedStyle(element).marginLeft) +
+					parseInt(window.getComputedStyle(element).marginRight);
 			}
-			newState.childWidthArray = childWidthArray;
+			);
 		}
 		let children = React.Children.toArray(this.props.children);
 		let totalChildLength = 0;
@@ -84,9 +84,9 @@ export default class ToolbarOverflow extends React.Component {
 		}
 		this.setState(newState);
 	}
-	
+
 	render() {
-		let {children, overflowButton, appendStart, ...props} = this.props;
+		let {children, overflowButton, appendStart, style, ...props} = this.props;
 		let onClick = () => this.setState({dropdownOpen: true});
 		let trigger = <NavItem onClick={onClick}>more<Arrow direction="down"/></NavItem>;
 		if (overflowButton) {
@@ -110,8 +110,17 @@ export default class ToolbarOverflow extends React.Component {
 				overflowEndDropdown = dropdown;
 			}
 		}
-		return <div ref="root" {...props}>
-			{overflowStartDropdown}{(this.state.visibleChildren && this.state.totalChildren === this.props.children.length) ? this.state.visibleChildren : children}{overflowEndDropdown}
-		</div>;
+		return <div className="ToolbarOverflow" ref="root" {...props} style={{...(this.context.rebass.ToolbarOverflow || {display: 'flex', flex: '1', margin: 0, justifyContent: 'flex-start'}), ...style}}>
+				<NavItem style={{visibility: 'hidden', zIndex: -1, float: 'left', height: this.state.maxChildHeight || '100%'}}>Hidden</NavItem>
+				{overflowStartDropdown}
+				<div style={{display: 'flex', flex: '1', overflow: 'hidden'}}>
+					<div ref="items" style={{position: 'absolute', display: 'flex', top: '0', left: '0', tranform: 'translateY(-50%)'}}>
+						{((this.state.visibleChildren && this.state.totalChildren === this.props.children.length) ? this.state.visibleChildren : React.Children.toArray(children)).map((child) => {
+							return React.cloneElement(child, {style: {...(child.style || {}), display: 'flex'}})
+						})}
+					</div>
+				</div>
+				{overflowEndDropdown}
+			</div>;
 	}
 }
