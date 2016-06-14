@@ -28,7 +28,7 @@ export default class CosmosComponents extends React.Component {
 				colors: {
 					...rebassConfig.colors,
 					...theme.colors,
-					primary: this.props.primaryColour
+					primary: this.props.primaryColour || theme.colors.primary || rebassConfig.colors.primary
 				}
 			}
 		}
