@@ -62,7 +62,7 @@ export default class NavigationToolbar extends React.Component {
 		let {children, ...props} = this.props;
 		let toggleBottom =  (this.state.lastScrollDirectionUp || this.state.styling.top <= -this.state.scrollTop) ? 0 : -26;
 		return <Base className='NavigationToolbar' baseStyle={this.state.styling} inverted={true} theme="primary" {...props}>
-			<Toolbar>
+			<Toolbar p={0}>
 				<Base className="NavigationToolbar Toggle" onClick={this.toggle} inverted={true} theme="primary" baseStyle={{
 					height: 22,
 					position: 'absolute',
