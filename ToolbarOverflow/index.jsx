@@ -55,7 +55,7 @@ export default class ToolbarOverflow extends React.Component {
 			childWidthArray: this.state.childWidthArray || [],
 			visibleChildren: [],
 			dropdownChildren: [],
-			totalChildren: this.props.children.length,
+			totalChildren: (this.props.children || []).length,
 			width: toolbarWidth,
 			overflowButtonWidth: this.props.overflowButtonWidth || 80,
 			dropdownOpen: false
