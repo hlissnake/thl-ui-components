@@ -1,6 +1,5 @@
 import React from 'react';
 import rebassConfig from 'rebass/src/config';
-require("font-awesome-webpack");
 
 export default class CosmosComponents extends React.Component {
 	static propTypes = {
