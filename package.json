@@ -2,7 +2,7 @@
   "name": "thl-ui-components",
   "description": "THL UI Components",
   "main": "index.jsx",
-  "version": "0.4.8",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/THL-DEV/thl-ui-components.git"
@@ -42,8 +42,6 @@
   },
   "peerDependencies": {
     "color": "^0.11.1",
-    "font-awesome": "^4.6.1",
-    "font-awesome-webpack": "0.0.4",
     "lodash": "^4.13.1",
     "moment": "^2.11.1",
     "radium": "^0.17.1",
