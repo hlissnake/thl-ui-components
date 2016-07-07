@@ -2,7 +2,7 @@
   "name": "thl-ui-components",
   "description": "THL UI Components",
   "main": "index.jsx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/THL-DEV/thl-ui-components.git"
@@ -48,9 +48,9 @@
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-redux": "^4.0.6",
-    "rebass": "^0.2.6",
+    "rebass": "^0.3.0",
     "redux": "^3.3.1",
-    "redux-form": "^6.0.0-alpha.15"
+    "redux-form": "^6.0.0-rc.3"
   },
   "optionalDependencies": {
     "react-router": "^2.4.1"

@@ -72,10 +72,10 @@ const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowCo
 							})}</select>;
 							break;
 						case 'textarea':
-							_inputField = <textarea {...fieldProps} {...field.settings}/>;
+							_inputField = <textarea {...fieldProps.input} {...field.settings}/>;
 							break;
 						default:
-							_inputField = <input {...fieldProps} {...field.settings} type={type || 'text'}/>;
+							_inputField = <input {...fieldProps.input} {...field.settings} type={type || 'text'}/>;
 							break;
 					}
 				} else {
