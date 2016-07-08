@@ -108,12 +108,26 @@ export class FormComponent extends Component {
 	};
 
 	render() {
-		let {rowComponent = this.context.defaultRowComponent || DefaultFieldRow, formComponent = this.context.defaultFormComponent || 'form', onSubmit, handleSubmit, ...formProps} = this.props;
-		return createElement(formComponent, {
+		let {
+			rowComponent = this.context.defaultRowComponent || DefaultFieldRow,
+			formComponent = this.context.defaultFormComponent || 'form',
+			onSubmit,
+			handleSubmit,
+			..._formProps
+		} = this.props;
+		let {fieldsDefinition, ...formProps} = _formProps;
+		if (isString(formComponent)) {
+			formProps = {
+				style: formProps.style,
+				className: formProps.className
+			};
+		}
+		formProps = {
 			...formProps,
 			onSubmit: (onSubmit) ? handleSubmit(onSubmit) : undefined,
-			name: formProps.formName
-		}, ...formProps.fieldsDefinition.map((origField, index) => {
+			name: _formProps.formName
+		};
+		return createElement(formComponent, formProps, ..._formProps.fieldsDefinition.map((origField, index) => {
 			let {type, required, nonInteractive, ...field} = origField;
 			let ReduxFieldElement = Field;
 			let CustomFieldComponent = (this.context.customFields || {})[type];
