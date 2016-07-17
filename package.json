@@ -2,7 +2,7 @@
   "name": "thl-ui-components",
   "description": "THL UI Components",
   "main": "index.jsx",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/THL-DEV/thl-ui-components.git"
@@ -44,7 +44,7 @@
     "color": "^0.11.1",
     "lodash": "^4.13.1",
     "moment": "^2.11.1",
-    "radium": "^0.17.1",
+    "radium": "^0.18.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-redux": "^4.0.6",
