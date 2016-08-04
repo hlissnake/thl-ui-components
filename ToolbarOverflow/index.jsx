@@ -113,7 +113,7 @@ export default class ToolbarOverflow extends React.Component {
 				{overflowStartDropdown}
 				<div style={{display: 'flex', flex: '1', overflow: 'hidden'}}>
 					<div ref="items" style={{position: 'absolute', display: 'flex', top: 0, left: 0, tranform: 'translateY(-50%)'}}>
-						{((this.state.visibleChildren && this.state.totalChildren === this.props.children.length) ? this.state.visibleChildren : React.Children.toArray(children)).map((child) => {
+						{((this.state.visibleChildren && this.props.children && this.state.totalChildren === this.props.children.length) ? this.state.visibleChildren : React.Children.toArray(children)).map((child) => {
 							return React.cloneElement(child, {style: {...(child.style || {}), display: 'flex'}})
 						})}
 					</div>
