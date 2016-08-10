@@ -70,8 +70,8 @@ export default class ExpandableSearch extends Component {
 		if (this.props.inverted) {
 			ButtonComponent = Button;
 		}
-		return <div>
-			<NavItem onClick={() => this.setState({expanded: true})} style={{padding: '13px 8px'}}>
+		return <div style={this.props.style}>
+			<NavItem onClick={() => this.setState({expanded: true})} style={{padding: '8px 16px'}}>
 				{this.props.children || 'Search'}
 			</NavItem>
 			<div style={{
