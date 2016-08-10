@@ -14,7 +14,8 @@ export default class NavigationToolbar extends React.Component {
 				position: 'fixed',
 				top: 0,
 				left: 0,
-				right: 0
+				right: 0,
+				zIndex: 2000
 			},
 			scrollTop: 0
 		};
@@ -52,17 +53,19 @@ export default class NavigationToolbar extends React.Component {
 	
 	componentWillMount(){
 		window.addEventListener('scroll', this.scrollHandler);
+		window.addEventListener('touchmove', this.scrollHandler);
 	}
 	
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.scrollHandler);
+		window.removeEventListener('touchmove', this.scrollHandler);
 	}
 	
 	render() {
-		let {children, ...props} = this.props;
+		let {children, onScroll, ...props} = this.props;
 		let toggleBottom =  (this.state.lastScrollDirectionUp || this.state.styling.top <= -this.state.scrollTop) ? 0 : -26;
 		return <Base className='NavigationToolbar' baseStyle={this.state.styling} inverted={true} theme="primary" {...props}>
-			<Toolbar>
+			<Toolbar p={0}>
 				<Base className="NavigationToolbar Toggle" onClick={this.toggle} inverted={true} theme="primary" baseStyle={{
 					height: 22,
 					position: 'absolute',

@@ -1,9 +1,10 @@
 import React from 'react';
-require("font-awesome-webpack");
+import rebassConfig from 'rebass/src/config';
 
 export default class CosmosComponents extends React.Component {
 	static propTypes = {
-		theme: React.PropTypes.object
+		theme: React.PropTypes.object,
+		primaryColour: React.PropTypes.string
 	};
 	
 	static childContextTypes = {
@@ -11,6 +12,7 @@ export default class CosmosComponents extends React.Component {
 	};
 	
 	getChildContext() {
+		let theme = this.props.theme || {colors: {}};
 		return {
 			rebass: {
 				Button: {
@@ -21,13 +23,18 @@ export default class CosmosComponents extends React.Component {
 				NavigationToolbar: {
 					minHeight: 32
 				},
-				...(this.props.theme || {})
+				...theme,
+				colors: {
+					...rebassConfig.colors,
+					...theme.colors,
+					primary: this.props.primaryColour || theme.colors.primary || rebassConfig.colors.primary
+				}
 			}
 		}
 	}
 	
 	render() {
-		let {theme, children, ...props} = this.props;
+		let {theme, primaryColour, children, ...props} = this.props;
 		return <div {...props}>{children}</div>;
 	}
 }
