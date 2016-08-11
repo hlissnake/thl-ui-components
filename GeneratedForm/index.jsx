@@ -128,9 +128,14 @@ export class FormComponent extends Component {
 			name: _formProps.formName
 		};
 		return createElement(formComponent, formProps, ..._formProps.fieldsDefinition.map((origField, index) => {
-			let {type, required, nonInteractive, ...field} = origField;
+			let {type, required, nonInteractive, Custom, ...field} = origField;
 			let ReduxFieldElement = Field;
-			let CustomFieldComponent = (this.context.customFields || {})[type];
+			let CustomFieldComponent;
+			if (isString(type)) {
+				CustomFieldComponent = (this.context.customFields || {})[type];
+			} else if(Custom) {
+				return <Custom key={index} field={origField}/>;
+			}
 			if (required) {
 				field.settings = {
 					...(field.settings || {}),
