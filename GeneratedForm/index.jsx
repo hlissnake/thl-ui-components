@@ -119,7 +119,9 @@ export class FormComponent extends Component {
 		if (isString(formComponent)) {
 			formProps = {
 				style: formProps.style,
-				className: formProps.className
+				className: formProps.className,
+				method: formProps.method,
+				action: formProps.action
 			};
 		}
 		formProps = {
