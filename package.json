@@ -2,7 +2,7 @@
   "name": "thl-ui-components",
   "description": "THL UI Components",
   "main": "index.jsx",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/THL-DEV/thl-ui-components.git"
@@ -39,8 +39,8 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.12.10",
     "webpack-hot-middleware": "^2.9.1",
-    
-    
+
+
     "color": "^0.11.1",
     "lodash": "^4.13.1",
     "moment": "^2.11.1",
@@ -50,7 +50,7 @@
     "react-redux": "^4.0.6",
     "rebass": "^0.3.0",
     "redux": "^3.3.1",
-    "redux-form": "^6.0.0-rc.3"
+    "redux-form": "^6.0.0-rc.5"
   },
   "peerDependencies": {
     "color": "^0.11.1",
@@ -62,7 +62,7 @@
     "react-redux": "^4.0.6",
     "rebass": "^0.3.0",
     "redux": "^3.3.1",
-    "redux-form": "^6.0.0-rc.3"
+    "redux-form": "^6.0.0-rc.5"
   },
   "optionalDependencies": {
     "react-router": "^2.4.1"

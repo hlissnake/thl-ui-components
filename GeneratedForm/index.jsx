@@ -58,11 +58,12 @@ const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowCo
 			rowComponent,
 			component: fieldProps => {
 				let _inputField;
+				let {input, meta, ...props} = fieldProps;
 				if (!CustomFieldComponent) {
 					switch (type) {
 						case 'select':
 							let {optionValue, optionDisplay, ...settings} = (field.settings || {});
-							_inputField = <select {...fieldProps} {...settings}>{field.options.map((option, index) => {
+							_inputField = <select {...input} {...props} {...settings}>{field.options.map((option, index) => {
 								if (isObject(option)) {
 									return <option key={index}
 												   value={option[optionValue || 'value']}>{option[optionDisplay || 'label']}</option>;
@@ -72,15 +73,15 @@ const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowCo
 							})}</select>;
 							break;
 						case 'textarea':
-							_inputField = <textarea {...fieldProps.input} {...field.settings}/>;
+							_inputField = <textarea {...input} {...props} {...field.settings}/>;
 							break;
 						default:
-							_inputField = <input {...fieldProps.input} {...field.settings} type={type || 'text'}/>;
+							_inputField = <input {...input} {...props} {...field.settings} type={type || 'text'}/>;
 							break;
 					}
 				} else {
 					_inputField =
-						<CustomFieldComponent {...field.settings} {...field} {...fieldProps}/>;
+						<CustomFieldComponent {...field.settings} {...field} {...input} {...props} {...meta}/>;
 				}
 				return createElement(rowComponent, {
 					...(field.rowProps || {}),

@@ -152,7 +152,7 @@ __props__
 | Property Name | Type | Description |
 | --- | --- | --- |
 | __label__ | _string / object / function / element_ | A react display variable, used to display the name/label of the component. |
-| __fieldProps__ | _object_ | These is the object with all the redux field properties on it. |
+| __fieldProps__ | _object_ | These is the object with all the redux field properties on it, these are `input`, `meta` and all props passed to the component. |
 | __formProps__ | _object_ | These is the object with all the redux form component properties on it. |
 | __field__ | _element_ | The built input element. |
 
