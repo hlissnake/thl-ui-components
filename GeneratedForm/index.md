@@ -180,3 +180,8 @@ export class DefaultFieldRow extends React.Component {
 	}
 }
 ```
+
+### Generated Form > customComponent
+
+If you provide a custom stateless function as the custom value or provide a custom form type the following params are passed on the props in addition to the standard input values.
+These should be stripped out as react v15 will give you errors. Fields are: `meta` (from Redux-Form), displayName, settings. The last two are from your fields definition.

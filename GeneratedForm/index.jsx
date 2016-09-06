@@ -81,7 +81,7 @@ const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowCo
 					}
 				} else {
 					_inputField =
-						<CustomFieldComponent {...field.settings} {...field} {...input} {...props} {...meta}/>;
+						<CustomFieldComponent {...field} {...input} {...props} meta={meta}/>;
 				}
 				return createElement(rowComponent, {
 					...(field.rowProps || {}),
