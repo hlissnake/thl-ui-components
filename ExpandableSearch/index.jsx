@@ -43,7 +43,7 @@ class SearchInput extends Component {
 	}
 	
 	render() {
-		let {triggerClose, expanded, ...props} = this.props;
+		let {triggerClose, triggerSearch, expanded, ...props} = this.props;
 		return <input ref="searchInput" {...props}/>;
 	}
 }
