@@ -1,3 +1,19 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/THL-DEV/thl-ui-components/compare/1.4.0...v1.5.0) (2016-09-30)
+
+
+### Bug Fixes
+
+* **NavigationToolbar:** Use rebass zIndex values ([b87ed75](https://github.com/THL-DEV/thl-ui-components/commit/b87ed75))
+* **RebassThemes:** Manually pass in the config so we can use off context ([8644dcb](https://github.com/THL-DEV/thl-ui-components/commit/8644dcb))
+
+
+### Features
+
+* **Stateless:** Add InlineForm override component ([ba32390](https://github.com/THL-DEV/thl-ui-components/commit/ba32390))
+
+
+
 <a name="1.4.0"></a>
 # 1.4.0 (2016-09-27)
 
