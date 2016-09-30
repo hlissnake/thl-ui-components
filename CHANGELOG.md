@@ -1,3 +1,13 @@
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/THL-DEV/thl-ui-components/compare/1.5.0...v1.6.0) (2016-09-30)
+
+
+### Features
+
+* **InlineForm:** Add new disabled options ([a9dfb18](https://github.com/THL-DEV/thl-ui-components/commit/a9dfb18))
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/THL-DEV/thl-ui-components/compare/1.4.0...v1.5.0) (2016-09-30)
 
