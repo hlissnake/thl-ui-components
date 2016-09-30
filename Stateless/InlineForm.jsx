@@ -17,6 +17,9 @@ const InlineForm = ({
 	buttonLabel,
 	onClick,
 	type,
+	disabled,
+	disabledInput,
+	disabledButton,
 	message,
 	buttonOutline = true,
 	invalid,
@@ -46,6 +49,7 @@ const InlineForm = ({
 				label={label}
 				value={value}
 				type={type}
+				disabled={disabledInput || disabled}
 				aria-invalid={invalid}
 				placeholder={placeholder}
 				onChange={onChange}
@@ -56,7 +60,7 @@ const InlineForm = ({
 				rounded='left'/>
 			<ButtonComponent
 				type='submit'
-				disabled={invalid}
+				disabled={invalid || disabledButton || disabled}
 				children={buttonLabel}
 				onClick={onClick}
 				style={sx.button}
