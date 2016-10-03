@@ -1,3 +1,13 @@
+<a name="1.7.0"></a>
+# [1.7.0](https://github.com/THL-DEV/thl-ui-components/compare/1.6.0...v1.7.0) (2016-10-03)
+
+
+### Features
+
+* **GeneratedForm:** Add our form setup functions ([6494914](https://github.com/THL-DEV/thl-ui-components/commit/6494914))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/THL-DEV/thl-ui-components/compare/1.5.0...v1.6.0) (2016-09-30)
 
