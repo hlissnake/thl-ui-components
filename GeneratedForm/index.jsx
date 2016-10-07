@@ -29,7 +29,7 @@ export class DefaultFieldRow extends Component {
 class StaticElement extends Component {
 	static contextTypes = {
 		_reduxForm: PropTypes.object
-	}
+	};
 
 	render() {
 		let {component, ...props} = this.props;
@@ -58,11 +58,12 @@ const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowCo
 			rowComponent,
 			component: fieldProps => {
 				let _inputField;
+				let {input, meta, ...props} = fieldProps;
 				if (!CustomFieldComponent) {
 					switch (type) {
 						case 'select':
 							let {optionValue, optionDisplay, ...settings} = (field.settings || {});
-							_inputField = <select {...fieldProps} {...settings}>{field.options.map((option, index) => {
+							_inputField = <select {...input} {...props} {...settings}>{field.options.map((option, index) => {
 								if (isObject(option)) {
 									return <option key={index}
 												   value={option[optionValue || 'value']}>{option[optionDisplay || 'label']}</option>;
@@ -72,15 +73,15 @@ const buildFieldComponent = (field, type, CustomFieldComponent, formProps, rowCo
 							})}</select>;
 							break;
 						case 'textarea':
-							_inputField = <textarea {...fieldProps.input} {...field.settings}/>;
+							_inputField = <textarea {...input} {...props} {...field.settings}/>;
 							break;
 						default:
-							_inputField = <input {...fieldProps.input} {...field.settings} type={type || 'text'}/>;
+							_inputField = <input {...input} {...props} {...field.settings} type={type || 'text'}/>;
 							break;
 					}
 				} else {
 					_inputField =
-						<CustomFieldComponent {...field.settings} {...field} {...fieldProps}/>;
+						<CustomFieldComponent {...field} {...input} {...props} meta={meta}/>;
 				}
 				return createElement(rowComponent, {
 					...(field.rowProps || {}),
@@ -119,7 +120,9 @@ export class FormComponent extends Component {
 		if (isString(formComponent)) {
 			formProps = {
 				style: formProps.style,
-				className: formProps.className
+				className: formProps.className,
+				method: formProps.method,
+				action: formProps.action
 			};
 		}
 		formProps = {
@@ -128,9 +131,14 @@ export class FormComponent extends Component {
 			name: _formProps.formName
 		};
 		return createElement(formComponent, formProps, ..._formProps.fieldsDefinition.map((origField, index) => {
-			let {type, required, nonInteractive, ...field} = origField;
+			let {type, required, nonInteractive, Custom, ...field} = origField;
 			let ReduxFieldElement = Field;
-			let CustomFieldComponent = (this.context.customFields || {})[type];
+			let CustomFieldComponent;
+			if (isString(type)) {
+				CustomFieldComponent = (this.context.customFields || {})[type];
+			} else if(Custom) {
+				return <Custom key={index} field={origField}/>;
+			}
 			if (required) {
 				field.settings = {
 					...(field.settings || {}),

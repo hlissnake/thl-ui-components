@@ -15,6 +15,7 @@ export default class CosmosComponents extends React.Component {
 		let theme = this.props.theme || {colors: {}};
 		return {
 			rebass: {
+				...rebassConfig,
 				Button: {
 					padding: '12px 8px',
 					border: '1px solid black',

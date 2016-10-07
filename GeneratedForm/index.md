@@ -98,6 +98,7 @@ __Parameters__
 | __rowProps__ | _object_ | This is passed as props to the rowComponent, for example `rowProps: {style: styleObject}` will set the style property of the rowComponent to be the styleObject. |
 | __validators__ | _array_ | An array of validators, see 'validator' property for individual settings. |
 | __validator__ | _object / string / function_ | If string the validator is converted to `{type: validator}` object. If an object it's type key is checked against inbuilt validators and that validator is called. If a function then the function is used as the validation. These are used in the `redux.validators`, see Validation for more details. |
+| __Custom__ | _React class / stateless function_ | Used to override the entire render of the form field, note you will have to manually include the Field/FieldArray component if needed - this also overrides the type param. |
 
 __Type='select' Parameters__
 
@@ -151,7 +152,7 @@ __props__
 | Property Name | Type | Description |
 | --- | --- | --- |
 | __label__ | _string / object / function / element_ | A react display variable, used to display the name/label of the component. |
-| __fieldProps__ | _object_ | These is the object with all the redux field properties on it. |
+| __fieldProps__ | _object_ | These is the object with all the redux field properties on it, these are `input`, `meta` and all props passed to the component. |
 | __formProps__ | _object_ | These is the object with all the redux form component properties on it. |
 | __field__ | _element_ | The built input element. |
 
@@ -179,3 +180,8 @@ export class DefaultFieldRow extends React.Component {
 	}
 }
 ```
+
+### Generated Form > customComponent
+
+If you provide a custom stateless function as the custom value or provide a custom form type the following params are passed on the props in addition to the standard input values.
+These should be stripped out as react v15 will give you errors. Fields are: `meta` (from Redux-Form), displayName, settings. The last two are from your fields definition.

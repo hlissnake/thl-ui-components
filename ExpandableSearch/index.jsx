@@ -43,7 +43,7 @@ class SearchInput extends Component {
 	}
 	
 	render() {
-		let {triggerClose, expanded, ...props} = this.props;
+		let {triggerClose, triggerSearch, expanded, ...props} = this.props;
 		return <input ref="searchInput" {...props}/>;
 	}
 }
@@ -83,7 +83,7 @@ export default class ExpandableSearch extends Component {
 				left: ((this.state.expanded) ? 0 : '100%'),
 				transition: 'left 0.3s ease-in-out',
 				display: 'flex',
-				alignItems: 'center',
+				alignItems: 'flex-start',
 				flexDirection: 'row'
 			}}>
 				<Input
@@ -110,7 +110,7 @@ export default class ExpandableSearch extends Component {
 					theme="primary"
 					children={this.props.children || 'Search'}
 					onClick={() => this.props.onSearch(this.state.value)}
-					style={{marginLeft: -1, padding: '8px 16px'}}
+					style={{marginLeft: -1, padding: '8px 16px', backgroundColor: (!this.props.inverted ? '#FFF' : undefined)}}
 					rounded='right'
 					inverted={this.props.inverted}
 				/>

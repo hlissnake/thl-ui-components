@@ -73,7 +73,7 @@ storiesOf('GeneratedForm', module)
 		return <div {...props}>
 			<label>{label}</label>
 			{field}
-			<span>Invalid: {(fieldProps.invalid) ? 'true' : 'false'}, touched: {(fieldProps.touched) ? 'true' : 'false'}</span>
+			<span>Invalid: {(fieldProps.meta.invalid) ? 'true' : 'false'}, touched: {(fieldProps.meta.touched) ? 'true' : 'false'}</span>
 		</div>
 	}}/>
 ))
