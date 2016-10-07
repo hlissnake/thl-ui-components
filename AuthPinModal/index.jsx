@@ -17,7 +17,7 @@ export default class AuthPinModal extends Component {
 		onFailure: PropTypes.func.isRequired,
 		cancelText: PropTypes.string.isRequired,
 		message: PropTypes.string.isRequired,
-		errorMessage: PropTypes.oneOf([PropTypes.string,PropTypes.func]).isRequired,
+		errorMessage: PropTypes.oneOfType([PropTypes.string,PropTypes.func]).isRequired,
 		maxTries: PropTypes.number
 	};
 	
@@ -102,7 +102,7 @@ export default class AuthPinModal extends Component {
 			<div style={{display: 'flex', justifyContent: 'center', flexDirection: 'row', marginBottom: 8}}>
 				{this.state.targetPin.map((value, index) => {
 					let className = 'PinInput ', baseStyle;
-					if (this.props.maxTries && this.props.maxTries > 0 && this.state.incorrectTries >= this.props.maxTries) {
+					if (this.state.incorrectTries > 0 && this.state.selectedIndex === 0) {
 						className += 'ErrorPinInput';
 						baseStyle = errorInputStyle;
 					} else if (index === this.state.selectedIndex) {
