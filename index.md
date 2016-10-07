@@ -3,7 +3,7 @@ title: Home
 layout: default
 ---
 
-# THL UI Components
+# THL UI Components v1.8.0
 
 ### Getting Started
 
