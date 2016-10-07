@@ -1,3 +1,13 @@
+<a name="1.8.1"></a>
+## [1.8.1](https://github.com/THL-DEV/thl-ui-components/compare/1.8.0...v1.8.1) (2016-10-07)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** bugfixes ([7b18372](https://github.com/THL-DEV/thl-ui-components/commit/7b18372))
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/THL-DEV/thl-ui-components/compare/1.7.0...v1.8.0) (2016-10-07)
 
