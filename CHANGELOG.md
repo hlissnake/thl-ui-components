@@ -1,3 +1,18 @@
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/THL-DEV/thl-ui-components/compare/1.8.1...v1.9.0) (2016-10-09)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Fix for mobile devices ([022ab39](https://github.com/THL-DEV/thl-ui-components/commit/022ab39))
+
+
+### Features
+
+* **AuthPinModal:** Add createPin mode ([9daddec](https://github.com/THL-DEV/thl-ui-components/commit/9daddec))
+
+
+
 <a name="1.8.1"></a>
 ## [1.8.1](https://github.com/THL-DEV/thl-ui-components/compare/1.8.0...v1.8.1) (2016-10-07)
 
