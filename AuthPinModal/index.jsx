@@ -11,14 +11,15 @@ import color from 'color';
 export default class AuthPinModal extends Component {
 	static propTypes = {
 		open: PropTypes.bool.isRequired,
-		unlockPin: PropTypes.string.isRequired,
 		onPinAuth: PropTypes.func.isRequired,
 		onCancel: PropTypes.func.isRequired,
 		onFailure: PropTypes.func.isRequired,
 		cancelText: PropTypes.string.isRequired,
 		message: PropTypes.string.isRequired,
 		errorMessage: PropTypes.oneOfType([PropTypes.string,PropTypes.func]).isRequired,
-		maxTries: PropTypes.number
+		maxTries: PropTypes.oneOfType([PropTypes.boolean,PropTypes.number]),
+		unlockPin: PropTypes.string,
+		createLength: PropTypes.number
 	};
 	
 	static contextTypes = {
@@ -167,7 +168,14 @@ export default class AuthPinModal extends Component {
 		if (/^[0-9]$/ig.test(event.key) && this.state.selectedIndex >= 0 && this.state.selectedIndex < this.state.targetPin.length) {
 			let pinInput = [...this.state.pinInput];
 			pinInput[this.state.selectedIndex] = event.key;
-			if (pinInput.length === this.state.targetPin.length) {
+			if (!isNaN(this.props.createLength) && this.props.createLength > 0 && pinInput.length === this.props.createLength) {
+				this.props.onPinAuth(pinInput.join(''));
+				this.selectInput(0, {
+					pinInput: [],
+					incorrectTries: 0,
+					correctPin: true
+				});
+			} else if (pinInput.length === this.state.targetPin.length) {
 				let correctPin = this.state.targetPin.reduce((correct, element, index) => correct && element === pinInput[index], true);
 				let incorrectTries = (correctPin || !this.props.maxTries || this.props.maxTries <= 0) ? 0 : (this.state.incorrectTries + 1);
 				this.selectInput(0, {

@@ -27,4 +27,6 @@ storiesOf('AuthPinModal', module)
 	<AuthPinModal {...defaults} unlockPin="111111"/>
 )).add('string errorMessage', () => (
 	<AuthPinModal {...defaults} errorMessage="Invalid Attempt, please try again"/>
+)).add('create pin mode', () => (
+	<AuthPinModal {...defaults} createLength={4}/>
 ));
