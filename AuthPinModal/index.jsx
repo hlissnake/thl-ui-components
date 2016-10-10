@@ -17,7 +17,7 @@ export default class AuthPinModal extends Component {
 		cancelText: PropTypes.string.isRequired,
 		message: PropTypes.string.isRequired,
 		errorMessage: PropTypes.oneOfType([PropTypes.string,PropTypes.func]).isRequired,
-		maxTries: PropTypes.oneOfType([PropTypes.boolean,PropTypes.number]),
+		maxTries: PropTypes.oneOfType([PropTypes.bool,PropTypes.number]),
 		unlockPin: PropTypes.string,
 		createLength: PropTypes.number
 	};
