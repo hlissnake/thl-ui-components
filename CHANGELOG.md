@@ -1,3 +1,13 @@
+<a name="1.9.1"></a>
+## [1.9.1](https://github.com/THL-DEV/thl-ui-components/compare/1.9.0...v1.9.1) (2016-10-10)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Fix error on PropTypes ([71c442c](https://github.com/THL-DEV/thl-ui-components/commit/71c442c))
+
+
+
 <a name="1.9.0"></a>
 # [1.9.0](https://github.com/THL-DEV/thl-ui-components/compare/1.8.1...v1.9.0) (2016-10-09)
 

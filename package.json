@@ -2,7 +2,7 @@
   "name": "thl-ui-components",
   "description": "THL UI Components",
   "main": "index.jsx",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/THL-DEV/thl-ui-components.git"
