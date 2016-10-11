@@ -1,3 +1,13 @@
+<a name="1.9.2"></a>
+## [1.9.2](https://github.com/THL-DEV/thl-ui-components/compare/1.9.1...v1.9.2) (2016-10-11)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Add props autoFocus and forceError ([6faea0f](https://github.com/THL-DEV/thl-ui-components/commit/6faea0f))
+
+
+
 <a name="1.9.1"></a>
 ## [1.9.1](https://github.com/THL-DEV/thl-ui-components/compare/1.9.0...v1.9.1) (2016-10-10)
 
