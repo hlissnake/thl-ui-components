@@ -13,7 +13,7 @@ Can be placed anywhere the rebass Overlay can be used.
 ([Live Demo]({{ '/storybook/?selectedKind=AuthPinModal' | prepend: site.baseurl }}))
 
 ```jsx
-<AuthPinModal {
+<AuthPinModal 
 	open={true}
 	unlockPin={'1111'}
 	onPinAuth={action('onPinAuth')}

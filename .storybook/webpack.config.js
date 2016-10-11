@@ -16,7 +16,9 @@ module.exports = {
 					path.resolve(__dirname, '../RebassThemes'),
 					path.resolve(__dirname, '../Stateless'),
 					path.resolve(__dirname, '../ToolbarOverflow'),
-					path.resolve(__dirname, '../VersionedComponent')
+					path.resolve(__dirname, '../VersionedComponent'),
+					path.resolve(__dirname, '../AuthPinModal'),
+					path.resolve(__dirname, '../ProgressBar')
 				],
 				query: {
 					presets: ['es2015', 'react', 'stage-0']
