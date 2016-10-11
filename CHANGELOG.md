@@ -1,3 +1,18 @@
+<a name="1.9.3"></a>
+## [1.9.3](https://github.com/THL-DEV/thl-ui-components/compare/1.9.2...v1.9.3) (2016-10-11)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** File formatting issues ([2223ad0](https://github.com/THL-DEV/thl-ui-components/commit/2223ad0))
+
+
+### Features
+
+* **ProgressBar:** New progress bar component ([89c31ec](https://github.com/THL-DEV/thl-ui-components/commit/89c31ec))
+
+
+
 <a name="1.9.2"></a>
 ## [1.9.2](https://github.com/THL-DEV/thl-ui-components/compare/1.9.1...v1.9.2) (2016-10-11)
 
