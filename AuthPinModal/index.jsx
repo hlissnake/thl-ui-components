@@ -11,14 +11,17 @@ import color from 'color';
 export default class AuthPinModal extends Component {
 	static propTypes = {
 		open: PropTypes.bool.isRequired,
-		unlockPin: PropTypes.string.isRequired,
 		onPinAuth: PropTypes.func.isRequired,
 		onCancel: PropTypes.func.isRequired,
 		onFailure: PropTypes.func.isRequired,
 		cancelText: PropTypes.string.isRequired,
 		message: PropTypes.string.isRequired,
 		errorMessage: PropTypes.oneOfType([PropTypes.string,PropTypes.func]).isRequired,
-		maxTries: PropTypes.number
+		maxTries: PropTypes.oneOfType([PropTypes.bool,PropTypes.number]),
+		unlockPin: PropTypes.string,
+		createLength: PropTypes.number,
+		autoFocus: PropTypes.bool,
+		forceError: PropTypes.bool
 	};
 	
 	static contextTypes = {
@@ -28,7 +31,7 @@ export default class AuthPinModal extends Component {
 	constructor(){
 		super();
 		this.state = {
-			selectedIndex: 0,
+			selectedIndex: -1,
 			incorrectTries: 0,
 			correctPin: false,
 			pinInput: [],
@@ -36,9 +39,10 @@ export default class AuthPinModal extends Component {
 		};
 		this.keypressHandler = this.keypressHandler.bind(this);
 		this.showModal = this.showModal.bind(this);
+		this.selectInput = this.selectInput.bind(this);
 	}
 	
-	componentWillMount() {
+	componentDidMount() {
 		if (this.props.open) {
 			this.showModal(this.props);
 		}
@@ -49,7 +53,7 @@ export default class AuthPinModal extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.open !== this.props.open) {
+		if (nextProps.open !== this.props.open || nextProps.unlockPin !== this.props.unlockPin) {
 			if (nextProps.open) {
 				this.showModal(nextProps);
 			} else {
@@ -60,7 +64,18 @@ export default class AuthPinModal extends Component {
 	
 	render(){
 		const { scale, colors, borderColor } = { ...rebassConfig, ...this.context.rebass }
+		const dotStyle = {
+			height: 12,
+			width: 12,
+			position: 'absolute',
+			top: '50%',
+			left: '50%',
+			transform: 'translate(-50%, -50%)',
+			borderRadius: 6,
+			backgroundColor: 'currentColor'
+		};
 		const inputStyle = {
+			position: 'relative',
 			width: 30,
 			height: 30,
 			borderWidth: '1px',
@@ -97,6 +112,12 @@ export default class AuthPinModal extends Component {
 			backgroundColor: color(colors.error).alpha(0.1).lighten(0.3).rgbaString(),
 			boxShadow: '0px 0px 1px 0px rgba(0,0,0,0.4) inset'
 		};
+		const selectedErrorInputStyle = {
+			...inputStyle,
+			borderColor: colors.error,
+			backgroundColor: color(colors.error).alpha(0.3).lighten(0.3).rgbaString(),
+			boxShadow: '0px 0px 2px 0px rgba(0,0,0,0.4) inset'
+		};
 		return <Overlay open={this.props.open} box style={{minWidth: 0, padding: 12, textAlign: 'center', maxWidth: Math.max(210, 46 * this.state.targetPin.length + 24), zIndex: 9999}}>
 			<Heading level={4} style={{marginBottom: 8}}>{this.props.message}</Heading>
 			<div style={{display: 'flex', justifyContent: 'center', flexDirection: 'row', marginBottom: 8}}>
@@ -104,7 +125,11 @@ export default class AuthPinModal extends Component {
 					let className = 'PinInput ', baseStyle;
 					if (this.state.incorrectTries > 0 && this.state.selectedIndex === 0) {
 						className += 'ErrorPinInput';
-						baseStyle = errorInputStyle;
+						if (index === 0) {
+							baseStyle = selectedErrorInputStyle;
+						} else {
+							baseStyle = errorInputStyle;
+						}
 					} else if (index === this.state.selectedIndex) {
 						className += 'SelectedPinInput';
 						baseStyle = selectedInputStyle;
@@ -120,12 +145,11 @@ export default class AuthPinModal extends Component {
 						rounded
 						className={className}
 						baseStyle={baseStyle}
-						children={this.state.pinInput[index] ? <span>&#183;</span> : undefined}
+						children={this.state.pinInput[index] ? <span style={dotStyle}/> : undefined}
 						onClick={() => {
-							let newIndex = Math.min(this.state.selectedIndex, index);
-							this.setState({
-								pinInput: this.state.pinInput.slice(0, newIndex),
-								selectedIndex: newIndex
+							let newIndex = Math.min(Math.max(this.state.selectedIndex, 0), index);
+							this.selectInput(newIndex, {
+								pinInput: this.state.pinInput.slice(0, newIndex)
 							});
 						}}
 					/>;
@@ -133,19 +157,31 @@ export default class AuthPinModal extends Component {
 			</div>
 			<Text theme="error" bold>{this.displayErrorMessage()}</Text>
 			<NavItem onClick={this.props.onCancel} theme="primary" style={{float: 'right', marginBottom: -8, marginRight: -8}}>{this.props.cancelText}</NavItem>
+			<input type="tel" style={{position: 'absolute', top: 0, left: 0, height: 1, width: 1, opacity: 0, zIndex: -1, color: 'transparent'}} ref={input => this.hiddenInput = input} onKeyPress={this.keypressHandler}/>
 		</Overlay>;
 	}
 	
+	selectInput(index, state) {
+		if (index >= 0) setTimeout(() => this.hiddenInput.focus());
+		this.setState({...state, selectedIndex: index});
+	}
+	
 	keypressHandler(event) {
-		if (/^[a-z0-9]$/ig.test(event.key) && this.state.selectedIndex >= 0 && this.state.selectedIndex < this.state.targetPin.length) {
+		if (/^[0-9]$/ig.test(event.key) && this.state.selectedIndex >= 0 && this.state.selectedIndex < this.state.targetPin.length) {
 			let pinInput = [...this.state.pinInput];
 			pinInput[this.state.selectedIndex] = event.key;
-			if (pinInput.length === this.state.targetPin.length) {
+			if (!isNaN(this.props.createLength) && this.props.createLength > 0 && pinInput.length === this.props.createLength) {
+				this.props.onPinAuth(pinInput.join(''));
+				this.selectInput(0, {
+					pinInput: [],
+					incorrectTries: 0,
+					correctPin: true
+				});
+			} else if (pinInput.length === this.state.targetPin.length) {
 				let correctPin = this.state.targetPin.reduce((correct, element, index) => correct && element === pinInput[index], true);
 				let incorrectTries = (correctPin || !this.props.maxTries || this.props.maxTries <= 0) ? 0 : (this.state.incorrectTries + 1);
-				this.setState({
+				this.selectInput(0, {
 					pinInput: [],
-					selectedIndex: 0,
 					incorrectTries,
 					correctPin
 				});
@@ -156,18 +192,17 @@ export default class AuthPinModal extends Component {
 					this.removeEvent();
 				} 
 			} else {
-				this.setState({pinInput, selectedIndex: this.state.selectedIndex + 1});
+				this.selectInput(this.state.selectedIndex + 1, {pinInput});
 			}
 		} else if ((event.keyCode === 8 || event.keyCode === 46) && this.state.selectedIndex > 0) {
-			this.setState({
-				pinInput: this.state.pinInput.slice(0, this.state.selectedIndex - 1),
-				selectedIndex: this.state.selectedIndex - 1
+			this.selectInput(this.state.selectedIndex - 1, {
+				pinInput: this.state.pinInput.slice(0, this.state.selectedIndex - 1)
 			});
 		}
 	}
 	
 	displayErrorMessage() {
-		if (this.state.incorrectTries > 0) {
+		if (this.state.incorrectTries > 0 || this.state.forceError) {
 			if (_isFunction(this.props.errorMessage)) {
 				return this.props.errorMessage(this.state.incorrectTries);
 			} else {
@@ -177,17 +212,21 @@ export default class AuthPinModal extends Component {
 	}
 	
 	showModal(props) {
-		document.body.addEventListener('keydown', this.keypressHandler);
-		this.setState({
-			selectedIndex: 0,
+		let _unlockPin = props.unlockPin;
+		if (props.createLength) {
+			_unlockPin = '';
+			for (var l = 0; l < props.createLength; l++) _unlockPin += '0';
+		}
+		this.selectInput(props.autoFocus ? 0 : -1, {
 			incorrectTries: 0,
+			forceError: props.forceError,
 			correctPin: false,
 			pinInput: [],
-			targetPin: props.unlockPin.split('')
+			targetPin: _unlockPin.split('')
 		});
 	}
 	
 	removeEvent() {
-		document.body.removeEventListener('keydown', this.keypressHandler);
+		this.hiddenInput.blur();
 	}
 }

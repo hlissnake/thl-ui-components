@@ -1,3 +1,48 @@
+<a name="1.9.2"></a>
+## [1.9.2](https://github.com/THL-DEV/thl-ui-components/compare/1.9.1...v1.9.2) (2016-10-11)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Add props autoFocus and forceError ([6faea0f](https://github.com/THL-DEV/thl-ui-components/commit/6faea0f))
+
+
+
+<a name="1.9.1"></a>
+## [1.9.1](https://github.com/THL-DEV/thl-ui-components/compare/1.9.0...v1.9.1) (2016-10-10)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Fix error on PropTypes ([71c442c](https://github.com/THL-DEV/thl-ui-components/commit/71c442c))
+
+
+
+<a name="1.9.0"></a>
+# [1.9.0](https://github.com/THL-DEV/thl-ui-components/compare/1.8.1...v1.9.0) (2016-10-09)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Fix for mobile devices ([022ab39](https://github.com/THL-DEV/thl-ui-components/commit/022ab39))
+
+
+### Features
+
+* **AuthPinModal:** Add createPin mode ([9daddec](https://github.com/THL-DEV/thl-ui-components/commit/9daddec))
+
+
+
+<a name="1.8.1"></a>
+## [1.8.1](https://github.com/THL-DEV/thl-ui-components/compare/1.8.0...v1.8.1) (2016-10-07)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** bugfixes ([7b18372](https://github.com/THL-DEV/thl-ui-components/commit/7b18372))
+
+
+
 <a name="1.8.0"></a>
 # [1.8.0](https://github.com/THL-DEV/thl-ui-components/compare/1.7.0...v1.8.0) (2016-10-07)
 
