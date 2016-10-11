@@ -44,3 +44,5 @@ __props__
 | __maxTries__ |  _number_ | Maximum number of attempts allowed, if false or <= 0 unlimited tries are allowed |
 | __unlockPin__ |  _string (required if not createLength)_ | The pin value that should result in a success |
 | __createLength__ |  _number_ | If this is defined as > 0 then the modal will act as a create pin field |
+| __autoFocus__ |  _boolean_ | If true then the first input will be automatically focussed when the modal opens |
+| __forceError__ |  _boolean_ | If true the error message will be shown all the time |

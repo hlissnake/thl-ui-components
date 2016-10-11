@@ -19,7 +19,9 @@ export default class AuthPinModal extends Component {
 		errorMessage: PropTypes.oneOfType([PropTypes.string,PropTypes.func]).isRequired,
 		maxTries: PropTypes.oneOfType([PropTypes.bool,PropTypes.number]),
 		unlockPin: PropTypes.string,
-		createLength: PropTypes.number
+		createLength: PropTypes.number,
+		autoFocus: PropTypes.bool,
+		forceError: PropTypes.bool
 	};
 	
 	static contextTypes = {
@@ -51,7 +53,7 @@ export default class AuthPinModal extends Component {
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.open !== this.props.open) {
+		if (nextProps.open !== this.props.open || nextProps.unlockPin !== this.props.unlockPin) {
 			if (nextProps.open) {
 				this.showModal(nextProps);
 			} else {
@@ -160,7 +162,7 @@ export default class AuthPinModal extends Component {
 	}
 	
 	selectInput(index, state) {
-		if (index >= 0) this.hiddenInput.focus();
+		if (index >= 0) setTimeout(() => this.hiddenInput.focus());
 		this.setState({...state, selectedIndex: index});
 	}
 	
@@ -200,7 +202,7 @@ export default class AuthPinModal extends Component {
 	}
 	
 	displayErrorMessage() {
-		if (this.state.incorrectTries > 0) {
+		if (this.state.incorrectTries > 0 || this.state.forceError) {
 			if (_isFunction(this.props.errorMessage)) {
 				return this.props.errorMessage(this.state.incorrectTries);
 			} else {
@@ -215,8 +217,9 @@ export default class AuthPinModal extends Component {
 			_unlockPin = '';
 			for (var l = 0; l < props.createLength; l++) _unlockPin += '0';
 		}
-		this.selectInput(-1, {
+		this.selectInput(props.autoFocus ? 0 : -1, {
 			incorrectTries: 0,
+			forceError: props.forceError,
 			correctPin: false,
 			pinInput: [],
 			targetPin: _unlockPin.split('')
