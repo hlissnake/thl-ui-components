@@ -63,7 +63,7 @@ export default class AuthPinModal extends Component {
 	}
 	
 	render(){
-		const { scale, colors, borderColor } = { ...rebassConfig, ...this.context.rebass }
+		const { scale, colors, borderColor } = { ...rebassConfig, ...this.context.rebass };
 		const dotStyle = {
 			height: 12,
 			width: 12,
