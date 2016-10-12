@@ -1,3 +1,13 @@
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/THL-DEV/thl-ui-components/compare/1.9.3...v1.10.0) (2016-10-12)
+
+
+### Features
+
+* **Stateless:** Add PanelHeader wrapper ([06070ef](https://github.com/THL-DEV/thl-ui-components/commit/06070ef))
+
+
+
 <a name="1.9.3"></a>
 ## [1.9.3](https://github.com/THL-DEV/thl-ui-components/compare/1.9.2...v1.9.3) (2016-10-11)
 
