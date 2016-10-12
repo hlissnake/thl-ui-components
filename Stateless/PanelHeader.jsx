@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import PanelHeader from 'rebass/dist/PanelHeader';
 
 function WrappedPanelHeader({style = {}, theme = 'primary', ...props}, {rebass}) {
-	console.log('theme', theme, rebass);
 	return <PanelHeader
 		style={{
 			...style,

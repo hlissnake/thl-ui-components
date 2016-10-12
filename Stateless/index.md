@@ -30,6 +30,6 @@ This component is an extension of rebass' `InlineForm` it has all the functional
 | __invalid__ |  _boolean_ | If true sets `aria-invalid` on the input and disables the submit button. |
 | __buttonOutline__ |  _boolean (true)_ | If true it uses the `ButtonOutline` component, if false uses the `Button` component. |
 
-### PanelHeader
+### PanelHeader, Button, ButtonOutline, ButtonCircle
 
 These components directly wrap their rebass components and apply styling specific to our usages.

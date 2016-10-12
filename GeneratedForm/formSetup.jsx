@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from 'rebass/dist/Button';
+import Button from '../Stateless/Button';
 import {FormattedMessage} from 'react-intl';
 
 export const FormButton = (_props) => {
