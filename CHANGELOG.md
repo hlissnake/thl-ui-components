@@ -1,3 +1,13 @@
+<a name="1.11.0"></a>
+# [1.11.0](https://github.com/THL-DEV/thl-ui-components/compare/1.10.0...v1.11.0) (2016-10-12)
+
+
+### Features
+
+* **Stateless:** Add Button overrides for styling ([e4bd89e](https://github.com/THL-DEV/thl-ui-components/commit/e4bd89e))
+
+
+
 <a name="1.10.0"></a>
 # [1.10.0](https://github.com/THL-DEV/thl-ui-components/compare/1.9.3...v1.10.0) (2016-10-12)
 
