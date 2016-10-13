@@ -1,3 +1,13 @@
+<a name="1.11.2"></a>
+## [1.11.2](https://github.com/THL-DEV/thl-ui-components/compare/1.11.1...v1.11.2) (2016-10-13)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Fix pin entry bugs ([6b25fe1](https://github.com/THL-DEV/thl-ui-components/commit/6b25fe1))
+
+
+
 <a name="1.11.1"></a>
 ## [1.11.1](https://github.com/THL-DEV/thl-ui-components/compare/1.11.0...v1.11.1) (2016-10-13)
 
