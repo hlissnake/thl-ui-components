@@ -1,3 +1,13 @@
+<a name="1.11.1"></a>
+## [1.11.1](https://github.com/THL-DEV/thl-ui-components/compare/1.11.0...v1.11.1) (2016-10-13)
+
+
+### Bug Fixes
+
+* **ProgressBar:** passthrough style options and spinner options ([cd495b1](https://github.com/THL-DEV/thl-ui-components/commit/cd495b1))
+
+
+
 <a name="1.11.0"></a>
 # [1.11.0](https://github.com/THL-DEV/thl-ui-components/compare/1.10.0...v1.11.0) (2016-10-12)
 
