@@ -1,3 +1,13 @@
+<a name="1.11.4"></a>
+## [1.11.4](https://github.com/THL-DEV/thl-ui-components/compare/1.11.3...v1.11.4) (2016-10-13)
+
+
+### Bug Fixes
+
+* **RebassThemes:** Add borderColors override for astro ([1ee9a95](https://github.com/THL-DEV/thl-ui-components/commit/1ee9a95))
+
+
+
 <a name="1.11.3"></a>
 ## [1.11.3](https://github.com/THL-DEV/thl-ui-components/compare/1.11.2...v1.11.3) (2016-10-13)
 
