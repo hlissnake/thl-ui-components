@@ -1,3 +1,13 @@
+<a name="1.11.3"></a>
+## [1.11.3](https://github.com/THL-DEV/thl-ui-components/compare/1.11.2...v1.11.3) (2016-10-13)
+
+
+### Bug Fixes
+
+* **ExpandableSearch:** Styling issues ([55ef79b](https://github.com/THL-DEV/thl-ui-components/commit/55ef79b))
+
+
+
 <a name="1.11.2"></a>
 ## [1.11.2](https://github.com/THL-DEV/thl-ui-components/compare/1.11.1...v1.11.2) (2016-10-13)
 
