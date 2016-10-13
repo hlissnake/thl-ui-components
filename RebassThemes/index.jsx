@@ -1,5 +1,6 @@
 import React from 'react';
 import rebassConfig from 'rebass/src/config';
+import color from 'color';
 
 export default class CosmosComponents extends React.Component {
 	static propTypes = {
@@ -29,6 +30,10 @@ export default class CosmosComponents extends React.Component {
 					...rebassConfig.colors,
 					...theme.colors,
 					primary: this.props.primaryColour || theme.colors.primary || rebassConfig.colors.primary
+				},
+				borderColors: {
+					...theme.borderColors,
+					primary: color(this.props.primaryColour || theme.colors.primary || rebassConfig.colors.primary).desaturate(1/74).darken(5/54).hexString()
 				}
 			}
 		}
