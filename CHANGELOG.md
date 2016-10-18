@@ -1,3 +1,13 @@
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/THL-DEV/thl-ui-components/compare/1.11.4...v1.12.0) (2016-10-18)
+
+
+### Features
+
+* **AlertMessages:** New component ([204ef4e](https://github.com/THL-DEV/thl-ui-components/commit/204ef4e))
+
+
+
 <a name="1.11.4"></a>
 ## [1.11.4](https://github.com/THL-DEV/thl-ui-components/compare/1.11.3...v1.11.4) (2016-10-13)
 
