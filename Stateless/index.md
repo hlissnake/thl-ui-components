@@ -29,3 +29,7 @@ This component is an extension of rebass' `InlineForm` it has all the functional
 | __message__ |  _string_ | An optional message to send to the input field. |
 | __invalid__ |  _boolean_ | If true sets `aria-invalid` on the input and disables the submit button. |
 | __buttonOutline__ |  _boolean (true)_ | If true it uses the `ButtonOutline` component, if false uses the `Button` component. |
+
+### PanelHeader, Button, ButtonOutline, ButtonCircle
+
+These components directly wrap their rebass components and apply styling specific to our usages.

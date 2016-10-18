@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react';
 import Radium from 'radium';
 import Base from 'rebass/dist/Base';
 import rebassConfig from 'rebass/dist/config';
+import _isString from 'lodash/isString';
 
 class ProgressBar extends React.Component {
 	static propTypes = {
@@ -12,7 +13,7 @@ class ProgressBar extends React.Component {
 		absolute: PropTypes.bool,
 		autoIncrement: PropTypes.bool,
 		intervalTime: PropTypes.number,
-		spinner: PropTypes.oneOf([false, 'left', 'right'])
+		spinner: PropTypes.oneOfType([PropTypes.bool, PropTypes.string, PropTypes.object])
 	};
 	
 	static defaultProps = {
@@ -92,7 +93,7 @@ class ProgressBar extends React.Component {
 	
 	render() {
 		const { colors, ProgressBar_Spinner_Icon } = { ...rebassConfig, ...this.context.rebass }
-		let {onTop, spinner, className, theme, absolute} = this.props;
+		let {onTop, spinner, className, theme, absolute, style = {}} = this.props;
 		className = 'ProgressBar' + (className ? ' ' + className : '');
 		let {percent} = this.state;
 		let spinnerIconStyle = {
@@ -111,19 +112,28 @@ class ProgressBar extends React.Component {
 			...(absolute ? classes.absolute : {}),
 			...(onTop ? classes.onTop : {}),
 			...((percent < 0 || percent >= 100) ? classes.hide : {}),
+			...style
 		};
-		let style = {
+		let barStyle = {
 			...percentStyle,
 			width: (percent < 0 ? 0 : percent) + '%'
 		};
+		let spinnerClass;
+		if (_isString(spinner)) {
+			spinnerClass = classes[`spinner-${spinner}`];
+		} else {
+			spinnerClass = spinner;
+		}
 		let spinnerStyles = {
 			...classes.spinner,
 			...(absolute ? classes.absolute : {}),
-			...classes[`spinner-${spinner}`]
+			...spinnerClass
 		};
 		return (
 			<Base className={className} baseStyle={mainStyle}>
-				<Base className="ProgressBar_Bar" baseStyle={style}/>
+				<div style={{overflow: 'hidden', height: 3}}>
+					<Base className="ProgressBar_Bar" baseStyle={barStyle}/>
+				</div>
 				{
 					spinner ?
 						<Base className="ProgressBar_Spinner" baseStyle={spinnerStyles}>
@@ -153,9 +163,7 @@ const classes = {
 		visibility: 'visible',
 		opacity: 1,
 		transition: 'all 400ms',
-		zIndex: 9999,
-		overflow: 'hidden',
-		height: 33
+		zIndex: 9999
 	},
 	onTop: {
 		height: '100%'

@@ -1,3 +1,73 @@
+<a name="1.12.0"></a>
+# [1.12.0](https://github.com/THL-DEV/thl-ui-components/compare/1.11.4...v1.12.0) (2016-10-18)
+
+
+### Features
+
+* **AlertMessages:** New component ([204ef4e](https://github.com/THL-DEV/thl-ui-components/commit/204ef4e))
+
+
+
+<a name="1.11.4"></a>
+## [1.11.4](https://github.com/THL-DEV/thl-ui-components/compare/1.11.3...v1.11.4) (2016-10-13)
+
+
+### Bug Fixes
+
+* **RebassThemes:** Add borderColors override for astro ([1ee9a95](https://github.com/THL-DEV/thl-ui-components/commit/1ee9a95))
+
+
+
+<a name="1.11.3"></a>
+## [1.11.3](https://github.com/THL-DEV/thl-ui-components/compare/1.11.2...v1.11.3) (2016-10-13)
+
+
+### Bug Fixes
+
+* **ExpandableSearch:** Styling issues ([55ef79b](https://github.com/THL-DEV/thl-ui-components/commit/55ef79b))
+
+
+
+<a name="1.11.2"></a>
+## [1.11.2](https://github.com/THL-DEV/thl-ui-components/compare/1.11.1...v1.11.2) (2016-10-13)
+
+
+### Bug Fixes
+
+* **AuthPinModal:** Fix pin entry bugs ([6b25fe1](https://github.com/THL-DEV/thl-ui-components/commit/6b25fe1))
+
+
+
+<a name="1.11.1"></a>
+## [1.11.1](https://github.com/THL-DEV/thl-ui-components/compare/1.11.0...v1.11.1) (2016-10-13)
+
+
+### Bug Fixes
+
+* **ProgressBar:** passthrough style options and spinner options ([cd495b1](https://github.com/THL-DEV/thl-ui-components/commit/cd495b1))
+
+
+
+<a name="1.11.0"></a>
+# [1.11.0](https://github.com/THL-DEV/thl-ui-components/compare/1.10.0...v1.11.0) (2016-10-12)
+
+
+### Features
+
+* **Stateless:** Add Button overrides for styling ([e4bd89e](https://github.com/THL-DEV/thl-ui-components/commit/e4bd89e))
+
+
+
+<a name="1.10.0"></a>
+# [1.10.0](https://github.com/THL-DEV/thl-ui-components/compare/1.9.3...v1.10.0) (2016-10-12)
+
+
+### Features
+
+* **Stateless:** Add PanelHeader wrapper ([06070ef](https://github.com/THL-DEV/thl-ui-components/commit/06070ef))
+
+
+
 <a name="1.9.3"></a>
 ## [1.9.3](https://github.com/THL-DEV/thl-ui-components/compare/1.9.2...v1.9.3) (2016-10-11)
 

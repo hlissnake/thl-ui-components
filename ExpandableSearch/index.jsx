@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {Input, NavItem, ButtonOutline, Button} from 'rebass';
-
+import config from 'rebass/dist/config';
+import Input from 'rebass/dist/Input';
+import NavItem from 'rebass/dist/NavItem';
+import Button from '../Stateless/Button';
+import ButtonOutline from '../Stateless/ButtonOutline';
 
 class SearchInput extends Component {
 	constructor() {
@@ -66,9 +69,16 @@ export default class ExpandableSearch extends Component {
 	}
 	
 	render() {
+		const { scale, colors, borderColor } = { ...config, ...this.context.rebass };
 		let ButtonComponent = ButtonOutline;
+		let buttonStyle = {
+			marginLeft: -1,
+			padding: `${scale[1] - 2}px ${scale[2]}px`
+		}
 		if (this.props.inverted) {
 			ButtonComponent = Button;
+		} else {
+			buttonStyle.backgroundColor = '#FFF';
 		}
 		return <div style={this.props.style}>
 			<NavItem onClick={() => this.setState({expanded: true})} style={{padding: '8px 16px'}}>
@@ -83,12 +93,12 @@ export default class ExpandableSearch extends Component {
 				left: ((this.state.expanded) ? 0 : '100%'),
 				transition: 'left 0.3s ease-in-out',
 				display: 'flex',
-				alignItems: 'flex-start',
-				flexDirection: 'row'
+				alignItems: 'center',
+				flexDirection: 'row',
+				padding: ((this.state.expanded) ? 3 : 0)
 			}}>
 				<Input
 					style={{
-						backgroundColor: this.context.rebass.colors.white,
 						color: this.context.rebass.colors.black,
 						flex: '1 1 auto'
 					}}
@@ -110,7 +120,7 @@ export default class ExpandableSearch extends Component {
 					theme="primary"
 					children={this.props.children || 'Search'}
 					onClick={() => this.props.onSearch(this.state.value)}
-					style={{marginLeft: -1, padding: '8px 16px', backgroundColor: (!this.props.inverted ? '#FFF' : undefined)}}
+					style={buttonStyle}
 					rounded='right'
 					inverted={this.props.inverted}
 				/>

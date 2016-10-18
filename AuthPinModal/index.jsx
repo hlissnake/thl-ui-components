@@ -35,7 +35,8 @@ export default class AuthPinModal extends Component {
 			incorrectTries: 0,
 			correctPin: false,
 			pinInput: [],
-			targetPin: []
+			targetPin: [],
+			preventInput: false
 		};
 		this.keypressHandler = this.keypressHandler.bind(this);
 		this.showModal = this.showModal.bind(this);
@@ -157,7 +158,7 @@ export default class AuthPinModal extends Component {
 			</div>
 			<Text theme="error" bold>{this.displayErrorMessage()}</Text>
 			<NavItem onClick={this.props.onCancel} theme="primary" style={{float: 'right', marginBottom: -8, marginRight: -8}}>{this.props.cancelText}</NavItem>
-			<input type="tel" style={{position: 'absolute', top: 0, left: 0, height: 1, width: 1, opacity: 0, zIndex: -1, color: 'transparent'}} ref={input => this.hiddenInput = input} onKeyPress={this.keypressHandler}/>
+			<input type="tel" style={{position: 'absolute', top: 0, left: 0, height: 1, width: 1, opacity: 0, zIndex: -1, color: 'transparent'}} ref={input => this.hiddenInput = input} disabled={this.state.preventInput} onKeyPress={this.keypressHandler}/>
 		</Overlay>;
 	}
 	
@@ -179,7 +180,10 @@ export default class AuthPinModal extends Component {
 				});
 			} else if (pinInput.length === this.state.targetPin.length) {
 				let correctPin = this.state.targetPin.reduce((correct, element, index) => correct && element === pinInput[index], true);
-				let incorrectTries = (correctPin || !this.props.maxTries || this.props.maxTries <= 0) ? 0 : (this.state.incorrectTries + 1);
+				let incorrectTries = this.state.incorrectTries + 1;
+				if (correctPin) {
+					incorrectTries = 0;
+				}
 				this.selectInput(0, {
 					pinInput: [],
 					incorrectTries,
@@ -228,5 +232,6 @@ export default class AuthPinModal extends Component {
 	
 	removeEvent() {
 		this.hiddenInput.blur();
+		this.setState({preventInput: true})
 	}
 }
