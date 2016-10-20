@@ -31,12 +31,13 @@ export default class ToolbarOverflow extends React.Component {
 		this.calculateVisibleFromWidth = this.calculateVisibleFromWidth.bind(this);
 	}
 
-	componentDidReceiveProps() {
-		if (this.state.totalChildren !== this.refs.root.childNodes.length ||
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.childnen !== this.props.children ||
+			this.state.totalChildren !== this.refs.root.childNodes.length ||
 			this.state.width !== parseInt(window.getComputedStyle(this.refs.root).width) ||
 			this.state.overflowButtonWidth !== (this.props.overflowButtonWidth || 80)
 		){
-			this.calculateVisibleFromWidth();
+			this.calculateVisibleFromWidth(nextProps);
 		}
 	}
 
@@ -49,15 +50,15 @@ export default class ToolbarOverflow extends React.Component {
 		window.removeEventListener('resize', this.calculateVisibleFromWidth);
 	}
 
-	calculateVisibleFromWidth(){
+	calculateVisibleFromWidth(props = this.props){
 		let toolbarWidth = parseInt(window.getComputedStyle(this.refs.root).width);
 		let newState = {
 			childWidthArray: this.state.childWidthArray || [],
 			visibleChildren: [],
 			dropdownChildren: [],
-			totalChildren: (this.props.children || []).length,
+			totalChildren: (props.children || []).length,
 			width: toolbarWidth,
-			overflowButtonWidth: this.props.overflowButtonWidth || 80,
+			overflowButtonWidth: props.overflowButtonWidth || 80,
 			dropdownOpen: false
 		};
 		if (!newState.childWidthArray || newState.totalChildren !== this.state.totalChildren) {
@@ -66,7 +67,7 @@ export default class ToolbarOverflow extends React.Component {
 					parseInt(window.getComputedStyle(element).marginRight)
 			);
 		}
-		let children = React.Children.toArray(this.props.children);
+		let children = React.Children.toArray(props.children);
 		let totalChildLength = 0;
 		for (var _c = 0; _c < newState.childWidthArray.length; _c++) {
 			if (totalChildLength + newState.childWidthArray[_c] < toolbarWidth - newState.overflowButtonWidth) {
