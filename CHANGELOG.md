@@ -1,3 +1,13 @@
+<a name="1.12.1"></a>
+## [1.12.1](https://github.com/THL-DEV/thl-ui-components/compare/1.12.0...v1.12.1) (2016-10-20)
+
+
+### Bug Fixes
+
+* **ToolbarOverflow:** Fix a bug with changing children not updating ([da84727](https://github.com/THL-DEV/thl-ui-components/commit/da84727))
+
+
+
 <a name="1.12.0"></a>
 # [1.12.0](https://github.com/THL-DEV/thl-ui-components/compare/1.11.4...v1.12.0) (2016-10-18)
 
