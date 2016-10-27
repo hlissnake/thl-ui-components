@@ -1,3 +1,13 @@
+<a name="1.12.2"></a>
+## [1.12.2](https://github.com/THL-DEV/thl-ui-components/compare/1.12.1...v1.12.2) (2016-10-27)
+
+
+### Features
+
+* **Stateless:** Add Table Component ([b361d16](https://github.com/THL-DEV/thl-ui-components/commit/b361d16))
+
+
+
 <a name="1.12.1"></a>
 ## [1.12.1](https://github.com/THL-DEV/thl-ui-components/compare/1.12.0...v1.12.1) (2016-10-20)
 
