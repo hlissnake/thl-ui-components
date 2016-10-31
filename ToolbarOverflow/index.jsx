@@ -32,12 +32,17 @@ export default class ToolbarOverflow extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.childnen !== this.props.children ||
+		if (nextProps.children !== this.props.children ||
 			this.state.totalChildren !== this.refs.root.childNodes.length ||
 			this.state.width !== parseInt(window.getComputedStyle(this.refs.root).width) ||
 			this.state.overflowButtonWidth !== (this.props.overflowButtonWidth || 80)
 		){
-			this.calculateVisibleFromWidth(nextProps);
+			this.setState({
+				visibleChildren: undefined,
+				dropdownChildren: undefined,
+				dropdownOpen: false
+			});
+			setTimeout(() => this.calculateVisibleFromWidth(nextProps));
 		}
 	}
 
