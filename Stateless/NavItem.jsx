@@ -121,25 +121,6 @@ class Link extends React.Component {
   }
 }
 
-if (__DEV__) {
-  Link.propTypes = {
-    to: PropTypes.oneOfType([ PropTypes.string, PropTypes.object ]).isRequired,
-    replace: PropTypes.bool,
-    activeStyle: PropTypes.object,
-    activeClassName: PropTypes.string,
-    activeOnlyWhenExact: PropTypes.bool,
-    isActive: PropTypes.func,
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-
-    // props we have to deal with but aren't necessarily
-    // part of the Link API
-    style: PropTypes.object,
-    className: PropTypes.string,
-    target: PropTypes.string,
-    onClick: PropTypes.func
-  }
-}
-
 // we should probably use LocationUtils.createLocationDescriptor
 const createLocationDescriptor = (to) =>
   typeof to === 'object' ? to : { pathname: to }
