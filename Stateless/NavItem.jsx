@@ -200,5 +200,3 @@ const deepEqual = (a, b) => {
 
   return String(a) === String(b)
 }
-
-export default Link
