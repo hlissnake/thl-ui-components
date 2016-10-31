@@ -1,3 +1,18 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/THL-DEV/thl-ui-components/compare/1.12.2...v2.0.0) (2016-10-31)
+
+
+### Bug Fixes
+
+* **ToolbarOverflow:** correctly fix prop change updates ([03e0279](https://github.com/THL-DEV/thl-ui-components/commit/03e0279))
+
+
+### Features
+
+* **NavItem:** Temp fix for react-router ([b51c4f6](https://github.com/THL-DEV/thl-ui-components/commit/b51c4f6))
+
+
+
 <a name="1.12.2"></a>
 ## [1.12.2](https://github.com/THL-DEV/thl-ui-components/compare/1.12.1...v1.12.2) (2016-10-27)
 
