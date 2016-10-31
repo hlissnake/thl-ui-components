@@ -1,3 +1,13 @@
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/THL-DEV/thl-ui-components/compare/2.0.0...v2.0.1) (2016-10-31)
+
+
+### Bug Fixes
+
+* **NavItem:** Don’t export override ([a8c5f05](https://github.com/THL-DEV/thl-ui-components/commit/a8c5f05))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/THL-DEV/thl-ui-components/compare/1.12.2...v2.0.0) (2016-10-31)
 
