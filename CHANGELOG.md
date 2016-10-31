@@ -1,3 +1,13 @@
+<a name="2.0.3"></a>
+## [2.0.3](https://github.com/THL-DEV/thl-ui-components/compare/2.0.2...v2.0.3) (2016-10-31)
+
+
+### Bug Fixes
+
+* **NavItem:** Fix new Link logic and ability to set className ([78115b5](https://github.com/THL-DEV/thl-ui-components/commit/78115b5))
+
+
+
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/THL-DEV/thl-ui-components/compare/2.0.1...v2.0.2) (2016-10-31)
 
