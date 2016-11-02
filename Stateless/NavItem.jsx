@@ -216,7 +216,7 @@ const createLocationDescriptor = (to) =>
 	typeof to === 'object' ? to : {pathname: to}
 
 const pathIsActive = (to, pathname, activeOnlyWhenExact) =>
-	activeOnlyWhenExact ? pathname === to : pathname.indexOf(to) === 0
+	activeOnlyWhenExact ? pathname === to : new RegExp(to.replace(/(\/|\?)/ig, '\\$1') + '(\\/|\\?|#|$)').test(pathname)
 
 const queryIsActive = (query, activeQuery) => {
 	if (activeQuery == null)
