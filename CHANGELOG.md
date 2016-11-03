@@ -1,3 +1,16 @@
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/THL-DEV/thl-ui-components/compare/2.0.3...v2.0.4) (2016-11-03)
+
+
+### Bug Fixes
+
+* **NavItem:** background color more flexible ([1be4d62](https://github.com/THL-DEV/thl-ui-components/commit/1be4d62))
+* **NavItem:** Fix NavItem to not hack Link ([ae60e68](https://github.com/THL-DEV/thl-ui-components/commit/ae60e68))
+* **NavItem:** Hack the Link element here ([e456b9d](https://github.com/THL-DEV/thl-ui-components/commit/e456b9d))
+* **PanelHeader:** inverted sets color to black ([172c748](https://github.com/THL-DEV/thl-ui-components/commit/172c748))
+
+
+
 <a name="2.0.3"></a>
 ## [2.0.3](https://github.com/THL-DEV/thl-ui-components/compare/2.0.2...v2.0.3) (2016-10-31)
 
