@@ -2,11 +2,13 @@ import React, {Component} from 'react';
 import Link from 'react-router/Link';
 import Base from 'rebass/dist/Base';
 import config from 'rebass/dist/config';
+import color from 'color';
 
-export default function WrappedNavItem(_props) {
+export default function WrappedNavItem(_props, {rebass}) {
 	if (_props.is) {
 		return <NavItem {..._props}/>;
 	} else {
+		const {colors} = {...config, ...rebass}
 		let {
 			to, onClick, activeOnlyWhenExact, isActive,
 			location, activeClassName, activeStyle, ...props
@@ -22,13 +24,16 @@ export default function WrappedNavItem(_props) {
 		return <Link
 			{...linkProps}
 		>{({isActive, location, href, onClick, transition, ...others}) => {
-			let theme, inverted;
+			let theme = props.theme, inverted = props.inverted;
 			if (isActive) {
 				if (activeClassName || activeStyle) {
 					props.className = (props.className || '') + ' ' + (activeClassName || '');
 					props.style = {...props.style, ...activeStyle};
 				} else {
-					theme = "primary";
+					props.style = {...props.style,
+						backgroundColor: color(colors[theme] || colors.primary).alpha(0.6).rgbaString()
+					};
+					theme = theme || "primary";
 					inverted = true;
 				}
 			}
@@ -42,7 +47,9 @@ export default function WrappedNavItem(_props) {
 		}}</Link>;
 	}
 }
-
+WrappedNavItem.contextTypes = {
+	rebass: React.PropTypes.object
+};
 
 /**
  * Link for use in navigation. Inherits color
