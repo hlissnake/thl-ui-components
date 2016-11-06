@@ -26,7 +26,7 @@ export class DefaultFieldRow extends Component {
 	}
 }
 
-class StaticElement extends Component {
+export class StaticElement extends Component {
 	static contextTypes = {
 		_reduxForm: PropTypes.object
 	};
