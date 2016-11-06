@@ -1,3 +1,18 @@
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/THL-DEV/thl-ui-components/compare/2.0.4...v2.0.5) (2016-11-06)
+
+
+### Bug Fixes
+
+* **PanelHeader:** Color for theme default ([15edd6c](https://github.com/THL-DEV/thl-ui-components/commit/15edd6c))
+
+
+### Features
+
+* **GeneratedForm:** Expose StaticElement component ([fe29016](https://github.com/THL-DEV/thl-ui-components/commit/fe29016))
+
+
+
 <a name="2.0.4"></a>
 ## [2.0.4](https://github.com/THL-DEV/thl-ui-components/compare/2.0.3...v2.0.4) (2016-11-03)
 
