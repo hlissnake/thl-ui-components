@@ -1,3 +1,13 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/THL-DEV/thl-ui-components/compare/2.0.5...v3.0.0) (2016-11-09)
+
+
+### Features
+
+* **GeneratedForm:** Support Nested Forms ([1017c2d](https://github.com/THL-DEV/thl-ui-components/commit/1017c2d))
+
+
+
 <a name="2.0.5"></a>
 ## [2.0.5](https://github.com/THL-DEV/thl-ui-components/compare/2.0.4...v2.0.5) (2016-11-06)
 
