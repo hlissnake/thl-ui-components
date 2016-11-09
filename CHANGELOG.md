@@ -1,3 +1,106 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/THL-DEV/thl-ui-components/compare/2.0.5...v3.0.0) (2016-11-09)
+
+
+### Features
+
+* **GeneratedForm:** Support Nested Forms ([1017c2d](https://github.com/THL-DEV/thl-ui-components/commit/1017c2d))
+
+
+
+<a name="2.0.5"></a>
+## [2.0.5](https://github.com/THL-DEV/thl-ui-components/compare/2.0.4...v2.0.5) (2016-11-06)
+
+
+### Bug Fixes
+
+* **PanelHeader:** Color for theme default ([15edd6c](https://github.com/THL-DEV/thl-ui-components/commit/15edd6c))
+
+
+### Features
+
+* **GeneratedForm:** Expose StaticElement component ([fe29016](https://github.com/THL-DEV/thl-ui-components/commit/fe29016))
+
+
+
+<a name="2.0.4"></a>
+## [2.0.4](https://github.com/THL-DEV/thl-ui-components/compare/2.0.3...v2.0.4) (2016-11-03)
+
+
+### Bug Fixes
+
+* **NavItem:** background color more flexible ([1be4d62](https://github.com/THL-DEV/thl-ui-components/commit/1be4d62))
+* **NavItem:** Fix NavItem to not hack Link ([ae60e68](https://github.com/THL-DEV/thl-ui-components/commit/ae60e68))
+* **NavItem:** Hack the Link element here ([e456b9d](https://github.com/THL-DEV/thl-ui-components/commit/e456b9d))
+* **PanelHeader:** inverted sets color to black ([172c748](https://github.com/THL-DEV/thl-ui-components/commit/172c748))
+
+
+
+<a name="2.0.3"></a>
+## [2.0.3](https://github.com/THL-DEV/thl-ui-components/compare/2.0.2...v2.0.3) (2016-10-31)
+
+
+### Bug Fixes
+
+* **NavItem:** Fix new Link logic and ability to set className ([78115b5](https://github.com/THL-DEV/thl-ui-components/commit/78115b5))
+
+
+
+<a name="2.0.2"></a>
+## [2.0.2](https://github.com/THL-DEV/thl-ui-components/compare/2.0.1...v2.0.2) (2016-10-31)
+
+
+### Bug Fixes
+
+* **NavItem:** Remove debug ([51b966c](https://github.com/THL-DEV/thl-ui-components/commit/51b966c))
+
+
+
+<a name="2.0.1"></a>
+## [2.0.1](https://github.com/THL-DEV/thl-ui-components/compare/2.0.0...v2.0.1) (2016-10-31)
+
+
+### Bug Fixes
+
+* **NavItem:** Don’t export override ([a8c5f05](https://github.com/THL-DEV/thl-ui-components/commit/a8c5f05))
+
+
+
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/THL-DEV/thl-ui-components/compare/1.12.2...v2.0.0) (2016-10-31)
+
+
+### Bug Fixes
+
+* **ToolbarOverflow:** correctly fix prop change updates ([03e0279](https://github.com/THL-DEV/thl-ui-components/commit/03e0279))
+
+
+### Features
+
+* **NavItem:** Temp fix for react-router ([b51c4f6](https://github.com/THL-DEV/thl-ui-components/commit/b51c4f6))
+
+
+
+<a name="1.12.2"></a>
+## [1.12.2](https://github.com/THL-DEV/thl-ui-components/compare/1.12.1...v1.12.2) (2016-10-27)
+
+
+### Features
+
+* **Stateless:** Add Table Component ([b361d16](https://github.com/THL-DEV/thl-ui-components/commit/b361d16))
+
+
+
+<a name="1.12.1"></a>
+## [1.12.1](https://github.com/THL-DEV/thl-ui-components/compare/1.12.0...v1.12.1) (2016-10-20)
+
+
+### Bug Fixes
+
+* **ToolbarOverflow:** Fix a bug with changing children not updating ([da84727](https://github.com/THL-DEV/thl-ui-components/commit/da84727))
+
+
+
 <a name="1.12.0"></a>
 # [1.12.0](https://github.com/THL-DEV/thl-ui-components/compare/1.11.4...v1.12.0) (2016-10-18)
 

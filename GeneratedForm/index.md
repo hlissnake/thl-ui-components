@@ -47,27 +47,14 @@ This component converts the passed in parameters to be a useful form.
 
 __context__
 
-The following values are used from the context if available.
+The following values are used from the `context.generatedFormgeneratedForm` if available.
 
 | Property Name | Type | Description |
 | --- | --- | --- |
 | __customFields__ | _object_ | This object has key-value pairs. If the key matches a field type then the value is used in the `React.createElement(<value>...` to create the input. The following are passed as props; key-values from field.settings, the key-values from field, all redux-form values and if a field is set to nonInteractive then the `formProps` property containing the redux-form props is also passed. Additionally if a Class or Object has the `isArrayField` value set to true then the component will be passed to a FieldArray instead of a Field component. |
-| __buildErrorMessage__ | _function_ | This function, if provided, generates the default error message based on the field validator. The default function is as after below. |
 | __formValidators__ | _object_ | An object of key/value pairs which defines validators to be used. __NOTE__ These default validators have 3 parameters as opposed to fields.validators. Default is: `{required: (validator, name, value) => (!value) ? buildErrorMessage(validator, name) : undefined}` |
 | __defaultRowComponent__ | _object / React Class / html_ | default value for __rowComponent__ |
 | __defaultFormComponent__ | _object / React Class / html_ | default value for __formComponent__ |
-
-```jsx
-function buildErrorMessage(validator, name) {
-    if (isFunction(validator.message)) {
-        return validator.message(validator, name);
-    } else if (isString(validator.message)) {
-        return validator.message;
-    } else {
-        return `${name} is ${validator.verb || validator.type}`;
-    }
-}
-```
 
 __props__
 
@@ -89,7 +76,7 @@ __Parameters__
 | Property Name | Type | Description |
 | --- | --- | --- |
 | __name: (required)__ | _string_ | This is the name used in redux-form. Essentially this is the field identifier. |
-| __type: (required)__ | _string_ | This is the key that determines what input is displayed, currently supported (in order of precedence) Any key on `context.customFields`, 'select', 'textarea', any other value will be passed to an input field as the type parameter (defaults to 'text'). |
+| __type: (required)__ | _string_ | This is the key that determines what input is displayed, currently supported (in order of precedence) Any key on `context.generatedFormcustomFields`, 'objectArray' (see note below), 'select', 'textarea', any other value will be passed to an input field as the type parameter (defaults to 'text'). |
 | __displayName__ | _string_ | This is the name that will be displayed to the user - defaults to name. |
 | __required__ | _any_ | If set this value is passed to the input as required, can also be set in __settings__ |
 | __label__ | _string / React element_ | This is used as the label to display in the default display components. If not provided will use displayName. |
@@ -99,6 +86,45 @@ __Parameters__
 | __validators__ | _array_ | An array of validators, see 'validator' property for individual settings. |
 | __validator__ | _object / string / function_ | If string the validator is converted to `{type: validator}` object. If an object it's type key is checked against inbuilt validators and that validator is called. If a function then the function is used as the validation. These are used in the `redux.validators`, see Validation for more details. |
 | __Custom__ | _React class / stateless function_ | Used to override the entire render of the form field, note you will have to manually include the Field/FieldArray component if needed - this also overrides the type param. |
+
+__Type='objectArray' Parameters__
+
+| Property Name | Type | Description |
+| --- | --- | --- |
+| __fieldsDefinition__ | _array_ | This is an array of fieldsDefinitions, this allows for nested repeatable forms. |
+| __arrayComponent__ | _React element / Stateless Function_ | This component is used to wrap the nested form. |
+| __arrayRowComponent__ | _React element / Stateless Function_ | This component is used to wrap each form row of the array. |
+| __arrayFormRowComponent__ | _React element / Stateless Function_ | This component is used to wrap each field of the nested form. |
+
+The following is an example of displaying a nested form as a table.
+```
+{
+	arrayComponent: (({fields, fieldsMap, displayName, meta, ...props}) => <Table.Table {...props}>
+		<Table.Thead>
+			<Table.TR>
+				<Table.TH colSpan={3}>
+					{displayName}
+				</Table.TH>
+				<Table.TH style={{width: 32}}><Button theme="primary" type="button" style={{padding: '8px 12px'}} onClick={() => fields.push({})}>
+					<i className="fa fa-fw fa-plus"/>
+				</Button></Table.TH>
+			</Table.TR>
+		</Table.Thead>
+		<Table.Tbody>
+			{fields.map(fieldsMap)}
+		</Table.Tbody>
+	</Table.Table>),
+	arrayRowComponent: (({index, fieldName, children, fields}) => <Table.TR>
+		{children}
+		<Table.TD style={{width: 32}}>
+			<ButtonOutline theme="warning" type="button" style={{padding: '8px 12px'}} onClick={() => fields.remove(index)}>
+				<i className="fa fa-fw fa-times-circle"/>
+			</ButtonOutline>
+		</Table.TD>
+	</Table.TR>),
+	arrayFormRowComponent: ({label, fieldProps, field, ...props}) => <Table.TD {...props}>{field}</Table.TD>
+}
+```
 
 __Type='select' Parameters__
 
@@ -141,7 +167,7 @@ If we were to convert this to a GeneratedForm component field set we would do th
 ```
 
 You could also override this by manually passing in the validate parameter in the `formRedux` parameter.
-Note that passing a string will attempt to get the corresponding function off the 'context.formValidators' object, by default the only validator included is the required validator.
+Note that passing a string will attempt to get the corresponding function off the 'context.generatedFormformValidators' object, by default the only validator included is the required validator.
 
 #### Generated Form > rowComponent
 

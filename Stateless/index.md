@@ -33,3 +33,7 @@ This component is an extension of rebass' `InlineForm` it has all the functional
 ### PanelHeader, Button, ButtonOutline, ButtonCircle
 
 These components directly wrap their rebass components and apply styling specific to our usages.
+
+### Table
+
+This component exposes Tbody, Thead, TR, TD, TH and Table components that are used to apply rebass styling to generic tables. Only basic copy from rebass Table component currently.
