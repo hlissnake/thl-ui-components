@@ -113,4 +113,20 @@ storiesOf('GeneratedForm', module)
 			<span>Invalid: {(fieldProps.invalid) ? 'true' : 'false'}, touched: {(fieldProps.touched) ? 'true' : 'false'}, {fieldProps.error}</span>
 		</div>
 	}}/>
+)).add('Nested Form Components', () => (
+	<GeneratedForm formName="testform" fieldsDefinition={[
+		{
+			name: 'name'
+		},
+		{
+			name: 'children',
+			displayName: 'Children',
+			type: 'objectArray',
+			fieldsDefinition: [{
+				name: 'name'
+			},{
+				name: 'age'
+			}]
+		}
+	]}/>
 ));
