@@ -4,10 +4,10 @@ import ButtonCircle from 'rebass/dist/ButtonCircle';
 function WrappedButtonCircle({style = {}, theme = 'primary', ...props}, {rebass}) {
 	return <ButtonCircle
 		style={{
-			...style,
 			borderWidth: 1,
 			borderStyle: 'solid',
-			borderColor: rebass.colors[theme] 
+			borderColor: rebass.colors[theme], 
+			...style
 		}}
 		theme={theme}
 		{...props}

@@ -19,7 +19,7 @@ This Component is a modified version of https://github.com/minhtranite/react-pro
 
 ## API
 
-### AuthPinModal
+### ProgressBar
 
 __props__
 

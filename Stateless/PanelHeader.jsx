@@ -7,10 +7,10 @@ function WrappedPanelHeader({style = {}, theme = 'primary', ...props}, {rebass})
 	}
 	return <PanelHeader
 		style={{
-			...style,
 			borderBottomWidth: 1,
 			borderBottomStyle: 'solid',
-			borderBottomColor: (rebass.borderColors || rebass.colors)[theme] 
+			borderBottomColor: (rebass.borderColors || rebass.colors)[theme], 
+			...style
 		}}
 		theme={theme}
 		{...props}

@@ -4,10 +4,10 @@ import Button from 'rebass/dist/Button';
 function WrappedButton({style = {}, theme = 'primary', ...props}, {rebass}) {
 	return <Button
 		style={{
-			...style,
 			borderWidth: 1,
 			borderStyle: 'solid',
-			borderColor: rebass.colors[theme] 
+			borderColor: rebass.colors[theme], 
+			...style
 		}}
 		theme={theme}
 		{...props}
