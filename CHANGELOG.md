@@ -1,3 +1,18 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/THL-DEV/thl-ui-components/compare/3.0.0...v3.1.0) (2016-11-14)
+
+
+### Bug Fixes
+
+* **Stateless:** Fix style precedence order ([d3c3481](https://github.com/THL-DEV/thl-ui-components/commit/d3c3481))
+
+
+### Features
+
+* **SearchSelect:** New Component ([e42b8bf](https://github.com/THL-DEV/thl-ui-components/commit/e42b8bf))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/THL-DEV/thl-ui-components/compare/2.0.5...v3.0.0) (2016-11-09)
 

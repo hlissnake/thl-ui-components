@@ -18,6 +18,7 @@ module.exports = {
 					path.resolve(__dirname, '../ToolbarOverflow'),
 					path.resolve(__dirname, '../VersionedComponent'),
 					path.resolve(__dirname, '../AuthPinModal'),
+					path.resolve(__dirname, '../SearchSelect'),
 					path.resolve(__dirname, '../ProgressBar')
 				],
 				query: {
