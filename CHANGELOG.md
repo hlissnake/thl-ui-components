@@ -1,3 +1,13 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/THL-DEV/thl-ui-components/compare/3.1.0...v3.1.1) (2016-11-15)
+
+
+### Bug Fixes
+
+* **SearchSelect:** Fix keyboard interaction and auto focus ([24fac24](https://github.com/THL-DEV/thl-ui-components/commit/24fac24))
+
+
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/THL-DEV/thl-ui-components/compare/3.0.0...v3.1.0) (2016-11-14)
 
