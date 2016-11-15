@@ -23,11 +23,11 @@ __props__
 
 | Property Name | Type | Description |
 | --- | --- | --- | 
-| __children__ | _func (required)_ | Function to render children, parameters are (item, onClick, isSelected) |
+| __children__ | _func (required)_ | Function to render children, parameters are (item, onClick, isSelected, isHighlighted) |
 | __open__ | _boolean (required)_ | Value if the select list is open or not |
 | __onOpen__ | _func (required)_ | Function called when the select is opened (normally sets __open__ to true) |
 | __onDismiss__ | _func (required)_ | Function called when the select should be closed (normally sets __open__ to false) |
-| __maxResults__ | _number_ | If defined will trim the passed in search results to this number and places a child at the end with params _(undefined, onNew, false)_ |
+| __maxResults__ | _number_ | If defined will trim the passed in search results to this number and places a child at the end with params _(undefined, onNew, false, isSelected)_ |
 | __value__ | _any_ | Currently selected value, will be passed through the __children__ function to display the normal value _(value, onOpen, true)_ |
 | __onChange__ | _func_ | Function called when the selected value is changed, gets passed the "item" of __children__ function via the onClick |
 | __onNew__ | _func_ | Function that is called when a "New" item should be added, is displayed based on maxResults and searchResults |

@@ -12,21 +12,13 @@ const SearchSelect = ({
 	children:itemRender,
 	open,
 	onOpen,
-	onChange,
-	onNew,
-	onSearchChange,
-	searchResults,
-	searching,
-	searchElement,
 	onDismiss,
 	value = '',
-	maxResults = 6,
-	searchValue = '',
 	styles = {},
 	animationSpeed = 200,
 	...props
-}, {rebass, ...context}) => {
-	let {scale, zIndex, colors} = {...config, ...context.rebass};
+}, {rebass}) => {
+	let {scale, zIndex, colors} = {...config, ...rebass};
 	const baseStyles = {
 		dropdown: {
 			base: {
@@ -108,19 +100,6 @@ const SearchSelect = ({
 		display: open ? null : 'none'
 	};
 	
-	let children;
-	if (searching) {
-		if (!searchElement) console.error('Warning: thl-ui-components/SearchSelect: searching was passed but no searchElement was passed');
-		children = searchElement;
-	} else if ((searchResults || []).length > 0) {
-		children = searchResults.slice(0, maxResults).map(item => itemRender(item, () => onChange(item), false));
-		if (children.length < maxResults && onNew) {
-			children.push(itemRender(undefined, onNew, false));
-		}
-	} else {
-		children = itemRender(undefined, onNew, false);
-	}
-	
 	return <Dropdown>
 		<Style rules={{
 			'.OverlayFadeIn': styles.dropdown.base,
@@ -133,14 +112,106 @@ const SearchSelect = ({
 			baseStyle={styles.dropdownMenu.root}>
 			<div style={styles.dropdownMenu.overlay} onClick={onDismiss}/>
 			<ReactCSSTransitionGroup transitionName="OverlayFadeIn" transitionEnterTimeout={animationSpeed} transitionLeaveTimeout={animationSpeed}>
-				{open && <div key="menu" {...props} className={"OverlayFadeIn " + (open ? 'OverlayFadeIn-Open' : '')}>
-					<Input value={searchValue} onChange={onSearchChange} label="" hideLabel name="search-input" style={styles.input}/>
-					{children}
-				</div>}
+				{open && <SearchInput
+					key="menu"
+					{...props}
+					children={itemRender}
+					open={open}
+					inputStyle={styles.input}
+					className={"OverlayFadeIn " + (open ? 'OverlayFadeIn-Open' : '')}
+				/>}
 			</ReactCSSTransitionGroup>
 		</Base>
 	</Dropdown>;
 };
+
+class SearchInput extends Component {
+	constructor() {
+		super();
+		this.state = {
+			selected: 0
+		};
+	}
+	
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.searching) {
+			this.setState({selected: 0});
+		}
+	}
+	
+	componentDidMount() {
+		// the timeout prevents a double transition trigger for some reason
+		setTimeout(() => this.input.focus());
+	}
+	
+	render() {
+		let {
+			children:itemRender,
+			onSearchChange,
+			inputStyle,
+			searching,
+			searchElement,
+			searchResults,
+			onChange,
+			onNew,
+			maxResults = 6,
+			searchValue = '',
+			...props
+		} = this.props;
+		
+		let children;
+		if (searching) {
+			if (!searchElement) console.error('Warning: thl-ui-components/SearchSelect: searching was passed but no searchElement was passed');
+			children = searchElement;
+		} else if ((searchResults || []).length > 0) {
+			children = searchResults.slice(0, maxResults).map((item, index) => itemRender(item, () => onChange(item), false, index === this.state.selected));
+			if (children.length < maxResults && onNew && (children.length === 0 || searchValue)) {
+				let newIndex = children.length;
+				children.push(itemRender(undefined, onNew, false, newIndex === this.state.selected));
+			}
+		} else {
+			children = itemRender(undefined, onNew, false, true);
+		}
+		
+		return <div {...props}>
+			<Input
+				baseRef={ref => this.input = ref}
+				value={searchValue}
+				onChange={onSearchChange}
+				label=""
+				hideLabel
+				name="search-input"
+				style={inputStyle}
+				onKeyDown={this.inputKeyhandler.bind(this)}
+			/>
+			{children}
+		</div>
+	}
+	
+	inputKeyhandler(event) {
+		let {maxResults = 6, searchResults = [], onNew, onChange} = this.props;
+		let {selected} = this.state;
+		if (event.keyCode === 13) {
+			// enter key
+			event.preventDefault();
+			if (selected < maxResults && selected < searchResults.length && searchResults.length > 0) {
+				onChange(searchResults[selected]);
+			} else {
+				onNew();
+			}
+		} else if (event.keyCode === 38) {
+			// up arrow
+			event.preventDefault();
+			this.setState({selected: Math.max(0, selected - 1)});
+		} else if (event.keyCode === 40) {
+			// down arrow
+			event.preventDefault();
+			let maxIndex = Math.min(maxResults, searchResults.length);
+			this.setState({selected: Math.min(maxIndex, selected + 1)});
+		}
+	}
+}
+
 SearchSelect.propTypes = {
 	children: PropTypes.func.isRequired,
 	open: PropTypes.bool.isRequired,
