@@ -100,7 +100,7 @@ const SearchSelect = ({
 		display: open ? null : 'none'
 	};
 	
-	return <Dropdown>
+	return <Dropdown style={props.style}>
 		<Style rules={{
 			'.OverlayFadeIn': styles.dropdown.base,
 			'.OverlayFadeIn-Open:not(.OverlayFadeIn-enter):not(.OverlayFadeIn-leave), .OverlayFadeIn-enter-active, .OverlayFadeIn-leave': styles.dropdown.open,
