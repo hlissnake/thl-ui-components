@@ -1,3 +1,13 @@
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/THL-DEV/thl-ui-components/compare/3.1.1...v3.1.2) (2016-11-16)
+
+
+### Bug Fixes
+
+* **SearchSelect:** Pass through style property to root element ([4fa5b7c](https://github.com/THL-DEV/thl-ui-components/commit/4fa5b7c))
+
+
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/THL-DEV/thl-ui-components/compare/3.1.0...v3.1.1) (2016-11-15)
 
