@@ -19,7 +19,9 @@ module.exports = {
 					path.resolve(__dirname, '../VersionedComponent'),
 					path.resolve(__dirname, '../AuthPinModal'),
 					path.resolve(__dirname, '../SearchSelect'),
-					path.resolve(__dirname, '../ProgressBar')
+					path.resolve(__dirname, '../ProgressBar'),
+					path.resolve(__dirname, '../DateSelector'),
+					path.resolve(__dirname, '../TimeSelector')
 				],
 				query: {
 					presets: ['es2015', 'react', 'stage-0']
@@ -32,6 +34,14 @@ module.exports = {
 			{
 				test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 				loader: "file-loader"
+			},
+			{
+				test: /\.json$/,
+				loaders: ['json']
+			},
+			{
+				test: /\.css$/,
+				loaders: ['style', 'css']
 			}
 		]
 	}
