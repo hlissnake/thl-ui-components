@@ -33,6 +33,7 @@ export default class ToolbarOverflow extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.children !== this.props.children ||
+			!this.refs.root ||
 			this.state.totalChildren !== this.refs.root.childNodes.length ||
 			this.state.width !== parseInt(window.getComputedStyle(this.refs.root).width) ||
 			this.state.overflowButtonWidth !== (this.props.overflowButtonWidth || 80)
@@ -91,6 +92,7 @@ export default class ToolbarOverflow extends React.Component {
 
 	render() {
 		let {children, overflowButton, appendStart, style, ...props} = this.props;
+		let ToolbarOverflowStyles  = (this.context.rebass || {}).ToolbarOverflow;
 		let onClick = () => this.setState({dropdownOpen: true});
 		let trigger = <NavItem onClick={onClick}>more<Arrow direction="down"/></NavItem>;
 		if (overflowButton) {
@@ -114,7 +116,7 @@ export default class ToolbarOverflow extends React.Component {
 				overflowEndDropdown = dropdown;
 			}
 		}
-		return <div className="ToolbarOverflow" ref="root" {...props} style={{...(this.context.rebass.ToolbarOverflow || {display: 'flex', flex: '1', margin: 0, justifyContent: 'flex-start'}), ...style}}>
+		return <div className="ToolbarOverflow" ref="root" {...props} style={{...(ToolbarOverflowStyles || {display: 'flex', flex: '1', margin: 0, justifyContent: 'flex-start'}), ...style}}>
 				<NavItem id="HiddenHeightSetter" style={{visibility: 'hidden', zIndex: -1, float: 'left', height: this.props.height}}/>
 				{overflowStartDropdown}
 				<div style={{display: 'flex', flex: '1', overflow: 'hidden'}}>
