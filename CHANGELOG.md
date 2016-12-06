@@ -1,3 +1,13 @@
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/THL-DEV/thl-ui-components/compare/3.1.2...v3.1.3) (2016-12-06)
+
+
+### Bug Fixes
+
+* **ToolbarOverflow:** Fix for when no refs error ([f58b714](https://github.com/THL-DEV/thl-ui-components/commit/f58b714))
+
+
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/THL-DEV/thl-ui-components/compare/3.1.1...v3.1.2) (2016-11-16)
 
