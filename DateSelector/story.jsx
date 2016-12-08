@@ -51,9 +51,8 @@ storiesOf('DateSelector', module)
 ))
 .add('populate date and recurrences', () => (
 	<RebassThemes>
-		<DateSelector dateMode="Date" date={moment()}
-		              hourAfter={10} minutesAfter={0} isAMAfter={true}
-		              hourBefore={11} minutesBefore={0} isAMBefore={true}
+		<DateSelector dateMode="Date" startDateTime={moment()}
+		              endDateTime={moment().add(1, 'hours')}
 		              repeatOption={'Custom'} repeatUntil={moment().add(10, 'days')}
 		              Mon={true} Sat={true}
 		              addCalendar={action('add to calendar')}
@@ -62,9 +61,25 @@ storiesOf('DateSelector', module)
 ))
 .add('populate date range', () => (
 	<RebassThemes>
-		<DateSelector dateMode="Range" startDate={moment()} endDate={moment().add(10, 'days')}
-		              hourAfter={10} minutesAfter={0} isAMAfter={true}
-		              hourBefore={11} minutesBefore={0} isAMBefore={false}
+		<DateSelector dateMode="Range" startDateTime={moment()}
+		              endDateTime={moment().add(10, 'days').add(1, 'hours')}
+		              addCalendar={action('add to calendar')}
+		/>
+	</RebassThemes>
+))
+.add('default duration 1 year for "After"', () => (
+	<RebassThemes>
+		<DateSelector dateMode="After"
+		              startDateTime={moment()}
+		              defaultDuration={moment.duration(1, 'years')}
+		              addCalendar={action('add to calendar')}
+		/>
+	</RebassThemes>
+))
+.add('Before mode', () => (
+	<RebassThemes>
+		<DateSelector dateMode="Before"
+		              endDateTime={moment().add(10, 'days').add(1, 'hours')}
 		              addCalendar={action('add to calendar')}
 		/>
 	</RebassThemes>
