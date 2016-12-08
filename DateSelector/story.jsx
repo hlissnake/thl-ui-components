@@ -1,4 +1,3 @@
-import addCal from './ical';
 import DateSelector from './index';
 import React  from 'react';
 import {storiesOf, action} from '@kadira/storybook';
