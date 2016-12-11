@@ -26,9 +26,10 @@ export default function WrappedNavItem(_props, {rebass}) {
 			{...linkProps}
 		>{({isActive, location, href, onClick, transition, ...others}) => {
 			let theme = props.theme, inverted = props.inverted;
+			let className = props.className;
 			if (isActive) {
 				if (activeClassName || activeStyle) {
-					props.className = (props.className || '') + ' ' + (activeClassName || '');
+					className = (props.className || '') + ' ' + (activeClassName || '');
 					props.style = {...props.style, ...activeStyle};
 				} else {
 					props.style = {...props.style,
@@ -40,6 +41,7 @@ export default function WrappedNavItem(_props, {rebass}) {
 			}
 			return <NavItem
 				{...props}
+				className={className}
 				onClick={onClick}
 				href={href}
 				theme={theme}
