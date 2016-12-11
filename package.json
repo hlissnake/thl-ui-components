@@ -60,7 +60,6 @@
   },
   "peerDependencies": {
     "color": "^0.11.1",
-    "fs": "0.0.1-security",
     "lodash": "^4.13.1",
     "radium": "^0.18.0",
     "react": "^15.3.0",
