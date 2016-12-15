@@ -6,13 +6,32 @@ import 'react-dates/lib/css/_datepicker.css';
 import rebassConfig from 'rebass/dist/config';
 import moment from 'moment';
 
-const themePrimary = {...rebassConfig,
+const basicTheme = {
+	...rebassConfig,
+
+	Button: {
+		padding: 8,
+		border: '1px solid black',
+		borderRadius: '4px'
+	},
+	ButtonOutline: {
+		padding: 8,
+		border: '1px solid black',
+		borderRadius: '4px'
+	},
+	Label: {
+		lineHeight: 2
+	}
+};
+
+
+const themePrimary = {...basicTheme,
 	colors: {
 		primary: '#03d0ab'
 	}
 };
 
-const themeBigger = {...rebassConfig,
+const themeBigger = {...basicTheme,
 	fontSizes : [
 		51,
 		35,
@@ -34,7 +53,7 @@ const themeBigger = {...rebassConfig,
 
 storiesOf('DateSelector', module)
 .add('default', () => (
-	<RebassThemes>
+	<RebassThemes theme={basicTheme}>
 		<DateSelector addCalendar={action('add to calendar')}/>
 	</RebassThemes>
 ))
@@ -49,7 +68,7 @@ storiesOf('DateSelector', module)
 	</RebassThemes>
 ))
 .add('populate date and recurrences', () => (
-	<RebassThemes>
+	<RebassThemes theme={basicTheme}>
 		<DateSelector dateMode="Date" startDateTime={moment()}
 		              endDateTime={moment().add(1, 'hours')}
 		              repeatOption={'Custom'} repeatUntil={moment().add(10, 'days')}
@@ -59,7 +78,7 @@ storiesOf('DateSelector', module)
 	</RebassThemes>
 ))
 .add('populate date range', () => (
-	<RebassThemes>
+	<RebassThemes theme={basicTheme}>
 		<DateSelector dateMode="Range" startDateTime={moment()}
 		              endDateTime={moment().add(10, 'days').add(1, 'hours')}
 		              addCalendar={action('add to calendar')}
@@ -67,7 +86,7 @@ storiesOf('DateSelector', module)
 	</RebassThemes>
 ))
 .add('default duration 1 year for "After"', () => (
-	<RebassThemes>
+	<RebassThemes theme={basicTheme}>
 		<DateSelector dateMode="After"
 		              startDateTime={moment()}
 		              defaultDuration={moment.duration(1, 'years')}
@@ -76,7 +95,7 @@ storiesOf('DateSelector', module)
 	</RebassThemes>
 ))
 .add('Before mode', () => (
-	<RebassThemes>
+	<RebassThemes theme={basicTheme}>
 		<DateSelector dateMode="Before"
 		              endDateTime={moment().add(10, 'days').add(1, 'hours')}
 		              addCalendar={action('add to calendar')}

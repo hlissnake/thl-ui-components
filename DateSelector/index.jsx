@@ -281,7 +281,7 @@ class DateSelector extends React.Component {
 			<Base className="DateSelectorComponent" baseStyle={{
 				color: colors.black || 'black',
 				fontSize: fontSizes[5],
-				maxWidth: (scale[4] || 64) * 4 + 13
+				maxWidth: (scale[4] || 64) * 4 + 44
 			}}>
 				<Style scopeSelector=".DateSelectorComponent" rules={{
 					'.DateInput': {

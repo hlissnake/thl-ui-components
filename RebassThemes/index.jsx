@@ -18,20 +18,14 @@ export default class CosmosComponents extends React.Component {
 			rebass: {
 				...rebassConfig,
 				Button: {
-					padding: 8,
-					border: '1px solid black',
-					borderRadius: '4px'
+					padding: '12px 8px'
 				},
 				ButtonOutline: {
-					padding: 8,
 					border: '1px solid black',
 					borderRadius: '4px'
 				},
 				NavigationToolbar: {
 					minHeight: 32
-				},
-				Label: {
-					lineHeight: 2
 				},
 				...theme,
 				colors: {
