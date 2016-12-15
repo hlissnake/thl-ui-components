@@ -72,7 +72,7 @@ storiesOf('DateSelector', module)
 		<DateSelector dateMode="Date" startDateTime={moment()}
 		              endDateTime={moment().add(1, 'hours')}
 		              repeatOption={'Custom'} repeatUntil={moment().add(10, 'days')}
-		              Mon={true} Sat={true}
+		              customDays={['Mon', 'Sat']}
 		              addCalendar={action('add to calendar')}
 		/>
 	</RebassThemes>

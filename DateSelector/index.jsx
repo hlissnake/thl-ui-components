@@ -7,14 +7,14 @@ import {Style} from 'radium'
 import TimeSelector from '../TimeSelector'
 import ButtonOutline from '../Stateless/ButtonOutline'
 import ToggleButton from '../Stateless/ToggleButton'
-import { Flex, Box } from 'reflexbox'
+import {Flex, Box} from 'reflexbox'
 import momentPropTypes from 'react-moment-proptypes'
 import {convertTimeFromMomentObj, convertDateTimeToMomentObj, validateOutput} from './helper'
 import moment from 'moment';
 
 class DateSelector extends React.Component {
 	static propTypes = {
-		defaultDuration : momentPropTypes.momentDurationObj,
+		defaultDuration: momentPropTypes.momentDurationObj,
 
 		startDateTime: momentPropTypes.momentObj,
 		endDateTime: momentPropTypes.momentObj,
@@ -23,13 +23,7 @@ class DateSelector extends React.Component {
 		repeatOption: PropTypes.string,
 		repeatUntilDate: momentPropTypes.momentObj,
 
-		Mon: PropTypes.bool,   // default value for day selection
-		Tue: PropTypes.bool,
-		Wed: PropTypes.bool,
-		Thu: PropTypes.bool,
-		Fri: PropTypes.bool,
-		Sat: PropTypes.bool,
-		Sun: PropTypes.bool,
+		customDays: PropTypes.array,
 
 		addCalendar: PropTypes.func.isRequired
 
@@ -56,25 +50,19 @@ class DateSelector extends React.Component {
 			dateMode: this.props.dateMode || 'Date',
 
 			hourAfter: (startTime === null ? 12 : startTime.hour) + '',   // initial value for After, convert to string since <select> value is string
-			minutesAfter: (startTime === null? 0 : startTime.minutes) + '',
-			isAMAfter: startTime === null? true : startTime.isAM,
+			minutesAfter: (startTime === null ? 0 : startTime.minutes) + '',
+			isAMAfter: startTime === null ? true : startTime.isAM,
 
 
-			hourBefore: (endTime === null? 11 : endTime.hour) + '',  // inital value for Before
-			minutesBefore: (endTime === null? 59 : endTime.minutes) + '',
-			isAMBefore: endTime === null? false : endTime.isAM,
+			hourBefore: (endTime === null ? 11 : endTime.hour) + '',  // inital value for Before
+			minutesBefore: (endTime === null ? 59 : endTime.minutes) + '',
+			isAMBefore: endTime === null ? false : endTime.isAM,
 
 			repeatOption: this.props.repeatOption || 'Does Not Repeat',
 			repeatUntil: this.props.repeatUntil || null,
 			focusedUntil: false,
 
-			Mon: this.props.Mon === undefined? false : this.props.Mon,   // default value for day selection
-			Tue: this.props.Tue === undefined? false : this.props.Tue,
-			Wed: this.props.Wed === undefined? false : this.props.Wed,
-			Thu: this.props.Thu === undefined? false : this.props.Thu,
-			Fri: this.props.Fri === undefined? false : this.props.Fri,
-			Sat: this.props.Sat === undefined? false : this.props.Sat,
-			Sun: this.props.Sun === undefined? false : this.props.Sun,
+			customDays: this.props.customDays,
 
 			message: ""
 
@@ -95,7 +83,7 @@ class DateSelector extends React.Component {
 		this.addToCalendar = this.addToCalendar.bind(this);
 	}
 
-	onDateModeChange(event){
+	onDateModeChange(event) {
 		const dateMode = event.target.value;
 
 		let changedState = {
@@ -105,13 +93,7 @@ class DateSelector extends React.Component {
 			date: null,
 			repeatUntil: null,
 
-			Mon: false,
-			Tue: false,
-			Wed: false,
-			Thu: false,
-			Fri: false,
-			Sat: false,
-			Sun: false
+			customDays: []
 		};
 
 		if (dateMode !== 'Before') {
@@ -143,7 +125,7 @@ class DateSelector extends React.Component {
 	}
 
 	onDateChange(date) {
-		this.setState({ date });
+		this.setState({date});
 	}
 
 	onFocusChange({focused}) {
@@ -152,31 +134,35 @@ class DateSelector extends React.Component {
 
 
 	onUntilDateChange(repeatUntil) {
-		this.setState({ repeatUntil });
+		this.setState({repeatUntil});
 	}
 
 	onUntilFocusChange({focused}) {
 		this.setState({focusedUntil: focused});
 	}
 
-	onDateRepeatOptionChange(event){
+	onDateRepeatOptionChange(event) {
 		this.setState({
 			repeatOption: event.target.value,
-			Mon: false,
-			Tue: false,
-			Wed: false,
-			Thu: false,
-			Fri: false,
-			Sat: false,
-			Sun: false});
+			customDays: []
+		});
 	}
 
-	toggleDay(day){
-		const isDaySelected = this.state[day] ? false : true;
-		this.setState({[day]: isDaySelected});
+	toggleDay(day) {
+
+		let newCustomDays = this.state.customDays.slice();
+		const index = this.state.customDays.indexOf(day);
+
+		if (index > -1) {
+			newCustomDays.splice(index, 1);
+		}
+		else {
+			newCustomDays.push(day);
+		}
+		this.setState({customDays: newCustomDays});
 	}
 
-	addToCalendar(){
+	addToCalendar() {
 
 
 		let startDate;
@@ -185,7 +171,7 @@ class DateSelector extends React.Component {
 		let startDateTime;
 		let endDateTime;
 
-		switch(this.state.dateMode){
+		switch (this.state.dateMode) {
 			case 'Date':
 				startDate = endDate = this.state.date;
 				startDateTime = convertDateTimeToMomentObj(startDate, this.state.hourAfter, this.state.minutesAfter, this.state.isAMAfter);
@@ -212,7 +198,7 @@ class DateSelector extends React.Component {
 
 		let data;
 
-		if (this.state.dateMode === 'Date'){
+		if (this.state.dateMode === 'Date') {
 
 			data = {
 				startDateTime: startDateTime,
@@ -221,19 +207,15 @@ class DateSelector extends React.Component {
 				dateMode: this.state.dateMode,
 
 				repeatOption: this.state.repeatOption,
-				repeatUntil: this.state.repeatUntil == null?  null : moment(this.state.repeatUntil).hour(23).minute(59)
+				repeatUntil: this.state.repeatUntil == null ? null : moment(this.state.repeatUntil).hour(23).minute(59)
 			};
 
 			if (data.repeatOption === 'Custom') {
-				data = {...data, ...{
-					Mon: this.state.Mon,
-					Tue: this.state.Tue,
-					Wed: this.state.Wed,
-					Thu: this.state.Thu,
-					Fri: this.state.Fri,
-					Sat: this.state.Sat,
-					Sun: this.state.Sun
-				}};
+				data = {
+					...data, ...{
+						customDays: this.state.customDays
+					}
+				};
 			}
 		}
 		else {    // actually range without recurrences
@@ -248,7 +230,7 @@ class DateSelector extends React.Component {
 		const errorMessage = validateOutput(data);
 		this.setState({message: errorMessage});
 
-		if(errorMessage.length === 0){
+		if (errorMessage.length === 0) {
 			this.props.addCalendar(data);
 		}
 	}
@@ -272,7 +254,7 @@ class DateSelector extends React.Component {
 			{children: 'Monthly', value: 'Monthly'},
 			{children: 'Yearly', value: 'Yearly'},
 			{children: 'Custom', value: 'Custom'}
-			];
+		];
 
 		//const allWeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		const allWeekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -424,23 +406,23 @@ class DateSelector extends React.Component {
 				}
 				<Flex wrap>
 
-				{
-					(this.state.dateMode === 'Date' && this.state.repeatOption === 'Custom') &&
-					allWeekDays.map( day => {
-					return <ToggleButton key={day}
-					                     selected={this.state[day]}
-					                     onClick={() => this.toggleDay(day)}
-					                     theme={themeColour}
-					                     style={{
-						                     marginRight: (scale[0] || 0) + 5
-					                     }}
-					                     pill
+					{
+						(this.state.dateMode === 'Date' && this.state.repeatOption === 'Custom') &&
+						allWeekDays.map(day => {
+							return <ToggleButton key={day}
+							                     selected={this.state.customDays.indexOf(day) > -1}
+							                     onClick={() => this.toggleDay(day)}
+							                     theme={themeColour}
+							                     style={{
+								                     marginRight: (scale[0] || 0) + 5
+							                     }}
+							                     pill
 							>
 								{day}
-					       </ToggleButton>
-					})
+							</ToggleButton>
+						})
 
-				}
+					}
 				</Flex>
 
 				{
