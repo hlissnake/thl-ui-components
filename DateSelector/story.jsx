@@ -51,54 +51,81 @@ const themeBigger = {...basicTheme,
 	]
 };
 
+class Wrapper extends React.Component {
+	constructor() {
+		super();
+		this.state = {
+
+			dateMode: 'Date',
+			startDate: moment(),
+			endDate: moment().add(10, 'days'),
+			date: moment().add(1, 'days'),
+
+			startTime: moment(),
+			endTime: moment().add(1, 'hours'),
+
+			repeatOption: 'Custom',
+			repeatUntilDate: moment().add(20, 'days'),
+			customDays: ['Mon', 'Sat']
+
+		};
+	}
+
+	render() {
+		return <DateSelector
+			{...this.props}
+			dateMode={this.state.dateMode}
+			startDate={this.state.startDate}
+			endDate={this.state.endDate}
+			date={this.state.date}
+			startTime={this.state.startTime}
+			endTime={this.state.endTime}
+			repeatOption={this.state.repeatOption}
+			repeatUntilDate={this.state.repeatUntilDate}
+			customDays={this.state.customDays}
+			onChange={ (dateMode, startDate, endDate, date, startTime, endTime, repeatOption, repeatUntilDate, customDays) => this.setState({
+				dateMode: dateMode,
+				startDate: startDate,
+				endDate: endDate,
+				date: date,
+				startTime: startTime,
+				endTime: endTime,
+				repeatOption: repeatOption,
+				repeatUntilDate: repeatUntilDate,
+				customDays: customDays
+
+			})}
+			onSubmit={action('submit')}
+		/>
+	}
+}
+
 storiesOf('DateSelector', module)
 .add('default', () => (
 	<RebassThemes theme={basicTheme}>
-		<DateSelector addCalendar={action('add to calendar')}/>
+		<Wrapper useDefaultValidation={true}/>
 	</RebassThemes>
 ))
 .add('theme is primary green', () => (
 	<RebassThemes theme={themePrimary}>
-		<DateSelector addCalendar={action('add to calendar')}/>
+		<Wrapper useDefaultValidation={true}/>
 	</RebassThemes>
 ))
 .add('size 5 pixel bigger', () => (
 	<RebassThemes theme={themeBigger}>
-		<DateSelector addCalendar={action('add to calendar')}/>
-	</RebassThemes>
-))
-.add('populate date and recurrences', () => (
-	<RebassThemes theme={basicTheme}>
-		<DateSelector dateMode="Date" startDateTime={moment()}
-		              endDateTime={moment().add(1, 'hours')}
-		              repeatOption={'Custom'} repeatUntil={moment().add(10, 'days')}
-		              customDays={['Mon', 'Sat']}
-		              addCalendar={action('add to calendar')}
-		/>
-	</RebassThemes>
-))
-.add('populate date range', () => (
-	<RebassThemes theme={basicTheme}>
-		<DateSelector dateMode="Range" startDateTime={moment()}
-		              endDateTime={moment().add(10, 'days').add(1, 'hours')}
-		              addCalendar={action('add to calendar')}
-		/>
+		<Wrapper useDefaultValidation={true}/>
 	</RebassThemes>
 ))
 .add('default duration 1 year for "After"', () => (
 	<RebassThemes theme={basicTheme}>
-		<DateSelector dateMode="After"
-		              startDateTime={moment()}
-		              defaultDuration={moment.duration(1, 'years')}
-		              addCalendar={action('add to calendar')}
+		<Wrapper useDefaultValidation={true}
+			defaultDuration={moment.duration(1, 'years')}
 		/>
 	</RebassThemes>
 ))
-.add('Before mode', () => (
+.add('disable default validation', () => (
 	<RebassThemes theme={basicTheme}>
-		<DateSelector dateMode="Before"
-		              endDateTime={moment().add(10, 'days').add(1, 'hours')}
-		              addCalendar={action('add to calendar')}
+		<Wrapper useDefaultValidation={false}
 		/>
 	</RebassThemes>
 ));

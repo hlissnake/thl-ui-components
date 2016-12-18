@@ -6,7 +6,11 @@ import moment from 'moment';
 export function convertTimeFromMomentObj(dateTime){
 
 	if (dateTime === undefined) {
-		return null;
+		return {
+			hour: null,
+			minutes: null,
+			isAM: true
+		};
 	}
 
 	return {
@@ -16,50 +20,60 @@ export function convertTimeFromMomentObj(dateTime){
 	};
 }
 
-export function convertDateTimeToMomentObj(date, hour, minutes, isAM) {
+export function convertTimeToMomentObj(hour, minutes, isAM) {
 
-	if (date == undefined || hour == undefined || minutes == undefined || isAM == undefined) {
+	if (hour == undefined || minutes == undefined || isAM == undefined) {
 		return null;
 	}
 
-	let momentString = moment(date).format('YYYYMMDD ');
+	let momentString = '';
 	momentString += hour.length === 1 ? '0' + hour : hour;
 	momentString += ':';
 	momentString += minutes.length === 1 ? '0' + minutes : minutes;
 	momentString += isAM ? ' am' : ' pm';
 
+	return moment(momentString, 'hh:mm a');
+}
+
+export function convertDateTimeToMomentObj(date, time) {
+	if (date == undefined || time == undefined) {
+		return null;
+	}
+
+	let momentString = moment(date).format('YYYYMMDD ') + moment(time).format('hh:mm a');
 	return moment(momentString, 'YYYYMMDD hh:mm a');
+
 }
 
 
 /*
 	The return is the error message
  */
-export function validateOutput(data){
-	switch(data.dateMode){
+export function validate(dateMode, startDateTime, endDateTime, repeatOption, repeatUntilDate, customDays){
+	switch(dateMode){
 		case 'Date':
-			if (data.startDateTime == undefined || data.endDateTime == undefined){
+			if (startDateTime == undefined || endDateTime == undefined){
 				return "Please select the date for 'Date' mode."
 			}
 
-			if (data.repeatOption !== 'Does Not Repeat' && data.repeatUntil == undefined) {
+			if (repeatOption !== 'Does Not Repeat' && repeatUntilDate == undefined) {
 				return "Please select the until date for the Repeat."
 			}
 
-			if(data.repeatOption !== 'Does Not Repeat' && data.repeatUntil.isBefore(data.endDateTime)) {
+			if(repeatOption !== 'Does Not Repeat' && repeatUntilDate.isBefore(endDateTime)) {
 				return "Please ensure the repeat until date is afer the first occurrence date."
 			}
 			break;
 		default:
-			if (data.startDateTime == undefined ){
+			if (startDateTime == undefined ){
 				return "Please select the start date."
 			}
 
-			if (data.endDateTime == undefined ){
+			if (endDateTime == undefined ){
 				return "Please select the end date."
 			}
 
-			if(data.endDateTime.isBefore(data.startDateTime)) {
+			if(endDateTime.isBefore(startDateTime)) {
 				return "Please ensure the end date time is afer the start date time."
 			}
 			break;

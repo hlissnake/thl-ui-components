@@ -1,32 +1,36 @@
 import React, {PropTypes}  from 'react';
 import DateRangePicker from 'react-dates/lib/components/DateRangePicker';
 import SingleDatePicker from 'react-dates/lib/components/SingleDatePicker';
-import {Base, Close, Label, Message, Select, Space, Panel, PanelHeader, Text} from 'rebass'
+import {Base, Label, Message, Select, Space} from 'rebass'
 import rebassConfig from 'rebass/dist/config';
 import {Style} from 'radium'
 import TimeSelector from '../TimeSelector'
-import ButtonOutline from '../Stateless/ButtonOutline'
 import ToggleButton from '../Stateless/ToggleButton'
 import {Flex, Box} from 'reflexbox'
 import momentPropTypes from 'react-moment-proptypes'
-import {convertTimeFromMomentObj, convertDateTimeToMomentObj, validateOutput} from './helper'
+import {convertTimeFromMomentObj, convertTimeToMomentObj, convertDateTimeToMomentObj, validate} from './helper'
 import moment from 'moment';
 
 class DateSelector extends React.Component {
 	static propTypes = {
 		defaultDuration: momentPropTypes.momentDurationObj,
 
-		startDateTime: momentPropTypes.momentObj,
-		endDateTime: momentPropTypes.momentObj,
 		dateMode: PropTypes.string,
+		startDate: momentPropTypes.momentObj,
+		endDate: momentPropTypes.momentObj,
+		date: momentPropTypes.momentObj,
+
+		startTime: momentPropTypes.momentObj,
+		endTime: momentPropTypes.momentObj,
 
 		repeatOption: PropTypes.string,
 		repeatUntilDate: momentPropTypes.momentObj,
-
 		customDays: PropTypes.array,
 
-		addCalendar: PropTypes.func.isRequired
+		onChange: PropTypes.func.isRequired,
+		onSubmit: PropTypes.func.isRequired,
 
+		useDefaultValidation: PropTypes.bool.isRequired
 	};
 
 	static contextTypes = {
@@ -36,36 +40,11 @@ class DateSelector extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const startTime = convertTimeFromMomentObj(this.props.startDateTime);
-		const endTime = convertTimeFromMomentObj(this.props.endDateTime);
-
 		this.state = {
 			focusedInput: null,  // date range picker
-			startDate: this.props.startDateTime || null,
-			endDate: this.props.endDateTime || null,
-
 			dateFocused: false,  // single date picker
-			date: (this.props.dateMode === 'Before' ? this.props.endDateTime : this.props.startDateTime) || null,
-
-			dateMode: this.props.dateMode || 'Date',
-
-			hourAfter: (startTime === null ? 12 : startTime.hour) + '',   // initial value for After, convert to string since <select> value is string
-			minutesAfter: (startTime === null ? 0 : startTime.minutes) + '',
-			isAMAfter: startTime === null ? true : startTime.isAM,
-
-
-			hourBefore: (endTime === null ? 11 : endTime.hour) + '',  // inital value for Before
-			minutesBefore: (endTime === null ? 59 : endTime.minutes) + '',
-			isAMBefore: endTime === null ? false : endTime.isAM,
-
-			repeatOption: this.props.repeatOption || 'Does Not Repeat',
-			repeatUntil: this.props.repeatUntil || null,
 			focusedUntil: false,
-
-			customDays: this.props.customDays,
-
-			message: ""
-
+			errorMessage: ''
 		};
 		this.onDateModeChange = this.onDateModeChange.bind(this);
 
@@ -79,45 +58,36 @@ class DateSelector extends React.Component {
 		this.onUntilDateChange = this.onUntilDateChange.bind(this);
 		this.onUntilFocusChange = this.onUntilFocusChange.bind(this);
 
+		this.onStartTimeChange = this.onStartTimeChange.bind(this);
+		this.onEndTimeChange = this.onEndTimeChange.bind(this);
 		this.toggleDay = this.toggleDay.bind(this);
-		this.addToCalendar = this.addToCalendar.bind(this);
+		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	onDateModeChange(event) {
 		const dateMode = event.target.value;
 
-		let changedState = {
-			dateMode: dateMode,
-			startDate: null,
-			endDate: null,
-			date: null,
-			repeatUntil: null,
-
-			customDays: []
-		};
+		//reset values
+		let startTime = null;
+		let endTime = null;
 
 		if (dateMode !== 'Before') {
-			changedState = Object.assign({}, changedState, {
-				hourAfter: '12',   // default value for After
-				minutesAfter: '0',
-				isAMAfter: true,
-			});
+			startTime = convertTimeToMomentObj('12', '0', true);
 		}
 
 		if (dateMode !== 'After') {
-			changedState = Object.assign({}, changedState, {
-				hourBefore: '11',  // default value for Before
-				minutesBefore: '59',
-				isAMBefore: false
-			});
+			endTime = convertTimeToMomentObj('11', '59', false);
 		}
 
-		this.setState(changedState);
+		this.props.onChange(dateMode, null, null, null,
+			startTime, endTime,
+			null, null, []);
 	}
 
 	onDatesChange({startDate, endDate}) {
-		console.log('startDate: ', startDate);
-		this.setState({startDate, endDate});
+		this.props.onChange(this.props.dateMode, startDate, endDate, this.props.date,
+			this.props.startTime, this.props.endTime,
+			this.props.repeatOption, this.props.repeatUntilDate, this.props.customDays);
 	}
 
 	onFocusInputChange(focusedInput) {
@@ -125,7 +95,20 @@ class DateSelector extends React.Component {
 	}
 
 	onDateChange(date) {
-		this.setState({date});
+		let {startDate, endDate, endTime} = this.props;
+		if (this.props.dateMode === 'After') {
+			startDate = date;
+			const duration = this.props.defaultDuration || moment.duration(90, 'days');
+			endDate = moment(startDate).add(duration);
+			endTime = convertTimeToMomentObj('11', '59', false);
+		}
+
+		if (this.props.dateMode === 'Before') {
+			endDate = date;
+		}
+		this.props.onChange(this.props.dateMode, startDate, endDate, date,
+			this.props.startTime, endTime,
+			this.props.repeatOption, this.props.repeatUntilDate, this.props.customDays);
 	}
 
 	onFocusChange({focused}) {
@@ -134,7 +117,9 @@ class DateSelector extends React.Component {
 
 
 	onUntilDateChange(repeatUntil) {
-		this.setState({repeatUntil});
+		this.props.onChange(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
+			this.props.startTime, this.props.endTime,
+			this.props.repeatOption, repeatUntil, this.props.customDays);
 	}
 
 	onUntilFocusChange({focused}) {
@@ -142,16 +127,26 @@ class DateSelector extends React.Component {
 	}
 
 	onDateRepeatOptionChange(event) {
-		this.setState({
-			repeatOption: event.target.value,
-			customDays: []
-		});
+		this.props.onChange(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
+			this.props.startTime, this.props.endTime,
+			event.target.value, this.props.repeatUntilDate, []);
+	}
+
+	onStartTimeChange(hour, minutes, isAM) {
+		this.props.onChange(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
+							convertTimeToMomentObj(hour, minutes, isAM), this.props.endTime,
+							this.props.repeatOption, this.props.repeatUntilDate, this.props.customDays);
+	}
+
+	onEndTimeChange(hour, minutes, isAM) {
+		this.props.onChange(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
+			this.props.startTime, convertTimeToMomentObj(hour, minutes, isAM),
+			this.props.repeatOption, this.props.repeatUntilDate, this.props.customDays);
 	}
 
 	toggleDay(day) {
-
-		let newCustomDays = this.state.customDays.slice();
-		const index = this.state.customDays.indexOf(day);
+		let newCustomDays = this.props.customDays.slice();
+		const index = this.props.customDays.indexOf(day);
 
 		if (index > -1) {
 			newCustomDays.splice(index, 1);
@@ -160,84 +155,50 @@ class DateSelector extends React.Component {
 			newCustomDays.push(day);
 		}
 		this.setState({customDays: newCustomDays});
+		this.props.onChange(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
+			this.props.startTime, this.props.endTime,
+			this.props.repeatOption, this.props.repeatUntilDate, newCustomDays);
 	}
 
-	addToCalendar() {
+	onSubmit() {
 
+		if (this.props.useDefaultValidation === true) {
+			let startDateTime;
+			let endDateTime;
 
-		let startDate;
-		let endDate;
+			switch (this.props.dateMode) {
+				case 'Date':
+					startDateTime = convertDateTimeToMomentObj(this.props.date, this.props.startTime);
+					endDateTime = convertDateTimeToMomentObj(this.props.date, this.props.endTime);
+					break;
+				case 'Before':
+					startDateTime = moment();
+					endDateTime = convertDateTimeToMomentObj(this.props.endDate, this.props.endTime);
+					break;
+				default:
+					startDateTime = convertDateTimeToMomentObj(this.props.startDate, this.props.startTime);
+					endDateTime = convertDateTimeToMomentObj(this.props.endDate, this.props.endTime);
+					break;
+			}
 
-		let startDateTime;
-		let endDateTime;
+			const repeatUntilDate = this.props.repeatUntilDate == null ? null : moment(this.props.repeatUntilDate).hour(23).minute(59);
 
-		switch (this.state.dateMode) {
-			case 'Date':
-				startDate = endDate = this.state.date;
-				startDateTime = convertDateTimeToMomentObj(startDate, this.state.hourAfter, this.state.minutesAfter, this.state.isAMAfter);
-				endDateTime = convertDateTimeToMomentObj(endDate, this.state.hourBefore, this.state.minutesBefore, this.state.isAMBefore);
-				break;
-			case 'After':
-				startDate = this.state.date;
-				const duration = this.props.defaultDuration || moment.duration(90, 'days');
-				console.log("duration: ", duration);
-				endDate = moment(startDate).add(duration);
-				startDateTime = convertDateTimeToMomentObj(startDate, this.state.hourAfter, this.state.minutesAfter, this.state.isAMAfter);
-				endDateTime = convertDateTimeToMomentObj(endDate, '11', '59', false);
-				break;
-			case 'Before':
-				endDate = this.state.date;
-				startDateTime = moment();
-				endDateTime = convertDateTimeToMomentObj(endDate, this.state.hourBefore, this.state.minutesBefore, this.state.isAMBefore);
-				break;
-			default:
-				startDateTime = convertDateTimeToMomentObj(this.state.startDate, this.state.hourAfter, this.state.minutesAfter, this.state.isAMAfter);
-				endDateTime = convertDateTimeToMomentObj(this.state.endDate, this.state.hourBefore, this.state.minutesBefore, this.state.isAMBefore);
-				break;
-		}
+			const errorMessage = validate(this.props.dateMode, startDateTime, endDateTime, this.props.repeatOption, repeatUntilDate, this.props.customDays);
+			this.setState({errorMessage: errorMessage});
 
-		let data;
-
-		if (this.state.dateMode === 'Date') {
-
-			data = {
-				startDateTime: startDateTime,
-				endDateTime: endDateTime,
-
-				dateMode: this.state.dateMode,
-
-				repeatOption: this.state.repeatOption,
-				repeatUntil: this.state.repeatUntil == null ? null : moment(this.state.repeatUntil).hour(23).minute(59)
-			};
-
-			if (data.repeatOption === 'Custom') {
-				data = {
-					...data, ...{
-						customDays: this.state.customDays
-					}
-				};
+			if (errorMessage.length > 0) {
+				return;
 			}
 		}
-		else {    // actually range without recurrences
-			data = {
-				startDateTime: startDateTime,
-				endDateTime: endDateTime,
 
-				dateMode: this.state.dateMode,
-			};
-		}
-
-		const errorMessage = validateOutput(data);
-		this.setState({message: errorMessage});
-
-		if (errorMessage.length === 0) {
-			this.props.addCalendar(data);
-		}
+		this.props.onSubmit(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
+			this.props.startTime, this.props.endTime,
+			this.props.repeatOption, this.props.repeatUntilDate, this.props.customDays);
 	}
 
 	render() {
-		const {focusedInput, startDate, endDate, date, dateFocused, repeatUntil, focusedUntil} = this.state;
-		const {scale, colors, borderColor, fontSizes, themeColour} = {...{themeColour: 'primary'}, ...rebassConfig, ...this.context.rebass};
+		const {focusedInput, dateFocused, focusedUntil} = this.state;
+		const {scale, colors, fontSizes, themeColour} = {...{themeColour: 'primary'}, ...rebassConfig, ...this.context.rebass};
 		const dateOptions = [
 			{children: 'After', value: 'After'},
 			{children: 'Before', value: 'Before'},
@@ -256,8 +217,10 @@ class DateSelector extends React.Component {
 			{children: 'Custom', value: 'Custom'}
 		];
 
-		//const allWeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 		const allWeekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+		let {hour:hourAfter, minutes:minutesAfter, isAM:isAMAfter} = convertTimeFromMomentObj(this.props.startTime);
+		let {hour:hourBefore, minutes:minutesBefore, isAM:isAMBefore} = convertTimeFromMomentObj(this.props.endTime);
 
 		return (
 			<Base className="DateSelectorComponent" baseStyle={{
@@ -310,65 +273,56 @@ class DateSelector extends React.Component {
 						options={dateOptions}
 						rounded
 						style={{width: (scale[4] || 64) + 36}}
-						value={this.state.dateMode}
+						value={this.props.dateMode}
 						onChange={this.onDateModeChange}
 					/>
 					<Space x={1}/>
 
-					{ this.state.dateMode === 'Range' ? <DateRangePicker
+					{ this.props.dateMode === 'Range' ? <DateRangePicker
 						onDatesChange={this.onDatesChange}
 						onFocusChange={this.onFocusInputChange}
 						focusedInput={focusedInput}
-						startDate={startDate}
-						endDate={endDate}
+						startDate={this.props.startDate}
+						endDate={this.props.endDate}
 						numberOfMonths={1}
 					/> : <SingleDatePicker
 						id="date_input"
 						onDateChange={this.onDateChange}
 						onFocusChange={this.onFocusChange}
 						focused={dateFocused}
-						date={date}
+						date={this.props.date}
 						numberOfMonths={1}
 					/>}
 				</div>
 
 				{
-					(this.state.dateMode !== 'Before') &&
+					(this.props.dateMode !== 'Before') &&
 					<div>
 						<Label>After</Label>
 						<TimeSelector
-
-							isAM={this.state.isAMAfter}
-							hour={this.state.hourAfter}
-							minutes={this.state.minutesAfter}
-							onChange={(hour, minutes, isAM) => this.setState({
-								hourAfter: hour,
-								minutesAfter: minutes,
-								isAMAfter: isAM
-							})}
+							isAM={isAMAfter === null ? true : isAMAfter }
+							hour={hourAfter || '00'}
+							minutes={minutesAfter || '00'}
+							onChange={this.onStartTimeChange}
 						/>
 					</div>
 				}
 
 				{
-					(this.state.dateMode !== 'After') &&
+					(this.props.dateMode !== 'After') &&
 					<div>
 						<Label>Before</Label>
 						<TimeSelector
-							isAM={this.state.isAMBefore}
-							hour={this.state.hourBefore}
-							minutes={this.state.minutesBefore}
-							onChange={(hour, minutes, isAM) => this.setState({
-								hourBefore: hour,
-								minutesBefore: minutes,
-								isAMBefore: isAM
-							})}
+							isAM={isAMBefore === null ? false : isAMBefore}
+							hour={hourBefore || '11'}
+							minutes={minutesBefore || '59'}
+							onChange={this.onEndTimeChange}
 						/>
 					</div>
 				}
 
 				{
-					(this.state.dateMode === 'Date') &&
+					(this.props.dateMode === 'Date') &&
 					<Flex wrap>
 						<Box>
 							<Label> Repeat </Label>
@@ -378,13 +332,13 @@ class DateSelector extends React.Component {
 								options={repeatOptions}
 								rounded
 								style={{width: (scale[4] || 64) + 96}}
-								value={this.state.repeatOption}
+								value={this.props.repeatOption}
 								onChange={this.onDateRepeatOptionChange}
 							/>
 						</Box>
 						<Space x={1}/>
 						{
-							(this.state.repeatOption !== 'Does Not Repeat' &&
+							(this.props.repeatOption !== 'Does Not Repeat' &&
 
 								<Box>
 									<Label> Until </Label>
@@ -394,7 +348,7 @@ class DateSelector extends React.Component {
 											onDateChange={this.onUntilDateChange}
 											onFocusChange={this.onUntilFocusChange}
 											focused={focusedUntil}
-											date={repeatUntil}
+											date={this.props.repeatUntilDate}
 											numberOfMonths={1}
 										/>
 									</div>
@@ -407,10 +361,10 @@ class DateSelector extends React.Component {
 				<Flex wrap>
 
 					{
-						(this.state.dateMode === 'Date' && this.state.repeatOption === 'Custom') &&
+						(this.props.dateMode === 'Date' && this.props.repeatOption === 'Custom') &&
 						allWeekDays.map(day => {
 							return <ToggleButton key={day}
-							                     selected={this.state.customDays.indexOf(day) > -1}
+							                     selected={this.props.customDays.indexOf(day) > -1}
 							                     onClick={() => this.toggleDay(day)}
 							                     theme={themeColour}
 							                     style={{
@@ -426,7 +380,7 @@ class DateSelector extends React.Component {
 				</Flex>
 
 				{
-					(this.state.message.length > 1) &&
+					(this.props.useDefaultValidation && this.state.errorMessage.length > 1) &&
 
 
 					<Message
@@ -438,12 +392,12 @@ class DateSelector extends React.Component {
 							fontWeight: 'normal'
 						}}
 					>
-						{this.state.message}
+						{this.state.errorMessage}
 					</Message>
 				}
 
 				<ToggleButton selected={true}
-				              onClick={this.addToCalendar}
+				              onClick={this.onSubmit}
 				              style={{
 					              width: (scale[4] || 64) + 16,
 					              marginTop: (scale[0] || 0) + 5
@@ -453,6 +407,7 @@ class DateSelector extends React.Component {
 				              theme={themeColour}>
 					Add
 				</ToggleButton>
+
 
 			</Base>
 		);
