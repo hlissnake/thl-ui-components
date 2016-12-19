@@ -10,6 +10,37 @@ import {Flex, Box} from 'reflexbox'
 import momentPropTypes from 'react-moment-proptypes'
 import {convertTimeFromMomentObj, convertTimeToMomentObj, convertDateTimeToMomentObj, validate} from './helper'
 import moment from 'moment';
+import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
+
+const messages = defineMessages({
+	dateMode: {id: "thl-ui-components.components.DateSelector.Label.dateMode", defaultMessage: "Date Mode"},
+	after: {id: "thl-ui-components.components.DateSelector.after", defaultMessage: "After"},
+	before: {id: "thl-ui-components.components.DateSelector.before", defaultMessage: "Before"},
+	repeat: {id: "thl-ui-components.components.DateSelector.Label.repeat", defaultMessage: "Repeat"},
+	until: {id: "thl-ui-components.components.DateSelector.Label.until", defaultMessage: "Until"},
+	add: {id: "thl-ui-components.components.DateSelector.Button.add", defaultMessage: "Add"},
+	range: {id: "thl-ui-components.components.DateSelector.Option.range", defaultMessage: "Range"},
+	date: {id: "thl-ui-components.components.DateSelector.Option.date", defaultMessage: "Date"},
+
+	doesNotRepeat: {id: "thl-ui-components.components.DateSelector.Option.doesNotRepeat", defaultMessage: "Deos Not Repeat"},
+	daily: {id: "thl-ui-components.components.DateSelector.Option.daily", defaultMessage: "Daily"},
+	weekDays: {id: "thl-ui-components.components.DateSelector.Option.weekDays", defaultMessage: "Week Days"},
+	weekend: {id: "thl-ui-components.components.DateSelector.Option.weekend", defaultMessage: "Weekend"},
+	weekly: {id: "thl-ui-components.components.DateSelector.Option.weekly", defaultMessage: "Weekly"},
+	fortnightly: {id: "thl-ui-components.components.DateSelector.Option.fortnightly", defaultMessage: "Fortnightly"},
+	monthly: {id: "thl-ui-components.components.DateSelector.Option.monthly", defaultMessage: "Monthly"},
+	yearly: {id: "thl-ui-components.components.DateSelector.Option.yearly", defaultMessage: "Yearly"},
+	custom: {id: "thl-ui-components.components.DateSelector.Option.custom", defaultMessage: "Custom"},
+
+	monday: {id: "thl-ui-components.components.DateSelector.Option.monday", defaultMessage: "Mon"},
+	tuesday: {id: "thl-ui-components.components.DateSelector.Option.tuesday", defaultMessage: "Tue"},
+	wednesday: {id: "thl-ui-components.components.DateSelector.Option.wednesday", defaultMessage: "Wed"},
+	thursday: {id: "thl-ui-components.components.DateSelector.Option.thursday", defaultMessage: "Thu"},
+	friday: {id: "thl-ui-components.components.DateSelector.Option.friday", defaultMessage: "Fri"},
+	saturday: {id: "thl-ui-components.components.DateSelector.Option.saturday", defaultMessage: "Sat"},
+	sunday: {id: "thl-ui-components.components.DateSelector.Option.sunday", defaultMessage: "Sun"},
+
+});
 
 class DateSelector extends React.Component {
 	static propTypes = {
@@ -81,7 +112,7 @@ class DateSelector extends React.Component {
 
 		this.props.onChange(dateMode, null, null, null,
 			startTime, endTime,
-			null, null, []);
+			'', null, []);
 	}
 
 	onDatesChange({startDate, endDate}) {
@@ -146,13 +177,13 @@ class DateSelector extends React.Component {
 
 	toggleDay(day) {
 		let newCustomDays = this.props.customDays.slice();
-		const index = this.props.customDays.indexOf(day);
+		const index = this.props.customDays.indexOf(day.value);
 
 		if (index > -1) {
 			newCustomDays.splice(index, 1);
 		}
 		else {
-			newCustomDays.push(day);
+			newCustomDays.push(day.value);
 		}
 		this.setState({customDays: newCustomDays});
 		this.props.onChange(this.props.dateMode, this.props.startDate, this.props.endDate, this.props.date,
@@ -199,28 +230,36 @@ class DateSelector extends React.Component {
 	render() {
 		const {focusedInput, dateFocused, focusedUntil} = this.state;
 		const {scale, colors, fontSizes, themeColour} = {...{themeColour: 'primary'}, ...rebassConfig, ...this.context.rebass};
+		let {formatMessage} = this.props.intl;
 		const dateOptions = [
-			{children: 'After', value: 'After'},
-			{children: 'Before', value: 'Before'},
-			{children: 'Range', value: 'Range'},
-			{children: 'Date', value: 'Date'}];
+			{children: formatMessage(messages.after), value: 'After'},
+			{children: formatMessage(messages.before), value: 'Before'},
+			{children: formatMessage(messages.range), value: 'Range'},
+			{children: formatMessage(messages.date), value: 'Date'}];
 
 		const repeatOptions = [
-			{children: 'Does Not Repeat', value: 'Does Not Repeat'},
-			{children: 'Daily', value: 'Daily'},
-			{children: 'Week Days', value: 'Week Days'},
-			{children: 'Weekend', value: 'Weekend'},
-			{children: 'Weekly', value: 'Weekly'},
-			{children: 'Fortnightly', value: 'Fortnightly'},
-			{children: 'Monthly', value: 'Monthly'},
-			{children: 'Yearly', value: 'Yearly'},
-			{children: 'Custom', value: 'Custom'}
+			{children: formatMessage(messages.doesNotRepeat), value: 'Does Not Repeat'},
+			{children: formatMessage(messages.daily), value: 'Daily'},
+			{children: formatMessage(messages.weekDays), value: 'Week Days'},
+			{children: formatMessage(messages.weekend), value: 'Weekend'},
+			{children: formatMessage(messages.weekly), value: 'Weekly'},
+			{children: formatMessage(messages.fortnightly), value: 'Fortnightly'},
+			{children: formatMessage(messages.monthly), value: 'Monthly'},
+			{children: formatMessage(messages.yearly), value: 'Yearly'},
+			{children: formatMessage(messages.custom), value: 'Custom'}
 		];
 
-		const allWeekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+		const allWeekDays = [{value: 'Mon', description: formatMessage(messages.monday)},
+			{value:'Tue', description: formatMessage(messages.tuesday)},
+			{value: 'Wed', description: formatMessage(messages.wednesday)},
+			{value:'Thu', description: formatMessage(messages.thursday)},
+			{value: 'Fri', description: formatMessage(messages.friday)},
+			{value: 'Sat', description: formatMessage(messages.saturday)},
+			{value: 'Sun', description: formatMessage(messages.sunday)}];
 
 		let {hour:hourAfter, minutes:minutesAfter, isAM:isAMAfter} = convertTimeFromMomentObj(this.props.startTime);
 		let {hour:hourBefore, minutes:minutesBefore, isAM:isAMBefore} = convertTimeFromMomentObj(this.props.endTime);
+
 
 		return (
 			<Base className="DateSelectorComponent" baseStyle={{
@@ -265,7 +304,7 @@ class DateSelector extends React.Component {
 						//opacity: 0.6
 					}
 				}}/>
-				<Label>Select Dates</Label>
+				<Label>{formatMessage(messages.dateMode)}</Label>
 				<div style={{display: 'flex'}}>
 					<Select
 						label=""
@@ -298,7 +337,7 @@ class DateSelector extends React.Component {
 				{
 					(this.props.dateMode !== 'Before') &&
 					<div>
-						<Label>After</Label>
+						<Label>{formatMessage(messages.after)}</Label>
 						<TimeSelector
 							isAM={isAMAfter === null ? true : isAMAfter }
 							hour={hourAfter || '00'}
@@ -311,7 +350,7 @@ class DateSelector extends React.Component {
 				{
 					(this.props.dateMode !== 'After') &&
 					<div>
-						<Label>Before</Label>
+						<Label>{formatMessage(messages.before)}</Label>
 						<TimeSelector
 							isAM={isAMBefore === null ? false : isAMBefore}
 							hour={hourBefore || '11'}
@@ -325,7 +364,7 @@ class DateSelector extends React.Component {
 					(this.props.dateMode === 'Date') &&
 					<Flex wrap>
 						<Box>
-							<Label> Repeat </Label>
+							<Label> {formatMessage(messages.repeat)} </Label>
 							<Select
 								label=""
 								name="select_repeat_options"
@@ -341,7 +380,7 @@ class DateSelector extends React.Component {
 							(this.props.repeatOption !== 'Does Not Repeat' &&
 
 								<Box>
-									<Label> Until </Label>
+									<Label> {formatMessage(messages.until)} </Label>
 									<div>
 										<SingleDatePicker
 											id="date_until_input"
@@ -363,8 +402,8 @@ class DateSelector extends React.Component {
 					{
 						(this.props.dateMode === 'Date' && this.props.repeatOption === 'Custom') &&
 						allWeekDays.map(day => {
-							return <ToggleButton key={day}
-							                     selected={this.props.customDays.indexOf(day) > -1}
+							return <ToggleButton key={day.value}
+							                     selected={this.props.customDays.indexOf(day.value) > -1}
 							                     onClick={() => this.toggleDay(day)}
 							                     theme={themeColour}
 							                     style={{
@@ -372,7 +411,7 @@ class DateSelector extends React.Component {
 							                     }}
 							                     pill
 							>
-								{day}
+								{day.description}
 							</ToggleButton>
 						})
 
@@ -405,7 +444,7 @@ class DateSelector extends React.Component {
 
 				              }}
 				              theme={themeColour}>
-					Add
+					{formatMessage(messages.add)}
 				</ToggleButton>
 
 
@@ -414,5 +453,5 @@ class DateSelector extends React.Component {
 	}
 }
 
-export default DateSelector;
+export default injectIntl(DateSelector);
 

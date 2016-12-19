@@ -1,0 +1,32 @@
+{
+  "thl-ui-components.components.DateSelector.Label.dateMode": "日期模式",
+  "thl-ui-components.components.DateSelector.after": "之后",
+  "thl-ui-components.components.DateSelector.before": "之前",
+  "thl-ui-components.components.DateSelector.Label.repeat": "重复",
+  "thl-ui-components.components.DateSelector.Label.until": "直至",
+  "thl-ui-components.components.DateSelector.Button.add": "添加",
+  "thl-ui-components.components.DateSelector.Option.range": "范围",
+  "thl-ui-components.components.DateSelector.Option.date": "日期",
+
+  "thl-ui-components.components.DateSelector.Option.doesNotRepeat": "不重复",
+  "thl-ui-components.components.DateSelector.Option.daily": "每天",
+  "thl-ui-components.components.DateSelector.Option.weekDays": "工作日",
+  "thl-ui-components.components.DateSelector.Option.weekend": "周末",
+  "thl-ui-components.components.DateSelector.Option.weekly": "每周",
+  "thl-ui-components.components.DateSelector.Option.fortnightly": "每两周",
+  "thl-ui-components.components.DateSelector.Option.monthly": "每月",
+  "thl-ui-components.components.DateSelector.Option.yearly": "每年",
+  "thl-ui-components.components.DateSelector.Option.custom": "定制",
+
+  "thl-ui-components.components.DateSelector.Option.monday": "周一",
+  "thl-ui-components.components.DateSelector.Option.tuesday": "周二",
+  "thl-ui-components.components.DateSelector.Option.wednesday": "周三",
+  "thl-ui-components.components.DateSelector.Option.thursday": "周四",
+  "thl-ui-components.components.DateSelector.Option.friday": "周五",
+  "thl-ui-components.components.DateSelector.Option.saturday": "周六",
+  "thl-ui-components.components.DateSelector.Option.sunday": "周日",
+
+
+  "thl-ui-components.components.TimeSelector.Button.am": "上午",
+  "thl-ui-components.components.TimeSelector.Button.pm": "下午"
+}

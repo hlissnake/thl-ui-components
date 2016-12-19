@@ -4,6 +4,13 @@ import rebassConfig from 'rebass/dist/config';
 import {Style} from 'radium'
 import ToggleButton from '../Stateless/ToggleButton'
 
+import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
+
+const messages = defineMessages({
+	am: {id: "thl-ui-components.components.TimeSelector.Button.am", defaultMessage: "am"},
+	pm: {id: "thl-ui-components.components.TimeSelector.Button.pm", defaultMessage: "pm"}
+});
+
 class TimeSelector extends React.Component {
 	static propTypes = {
 		onChange: React.PropTypes.func.isRequired,
@@ -29,6 +36,8 @@ class TimeSelector extends React.Component {
 			const iString = "" + i;
 			minuteOptions.push({children: iString.length === 1 ? '0' + iString : iString, value: iString});
 		}
+
+		let {formatMessage} = this.props.intl;
 
 		return (
 			<div style={{display: 'flex'}}>
@@ -63,7 +72,7 @@ class TimeSelector extends React.Component {
 						rounded="left"
 						theme={themeColour}
 					>
-						am
+						{formatMessage(messages.am)}
 					</ToggleButton>
 					<ToggleButton
 						selected={!this.props.isAM}
@@ -71,7 +80,7 @@ class TimeSelector extends React.Component {
 						rounded="right"
 						theme={themeColour}
 					>
-						pm
+						{formatMessage(messages.pm)}
 					</ToggleButton>
 				</div>
 			</div>
@@ -79,4 +88,4 @@ class TimeSelector extends React.Component {
 	}
 }
 
-export default TimeSelector;
+export default injectIntl(TimeSelector);

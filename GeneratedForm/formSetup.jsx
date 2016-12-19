@@ -11,7 +11,7 @@ export const FormButton = (_props) => {
 		settings = {
 			...settings,
 			children: <FormattedMessage
-				id="components.Forms.submitting"
+				id="thl-ui-components.components.Forms.submitting"
 				defaultMessage="Sending..."
 			/>
 		};

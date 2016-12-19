@@ -5,6 +5,12 @@ import RebassThemes from '../RebassThemes';
 import 'react-dates/lib/css/_datepicker.css';
 import rebassConfig from 'rebass/dist/config';
 import moment from 'moment';
+import {IntlProvider, addLocaleData} from 'react-intl';
+
+import zhLocaleData from 'react-intl/locale-data/zh';
+import cnLocaleData from './cn.json'
+
+addLocaleData(zhLocaleData);
 
 const basicTheme = {
 	...rebassConfig,
@@ -103,29 +109,54 @@ class Wrapper extends React.Component {
 storiesOf('DateSelector', module)
 .add('default', () => (
 	<RebassThemes theme={basicTheme}>
-		<Wrapper useDefaultValidation={true}/>
+		<IntlProvider defaultLocale="en-NZ"
+		              locale="en-NZ">
+			<Wrapper useDefaultValidation={true}/>
+		</IntlProvider>
 	</RebassThemes>
 ))
 .add('theme is primary green', () => (
 	<RebassThemes theme={themePrimary}>
-		<Wrapper useDefaultValidation={true}/>
+		<IntlProvider defaultLocale="en-NZ"
+		              locale="en-NZ">
+			<Wrapper useDefaultValidation={true}/>
+		</IntlProvider>
 	</RebassThemes>
 ))
 .add('size 5 pixel bigger', () => (
 	<RebassThemes theme={themeBigger}>
-		<Wrapper useDefaultValidation={true}/>
+		<IntlProvider defaultLocale="en-NZ"
+		              locale="en-NZ">
+			<Wrapper useDefaultValidation={true}/>
+		</IntlProvider>
 	</RebassThemes>
 ))
 .add('default duration 1 year for "After"', () => (
 	<RebassThemes theme={basicTheme}>
-		<Wrapper useDefaultValidation={true}
-			defaultDuration={moment.duration(1, 'years')}
-		/>
+		<IntlProvider defaultLocale="en-NZ"
+		              locale="en-NZ">
+			<Wrapper useDefaultValidation={true}
+				defaultDuration={moment.duration(1, 'years')}
+			/>
+		</IntlProvider>
 	</RebassThemes>
 ))
 .add('disable default validation', () => (
 	<RebassThemes theme={basicTheme}>
-		<Wrapper useDefaultValidation={false}
-		/>
+		<IntlProvider defaultLocale="en-NZ"
+		              locale="en-NZ">
+			<Wrapper useDefaultValidation={false}
+			/>
+		</IntlProvider>
+	</RebassThemes>
+))
+.add('Simplified Chinese translations', () => (
+	<RebassThemes theme={basicTheme}>
+		<IntlProvider defaultLocale="zh-cn"
+		              locale="zh"
+		              messages={cnLocaleData}>
+			<Wrapper useDefaultValidation={true}
+			/>
+		</IntlProvider>
 	</RebassThemes>
 ));
