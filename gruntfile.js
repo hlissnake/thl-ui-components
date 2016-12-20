@@ -8,6 +8,9 @@ module.exports = function (grunt) {
 	grunt.registerTask('release:minor', ['bump-only:minor','conventionalChangelog','bump-commit']);
 	grunt.registerTask('release:major', ['bump-only:major','conventionalChangelog','bump-commit']);
 	grunt.registerTask('release:prerelease', ['bump-only:prerelease','conventionalChangelog','bump-commit']);
+	grunt.registerTask('release:prepatch', ['bump-only:prepatch','conventionalChangelog','bump-commit']);
+	grunt.registerTask('release:preminor', ['bump-only:preminor','conventionalChangelog','bump-commit']);
+	grunt.registerTask('release:premajor', ['bump-only:premajor','conventionalChangelog','bump-commit']);
 
 	// Project configuration.
 	grunt.initConfig({
