@@ -1,3 +1,13 @@
+<a name="3.2.0-rc.0"></a>
+# [3.2.0-rc.0](https://github.com/THL-DEV/thl-ui-components/compare/3.1.2...v3.2.0-rc.0) (2016-12-20)
+
+
+### Bug Fixes
+
+* **ToolbarOverflow:** Correctly extends child style attribute ([ab229a0](https://github.com/THL-DEV/thl-ui-components/commit/ab229a0))
+
+
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/THL-DEV/thl-ui-components/compare/3.1.1...v3.1.2) (2016-11-16)
 
